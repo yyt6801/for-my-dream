@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <tchar.h>
-#include <iostream>
-#include "string.h"
+#include <iostream>//system("pause");需要
+#include "string.h"//strcpy函数需要
 int _tmain(int argc, _TCHAR* argv[])
 {
 	char aa[]="HelloWorld!";					//char[]
