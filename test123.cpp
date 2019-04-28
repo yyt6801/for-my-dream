@@ -62,6 +62,9 @@
 //	cin.get();
 //
 //}
+
+
+//通过互斥对象句柄检测程序是否运行
 #include <stdio.h>
 #include <Windows.h>
 #include <iostream>

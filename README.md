@@ -2,6 +2,14 @@
 这是yyt6801的梦想之路：
 程序员-->全栈工程师-->架构师-->CCIE最终信仰
 
+#文件介绍：
+	README.me 	个人随笔、知识体系、想学习的知识汇总分类。
+	SocketClient.cpp和SocketServer.cpp	是Socket通讯的两个测试程序，本不区分Client和Server,但为了方便，取建立监听的为Server,发起请求的为Client。
+	char型转换.cpp 	对char型、字符型、文本型字符转换赋值等操作的测试程序。 因为对方面不太清晰，用来测试和方便后期查阅。
+	formyself.txt	空
+	git基本操作.docx 	git的基本操作汇总
+	test123.cpp 	个人的测试程序代码（包括获取文件 1.txt的内容；调用windowsAPI-MessageBox；通过互斥对象句柄检测程序是否运行）
+
 #知识体系：
     计算机网络：4/7层模型、TCP/IP协议(三次握手四次挥手，报文状态标志，Nagel算法与ACK延迟，keepalive开启/关闭方式，滑动窗口，流量控制)、UDP协议、HTTP协议(method,header,cookies,状态码，HTTP2,HTTP3)
 
