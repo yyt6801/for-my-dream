@@ -1,17 +1,22 @@
 # for-my-dream
-这是yyt6801的梦想之路：
-程序员-->全栈工程师-->架构师-->CCIE最终信仰
+## 这是yyt6801的梦想之路：
+### 程序员-->全栈工程师-->架构师-->CCIE最终信仰
 
-#文件介绍：
-	README.me 	个人随笔、知识体系、想学习的知识汇总分类。
-	SocketClient.cpp和SocketServer.cpp	是Socket通讯的两个测试程序，本不区分Client和Server,但为了方便，取建立监听的为Server,发起请求的为Client。
-	char型转换.cpp 	对char型、字符型、文本型字符转换赋值等操作的测试程序。 因为对方面不太清晰，用来测试和方便后期查阅。
-	formyself.txt	空
-	git基本操作.docx 	git的基本操作汇总
-	test123.cpp 	个人的测试程序代码（包括获取文件 1.txt的内容；调用windowsAPI-MessageBox；通过互斥对象句柄检测程序是否运行）
+# 文件介绍：
 
-#知识体系：
-    计算机网络：4/7层模型、TCP/IP协议(三次握手四次挥手，报文状态标志，Nagel算法与ACK延迟，keepalive开启/关闭方式，滑动窗口，流量控制)、UDP协议、HTTP协议(method,header,cookies,状态码，HTTP2,HTTP3)
+	README.me               个人随笔、知识体系、想学习的知识汇总分类。  
+	SocketClient.cpp和SocketServer.cpp      是Socket通讯的两个测试程序，本不区分Client和Server,但为了方便，取建立监听的为Server,发起请求的为Client。  
+	char型转换.cpp          对char型、字符型、文本型字符转换赋值等操作的测试程序。 因为对方面不太清晰，用来测试和方便后期查阅。
+	formyself.txt           空  
+	git基本操作.docx         git的基本操作汇总  
+	test123.cpp             个人的测试程序代码（包括获取文件 1.txt的内容；调用windowsAPI-MessageBox；通过互斥对象句柄检测程序是否运行）
+
+# 知识体系：
+## 计算机网络
+    4/7层模型、
+    TCP/IP协议(三次握手四次挥手，报文状态标志，Nagel算法与ACK延迟，keepalive开启/关闭方式，滑动窗口，流量控制)、
+    UDP协议、
+    HTTP协议(method,header,cookies,状态码，HTTP2,HTTP3)
 
     操作系统原理:进程与线程的区别和联系，线程调度，线程切换步骤，进程间通信(IPC)，共享内存，消息队列，
 
@@ -23,16 +28,19 @@
 
     java :
 
-    数据库：Oracle:    ;MySql:   ;SqlServer:   ;MongoDB   ;
+    数据库：Oracle:    ;
+            MySql:   ;
+            SqlServer:   ;
+            MongoDB   ;
     
     前端：
         javascript:   ;
         anjularJS:   ;
         JQuery:   ;
 
-    WebSocket通讯；
+    WebSocket通讯;
 
-#计算机基础知识
+# 计算机基础知识
     编译: 源代码-->机器语言
     链接：把①目标文件②操作系统的启动启动代码③库文件-->组织生成可执行程序
         汇编语言()通过编译器生成机器语言(0和1)。其中编译器所使用的规则即是指令集。
@@ -55,3 +63,4 @@
            机器码和汇编语言确实是对应的，但是是有条件的。寄存器位宽会改变机器码的二进制。所以看起来有对应不上，但是可以算出来。改变二进制的位就可以反推算出来使用的是al，还是ax还是eax。 这就是为什么可以把二进制反编译成汇编语言。所以例子中那个C0二进制就是1100 0000。8B C0
 		   
 	版本控制：git基本操作
+    压缩原理及算法：
