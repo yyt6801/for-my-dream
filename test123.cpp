@@ -111,8 +111,7 @@
 //ºÚµ•≤‚ ‘¥Ú”°≥ˆHello_world!!!
 #include <stdio.h>
 #include <iostream>
-
 int main(){
-	printf("Hello_world!!!");
+	printf("hello_world!");
 	system("pause");
 }
