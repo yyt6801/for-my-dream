@@ -34,21 +34,21 @@
 
 
 //调用windowsAPI--MessageBox
-//#include <windows.h>
-////WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
-//int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
-//
-//{
-//	int result;
-//	result = MessageBox(NULL, TEXT("这是我第一次调用WindowsAPI编程--MessageBox--模态对话框！"), TEXT("木马程序！"), MB_ICONEXCLAMATION | MB_YESNO );//MB_ICONEXCLAMATION | MB_OKCANCEL| MB_ICONQUESTION | MB_DEFBUTTON2
-//	switch(result)
-//	{
-//	case IDYES: MessageBox(NULL,TEXT( "YOU click yes!"),TEXT("alert"),MB_DEFBUTTON2);
-//	case  IDNO: MessageBox(NULL,TEXT( "YOU click NO!"),TEXT("alert"),MB_ICONSTOP);
-//	}
-//	return 0;
-//
-//}
+#include <windows.h>
+//WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
+
+{
+	int result;
+	result = MessageBox(NULL, TEXT("这是我第一次调用WindowsAPI编程--MessageBox--模态对话框！"), TEXT("木马程序！"), MB_ICONEXCLAMATION | MB_YESNO );//MB_ICONEXCLAMATION | MB_OKCANCEL| MB_ICONQUESTION | MB_DEFBUTTON2
+	switch(result)
+	{
+	case IDYES: MessageBox(NULL,TEXT( "YOU click yes!"),TEXT("alert"),MB_DEFBUTTON2);
+	case  IDNO: MessageBox(NULL,TEXT( "YOU click NO!"),TEXT("alert"),MB_ICONSTOP);
+	}
+	return 0;
+
+}
 
 
 //使用strncpy(sub,string+12,13)/*将string中从string[12]开始的13个数字复制到sub中*/
@@ -109,9 +109,9 @@
 // 	}
 
 //简单测试打印出Hello_world!!!
-#include <stdio.h>
-#include <iostream>
-int main(){
-	printf("hello_world!");
-	system("pause");
-}
+// #include <stdio.h>
+// #include <iostream>
+// int main(){
+// 	printf("hello_world!");
+// 	system("pause");
+// }
