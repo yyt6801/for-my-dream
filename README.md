@@ -48,6 +48,7 @@
             MySql:   ;
             SqlServer:   ;
             MongoDB   ;
+            Redis   ;
     
     前端：
         javascript:   ;
@@ -99,6 +100,7 @@
     docker镜像使用
     docker容器连接
     容器安装、配置、运行、停止
+    
 ## flutter
 
 ## Windows内核编程
@@ -108,6 +110,12 @@
 ## XML
 
 ## Python
+
+## 框架和第三方库
+#### JAVA--Spring    MyBatis
+#### python--Django
+#### php--thinkphp
+#### nodejs--express
 
 # InformationSecurity
 ## CTF
