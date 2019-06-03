@@ -10,7 +10,6 @@
 //5.开始监听(listen()函数) 
 //6.循环执行 调用accept()函数接收客户端连接请求,如果accept()函数返回成功.则调用send()函数向客户端发送数据或者调用recv()函数从客户端接收数据
 
-#include "stdafx.h"
 #include <iostream>
 #include <WinSock2.h>
 #include <string.h>

@@ -89,9 +89,7 @@
 ### jQuery
 ### React
 -------------------------------
-## Ajax
-
-## WebSocket通讯
+## WebSocket协议与socket接口
 --------------------------------
 ## 版本控制
     git基本操作
@@ -126,7 +124,10 @@
 
 ## Windows内核编程
 
+## Ajax
 ## XML
+        ajax获取xml数据，通信
+        
 
 ## 框架和第三方库
 #### JAVA--Spring    MyBatis
