@@ -127,6 +127,8 @@
 ## XML
         ajax获取xml数据，通信
         
+## MFC编程-windows窗口编程
+     窗口控件、消息（事件）机制、常用事件监听，消息触发
 
 ## 框架和第三方库
 #### JAVA--Spring    MyBatis

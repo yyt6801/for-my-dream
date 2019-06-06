@@ -9,9 +9,12 @@
 *     2019-05-29    v1.0     LiLiGang    创建   
 */
 
+#include <winsock.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <tchar.h>
 #include <winsock.h>
+#include <string.h>
 
 // 电文头
 typedef struct _TEL_HEAD
