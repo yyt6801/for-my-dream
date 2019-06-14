@@ -130,6 +130,8 @@
 ## MFC编程-windows窗口编程
      窗口控件、消息（事件）机制、常用事件监听，消息触发
 
+## QT--跨平台C++图形用户界面应用程序开发框架
+
 ## 框架和第三方库
 #### JAVA--Spring    MyBatis
 #### python--Django
