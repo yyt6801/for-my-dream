@@ -24,4 +24,14 @@
 #### node.js
 #### visual Studio
 #### IDEA
+#### sublime
 #### SOGOU输入法
+#### xmind
+#### lantern
+#### Recuver
+#### VMware
+#### TeamViewer
+#### wireshark
+#### lansee
+#### oracle
+#### visio
