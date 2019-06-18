@@ -16,22 +16,21 @@
 ### 文件查找：Everything
 
 # 其他：
-#### docker
+#### 容器：docker
+#### tomcat
 #### python
 #### jdk
-#### tomcat
-#### mysql
 #### node.js
-#### visual Studio
-#### IDEA
-#### sublime
-#### SOGOU输入法
-#### xmind
-#### lantern
-#### Recuver
-#### VMware
-#### TeamViewer
-#### wireshark
-#### lansee
+#### IDE:visual Studio    IDEA
+#### 编辑器：sublime
+#### 输入法：SOGOU    QQ拼音
+#### 思维导图：xmind
+#### 科学上网：lantern    SS/SSR
+#### 数据恢复：Recuver
+#### 虚拟机：VMware
+#### 远程：TeamViewer
+#### 抓包工具：wireshark
+#### 局域网扫描：lansee
 #### oracle
+#### mysql
 #### visio
