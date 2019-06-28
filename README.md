@@ -117,6 +117,9 @@
     hash函数
     MD5加密
 
+## 常用数学算法
+    线性回归算法、
+
 ## Docker容器
     docker的一些基本操作
     docker架构
