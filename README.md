@@ -86,6 +86,20 @@
 动态分配；
 其他；
 宽字符函数；
+<assert.h>
+<ctype.h>
+<errno.h>
+<float.h>
+<limits.h>
+<locale.h>
+<math.h>
+<signal.h>
+<stdarg.h>
+<stddef.h>
+<stdio.h>
+<stdlib.h>
+<string.h>
+<time.h>
 
 ## Python
 
