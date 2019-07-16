@@ -16,6 +16,10 @@
 ----------------------------------
 # 知识体系：
 汇编-->内核编程-->c/c++-->python、java、
+## 基础知识
+计算机网络－离散数学－数据库原理－编译原理－计算机操作系统－软件工程－算法－设计模式
+### JAVA知识:
+JAVA基础-容器-并发-JVM-MySQL(或其他数据库)-Redis-RocketMQ(或其他消息中间件)-Git-Docker-Spring-SpringMVC-SpringBoot-SpringCloud
 
 ## 计算机网络
 ### 4/7层模型
