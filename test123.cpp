@@ -119,36 +119,52 @@
 // 	system("pause");
 // }
 
-#include <stdio.h>
-#include <iostream>
-using namespace std;
-int main(){
-	// //new 定义大数组，用来防止定义溢出--OK
-	// //第一种方式  定义一位数组
-	// double *array;
-	// array = new double[80*1000];
-	// //访问的时候*(array+i*y+j)表示array[i][j]
-	// for(int i=0;i<60;i++){
-	// 	for(int j=0;j < 1000;j++){
-	// 		*(array+i*1000+j) = i+j;
-	// 	}
-	// }
-	// cout<<"记录集变量CPCRec赋值成功！"<<*(array+55*1000+333)<<endl;
+// #include <stdio.h>
+// #include <iostream>
+// using namespace std;
+// int main(){
+// 	// //new 定义大数组，用来防止定义溢出--OK
+// 	// //第一种方式  定义一位数组
+// 	// double *array;
+// 	// array = new double[80*1000];
+// 	// //访问的时候*(array+i*y+j)表示array[i][j]
+// 	// for(int i=0;i<60;i++){
+// 	// 	for(int j=0;j < 1000;j++){
+// 	// 		*(array+i*1000+j) = i+j;
+// 	// 	}
+// 	// }
+// 	// cout<<"记录集变量CPCRec赋值成功！"<<*(array+55*1000+333)<<endl;
 
-	//第二种方式 定义一个二维数组
-		double **array1;
-		array1 = new double *[80];
-		for(int i=0;i<80;++i)
-			array1[i] = new double[1000];
-		//...用的时候可以直接array1[i][j]
-		for(int i=0;i<80;i++){
-			for(int j=0;j < 1000;j++){
-				array1[i][j] = i+j;
-			}
-		}
-	cout<<"记录集变量CPCRec赋值成功！"<<array1[50][333]<<endl;
-	//需注意及时delete
-		for(int i=0;i<80;++i)
-			delete[] array1[i];
-	delete[] array1;
+// 	//第二种方式 定义一个二维数组
+// 		double **array1;
+// 		array1 = new double *[80];
+// 		for(int i=0;i<80;++i)
+// 			array1[i] = new double[1000];
+// 		//...用的时候可以直接array1[i][j]
+// 		for(int i=0;i<80;i++){
+// 			for(int j=0;j < 1000;j++){
+// 				array1[i][j] = i+j;
+// 			}
+// 		}
+// 	cout<<"记录集变量CPCRec赋值成功！"<<array1[50][333]<<endl;
+// 	//需注意及时delete
+// 		for(int i=0;i<80;++i)
+// 			delete[] array1[i];
+// 	delete[] array1;
+// }
+
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    float a=12.257902012398877;
+    double b=12.257902012398877;
+    const float PI=3.1415926;         // 常量定义
+    cout<<setprecision(15)<<a<<endl;  // 只有6-7位有效数字，后面的就不精确
+    cout<<setprecision(15)<<b<<endl;  // 有15-16位有效数字，所以完全正确
+    cout<<setprecision(15)<<PI<<endl; 
+    return 0;
 }
