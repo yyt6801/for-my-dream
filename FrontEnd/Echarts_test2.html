@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chart</title>
+</head>
+<body>
+
+<div id="graph" style="height: 600px;"></div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/echarts/3.8.5/echarts.min.js"></script>
+<script type="text/javascript">
+	(function(config){
+		let chart = echarts.init(document.getElementById("graph"));
+
+	    /**
+	     * @params params
+	     * params.name 标识当前点击的legend
+	     * params.selected 标识当前选中的legend集合
+	     */
+        chart.on('legendselectchanged', function (params) {
+            let options = this.getOption(), keys = Object.keys(params.selected), selected = [];
+
+            // 获取选中目录的 category 值
+            for(let item of keys) {
+                if(params.selected[item]) {
+                    for(let term of config.level1)
+                        if(item == term.name)
+                            selected.push(term.category);
+                }
+            }
+
+            // 根据 category 获取 series 中 data 数据项
+            options.series[1].data = config.level2.filter(item => {
+                return selected.includes(item.category);
+            });
+            options.series[2].data = config.level3.filter(item => {
+                return selected.includes(item.category);
+            });
+
+            this.setOption(options);
+        });
+
+        chart.setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:['师资队伍','学科建设','人才培养','科学研究','国际化程度']
+            },
+            series: [
+                {
+                    name:'一级指标',
+                    type:'pie',
+                    label: {
+                        normal: {
+                            show: false,
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            /**
+                             * 自定义饼图 扇形 颜色
+                             * @param params
+                             */
+                            color(params) {
+                                return params.data.color;
+                            }
+                        }
+                    },
+                    radius: ['15%', '30%'],
+                    data: config.level1
+                },
+                {
+                    name:'二级指标',
+                    type:'pie',
+                    label: {
+                        normal: {
+                            show: false,
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color(params) {
+                                return params.data.color;
+                            }
+                        }
+                    },
+                    radius: ['40%', '55%'],
+                    data: config.level2
+                },
+                {
+                    name:'三级指标',
+                    type:'pie',
+                    radius: ['65%', '80%'],
+                    itemStyle: {
+                        normal: {
+                            color(params) {
+                                return params.data.color;
+                            }
+                        }
+                    },
+                    data: config.level3
+                }
+            ]
+        });
+	})({
+        "level1": [
+            {
+                name: "师资队伍",
+                color: "#2196F3",
+                category: 0,
+                value: 19
+            },
+            {
+                name: "学科建设",
+                color: "#F44336",
+                category: 1,
+                value: 10
+            },
+            {
+                name: "人才培养",
+                color: "#4CAF50",
+                category: 2,
+                value: 21
+            },
+            {
+                name: "科学研究",
+                color: "#FF9800",
+                category: 3,
+                value: 35
+            },
+            {
+                name: "国际化程度",
+                color: "#9C27B0",
+                category: 4,
+                value: 6
+            }
+        ],
+        "level2": [
+            {
+                name: "基本情况",
+                color: "#2196F3",
+                category: 0,
+                value: 3
+            },
+            {
+                name: "师资结构",
+                color: "#E3F2FD",
+                category: 0,
+                value: 6
+            },
+            {
+                name: "师资水平",
+                color: "#BBDEFB",
+                category: 0,
+                value: 10
+            },
+            {
+                name: "学科基础",
+                color: "#F44336",
+                category: 1,
+                value: 7
+            },
+            {
+                name: "学科水平",
+                color: "#FFEBEE",
+                category: 1,
+                value: 3
+            },
+            {
+                name: "基本情况",
+                color: "#4CAF50",
+                category: 2,
+                value: 4
+            },
+            {
+                name: "培养条件",
+                color: "#E8F5E9",
+                category: 2,
+                value: 7
+            },
+            {
+                name: "培养结果",
+                color: "#C8E6C9",
+                category: 2,
+                value: 10
+            },
+            {
+                name: "科研条件",
+                color: "#FFF3E0",
+                category: 3,
+                value: 2
+            },
+            {
+                name: "科研项目",
+                color: "#FFE0B2",
+                category: 3,
+                value: 10
+            },
+            {
+                name: "科研论文",
+                color: "#FFCC80",
+                category: 3,
+                value: 11
+            },
+            {
+                name: "科研获奖",
+                color: "#FFB74D",
+                category: 3,
+                value: 12
+            },
+            {
+                name: "国际化人员",
+                color: "#F3E5F5",
+                category: 4,
+                value: 2
+            },
+            {
+                name: "合作教学",
+                color: "#E1BEE7",
+                category: 4,
+                value: 2
+            },
+            {
+                name: "国际化成果",
+                color: "#CE93D8",
+                category: 4,
+                value: 2
+            }
+        ],
+        "level3": [
+            {
+                name: "师资规模",
+                color: "#2196F3",
+                category: 0,
+                value: 2
+            },
+            {
+                name: "进修情况",
+                color: "#E3F2FD",
+                category: 0,
+                value: 1
+            },
+            {
+                name: "职称结构",
+                color: "#BBDEFB",
+                category: 0,
+                value: 2
+            },
+            {
+                name: "学历结构",
+                color: "#90CAF9",
+                category: 0,
+                value: 1
+            },
+            {
+                name: "学缘结构",
+                color: "#64B5F6",
+                category: 0,
+                value: 3
+            },
+            {
+                name: "资深学术权威",
+                color: "#42A5F5",
+                category: 0,
+                value: 2
+            },
+            {
+                name: "中年领军专家",
+                color: "#2196F3",
+                category: 0,
+                value: 2
+            },
+            {
+                name: "青年拔尖英才",
+                color: "#1E88E5",
+                category: 0,
+                value: 4
+            },
+            {
+                name: "国际知名学者",
+                color: "#1976D2",
+                category: 0,
+                value: 2
+            },
+            {
+                name: "建设基础",
+                color: "#F44336",
+                category: 1,
+                value: 2
+            },
+            {
+                name: "建设强度",
+                color: "#FFEBEE",
+                category: 1,
+                value: 2
+            },
+            {
+                name: "学科层次",
+                color: "#FFCDD2",
+                category: 1,
+                value: 3
+            },
+            {
+                name: "学科排名",
+                color: "#EF9A9A",
+                category: 1,
+                value: 2
+            },
+            {
+                name: "学科竞争力",
+                color: "#E57373",
+                category: 1,
+                value: 1
+            },
+            {
+                name: "研究生培养规模",
+                color: "#4CAF50",
+                category: 2,
+                value: 3
+            },
+            {
+                name: "培养层次",
+                color: "#E8F5E9",
+                category: 2,
+                value: 1
+            },
+            {
+                name: "课程资源",
+                color: "#C8E6C9",
+                category: 2,
+                value: 4
+            },
+            {
+                name: "教授任课情况",
+                color: "#A5D6A7",
+                category: 2,
+                value: 3
+            },
+            {
+                name: "教学成果",
+                color: "#81C784",
+                category: 2,
+                value: 5
+            },
+            {
+                name: "毕业生就业情况",
+                color: "#66BB6A",
+                category: 2,
+                value: 1
+            },
+            {
+                name: "造就学术人才",
+                color: "#4CAF50",
+                category: 2,
+                value: 4
+            },
+            {
+                name: "科研经费",
+                color: "#FFF3E0",
+                category: 3,
+                value: 2
+            },
+            {
+                name: "重大重点项目",
+                color: "#FFE0B2",
+                category: 3,
+                value: 6
+            },
+            {
+                name: "一般青年项目",
+                color: "#FFCC80",
+                category: 3,
+                value: 4
+            },
+            {
+                name: "中文期刊论文",
+                color: "#FFB74D",
+                category: 3,
+                value: 1
+            },
+            {
+                name: "中文顶尖期刊论文",
+                color: "#FFA726",
+                category: 3,
+                value: 1
+            },
+            {
+                name: "国际期刊论文",
+                color: "#FF9800",
+                category: 3,
+                value: 5
+            },
+            {
+                name: "国际顶尖期刊论文",
+                color: "#FB8C00",
+                category: 3,
+                value: 2
+            },
+            {
+                name: "专著专利",
+                color: "#F57C00",
+                category: 3,
+                value: 2
+            },
+            {
+                name: "国际三大科技奖",
+                color: "#EF6C00",
+                category: 3,
+                value: 7
+            },
+            {
+                name: "社会科学重大成果",
+                color: "#E65100",
+                category: 3,
+                value: 4
+            },
+            {
+                name: "国际权威奖项",
+                color: "#FFD180",
+                category: 3,
+                value: 1
+            },
+            {
+                name: "国际化教师",
+                color: "#F3E5F5",
+                category: 4,
+                value: 1
+            },
+            {
+                name: "国际化学生",
+                color: "#E1BEE7",
+                category: 4,
+                value: 1
+            },
+            {
+                name: "合作教学",
+                color: "#CE93D8",
+                category: 4,
+                value: 2
+            },
+            {
+                name: "国际合作论文",
+                color: "#BA68C8",
+                category: 4,
+                value: 2
+            }
+        ]
+    });
+</script>
+</body>
+</html>
