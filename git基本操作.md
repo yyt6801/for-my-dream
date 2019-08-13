@@ -11,13 +11,22 @@ a)	Git pull (在本地pull远程仓库最新的代码到本地仓库，相当于
 b)	Git fetch 在本地仓库获取最新的代码同步（常用）
 至此，修改全部结束。
 
+### 在新环境中与仓库连接:
+ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建立了联系才能把你本地的代码提交到github上。首先要获取到ssh key公钥。
+1.在终端输运行命令：
+ssh-keygen
+获取ssh-key;
+把获取到的ssh-key复制到github自己账户setting中,然后回到终端，设置用户名和邮箱，最好与注册的github一致。这个用户名和邮箱是非常重要的，因为每次Git提交都会使用该信息。它被永远的嵌入到了你的提交中。在团队开发中，可以清楚地看到是谁的提交。在终端中输入命令：
+git config  'user.name'
+git config  'useremail@xx'
+接下来把仓库clone到本地,修改后git commit -am "xxx" 提交; 在git push 即可.
 
-回退命令：
+### 回退命令：
 $ git reset --hard HEAD^         回退到上个版本
 $ git reset --hard HEAD~3        回退到前3次提交之前，以此类推，回退到n次提交之前
 $ git reset --hard commit_id     	 退到/进到 指定commit的sha码
 
-git 基本操作注意点总结:
+## git 基本操作注意点总结:
 git clone <source repository> <destination repository>
 复制本地仓库的命令方式。
 <source repository>：想克隆的本地仓库路径
