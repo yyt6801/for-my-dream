@@ -33,26 +33,26 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
 docker search mongo
 
 ## 拉取镜像到本地
-docker pull mongo
+docker pull mongo  
 docker pull mysql:5.6    拉取5.6版本的mysql镜像
 
 ## 查看所有镜像
 docker images -a
 
 ## 把镜像做成容器并运行
-docker run --name mongodb -v ~/docker/mongo:/data/db -p 27017:27017 -d mongo
+docker run --name mongodb -v ~/docker/mongo:/data/db -p 27017:27017 -d mongo    
 docker run -p 3306:3306 --name mymysql -v $PWD/test-mysql/conf:/etc/mysql/conf.d -v $PWD/test-mysql/logs:/logs -v $PWD/test-mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.6
 ### 各参数含义:
-##### `--name` 设置了容器的自定义名字 * 
-##### `-v` 设置了路径的映射, 将本地路径映射到容器中. 此处, 路径可以自定义 * 
-    -v $PWD/conf:/etc/mysql/conf.d：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf。
-    -v $PWD/logs:/logs：将主机当前目录下的 logs 目录挂载到容器的 /logs。
-    -v $PWD/data:/var/lib/mysql ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql 。
-##### `-p` 设置了端口的映射, 将容器的27017(右侧) 映射到了本地的27017(右侧)
-    -P参数会随机分配一个49000~49900之间的端口到容器内部开放的网络（通过EXPORT指定的）端口
-    -p则可以具体指定要映射的端口，并且在一个指定端口上只能绑定一个容器
-##### `-d` 设置当前容器为守护进程,后台运行
-##### -e MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。
+`--name` 设置了容器的自定义名字 *     
+`-v` 设置了路径的映射, 将本地路径映射到容器中. 此处, 路径可以自定义 *     
+    -v $PWD/conf:/etc/mysql/conf.d：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf。    
+    -v $PWD/logs:/logs：将主机当前目录下的 logs 目录挂载到容器的 /logs。    
+    -v $PWD/data:/var/lib/mysql ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql 。    
+`-p` 设置了端口的映射, 将容器的27017(右侧) 映射到了本地的27017(右侧)     
+    -P参数会随机分配一个49000~49900之间的端口到容器内部开放的网络（通过EXPORT指定的）端口   
+    -p则可以具体指定要映射的端口，并且在一个指定端口上只能绑定一个容器    
+`-d` 设置当前容器为守护进程,后台运行    
+`-e` MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。    
 
 ## 查看所有的容器
 docker ps -a
@@ -64,7 +64,7 @@ docker start/stop +CONTAINER_NAME
 docker inspect +CONTAINER_NAME
 
 ## 进入容器交互模式:
-docker exec -it mongodb bash
+docker exec -it mongodb bash    
 使用交互的形式, 在 名字为 `mongodb` 的容器中实行 `bash`这个命令
 
 ## 删除某容器
@@ -73,8 +73,14 @@ docker rm +CONTAINER_NAME
 ## 删除某镜像
 docker rmi +IMAGE_NAME
 
-## 把容器打包成镜像
-docker commit 
+## 更新镜像
+通过命令 docker commit来提交容器副本    
+docker commit -m="has update" -a="runoob" e218edb10161 +NEW_IMAGE_NAME:+TAG_NAME   
+### 各个参数说明：
+`-m`:提交的描述信息    
+`-a`:指定镜像作者    
+`e218edb10161`：容器ID    
+`runoob/ubuntu:v2`:指定要创建的目标镜像名和标签名    
 
 ### 交互模式下常用vim编辑,需更新安装vim:
 #### 更新源
@@ -88,12 +94,12 @@ vim /etc/mongod.conf.orig
 
 
 
-关于使用docker的一些问题:
-Q: 修改部署的容器配置,如tomcat中的一些端口配置等的修改
-A: 通过vim编辑修改?
+关于使用docker的一些问题:    
+Q: 修改部署的容器配置,如tomcat中的一些端口配置等的修改    
+A: 通过vim编辑修改?    
 
-Q:随机端口映射,如何设置
-A:
+Q:随机端口映射,如何设置    
+A:    
 
-Q:已配置好的容器如何运行到其他电脑中? 如果跨平台呢?
-A:
+Q:已配置好的容器如何运行到其他电脑中? 如果跨平台呢?    
+A:    
