@@ -41,9 +41,12 @@ docker images -a
 ## 把镜像做成容器并运行
 docker run --name mongodb -v ~/docker/mongo:/data/db -p 27017:27017 -d mongo
 ### 各参数含义:
-`--name` 设置了容器的名字 * 
+`--name` 设置了容器的自定义名字 * 
 `-v` 设置了路径的映射, 将本地路径映射到容器中. 此处, 路径可以自定义 * 
 `-p` 设置了端口的映射, 将容器的27017(右侧) 映射到了本地的27017(右侧)
+    -P参数会随机分配一个49000~49900之间的端口到容器内部开放的网络（通过EXPORT指定的）端口
+    -p则可以具体指定要映射的端口，并且在一个指定端口上只能绑定一个容器
+`-d` 设置当前容器为守护进程,后台运行
 
 ## 查看所有的容器
 docker ps -a
@@ -57,6 +60,15 @@ docker inspect +CONTAINER_NAME
 ## 进入容器交互模式:
 docker exec -it mongodb bash
 使用交互的形式, 在 名字为 `mongodb` 的容器中实行 `bash`这个命令
+
+## 删除某容器
+docker rm +CONTAINER_NAME
+
+## 删除某镜像
+docker rmi +IMAGE_NAME
+
+## 把容器打包成镜像
+docker commit 
 
 ### 交互模式下常用vim编辑,需更新安装vim:
 #### 更新源
