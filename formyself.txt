@@ -75,3 +75,35 @@ new的用法，从内存区开辟空间？
     线性表---->树---->图。这是一种演进路径。
     线性表--->堆栈、队列、串--->数组--->各种线性表；
     二叉树--->各种二叉树---->B树、B+树---->红黑树；
+
+
+    可能会用到的环境:
+    虚拟机
+    VS2019
+    vscode
+    TOMCAT
+    XMAPP
+    apache
+    nginx
+    notepad++
+    gcc/g++
+    mysql
+    mongoDB
+    nosql
+    oracle
+    sumatrapdf
+    chrome
+    git
+    putty
+    SSR
+    lantern
+    navicat
+    BCompare
+    Everything
+    wireshark
+    Internet Download Manger
+    Teamviewer
+    FileZilla
+    
+    
+
