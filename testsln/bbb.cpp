@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include "../test_ex_headfile/aaa.h"
+#include <iostream>
+using namespace std;
 int main()
 {
-    int a = 5;
-    int b = 10;
-    int c = add(a, b);
-    printf("c is %d \n", c);
+    printf("hello world!!");
+    system("python F:/python/test.py");
+    system("pause");
 }
