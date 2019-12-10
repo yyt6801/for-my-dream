@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>《牛津高阶英汉词典》-查询</title>
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
+</head>
+
+<body>
+    <h3>《牛津高阶英汉词典》</h3>
+    <div style="width: 100%;">
+        <input id="words" placeholder="请输入需要查的单词" />
+        <button onclick="search()">查询</button>
+
+    </div>
+    <p id="ex_words"></p>
+</body>
+<script>
+    function search() {
+        var en_words = document.getElementById("words").value;
+        //1111111111111111111111111111111
+        // $.get("http://39.106.132.159:9090/api/word=" + en_words, function (result) {
+        //     alert("数据：" + result);
+        // });
+
+        //22222222222222222222
+        // $.ajax({
+        //     type: 'GET',
+        //     url: 'http://39.106.132.159:9090/api/word=' + en_words,
+        //     //dataType: "json",
+        //     headers: {
+        //         'Content-Type': 'application/json;charset=gb2312'
+        //     },
+        //     // data: JSON.stringify({
+        //     //     "key": "calcpc_res",
+        //     //     "list": []
+        //     // }),
+        //     success: function (res) {
+        //         document.getElementById("ex_words").innerHTML = res;
+        //         console.log(res);
+        //     },
+        // });
+
+        //33333333333333333
+        // （1）创建异步对象
+        var ajaxObj = new XMLHttpRequest();
+
+        // （2）设置请求的参数。包括：请求的方法、请求的url。
+        ajaxObj.open('get', 'http://39.106.132.159:9090/api/word=' + en_words);
+
+        // （3）发送请求
+        ajaxObj.send();
+
+        //（4）注册事件。 onreadystatechange事件，状态改变时就会调用。
+        //如果要在数据完整请求回来的时候才调用，我们需要手动写一些判断的逻辑。
+        ajaxObj.onreadystatechange = function () {
+            // 数据是保存在 异步对象的 属性中
+            console.log(ajaxObj.responseText);
+            // 为了保证 数据 完整返回，我们一般会判断 两个值
+            if (ajaxObj.readyState == 4 && ajaxObj.status == 200) {
+                // 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的
+                // 5.在注册的事件中 获取 返回的 内容 并修改页面的显示
+                console.log('数据返回成功');
+
+                // 数据是保存在 异步对象的 属性中
+                console.log(ajaxObj.responseText);
+
+                // 修改页面的显示
+                document.getElementById("ex_words").innerHTML = ajaxObj.responseText;
+                //document.querySelector('h1').innerHTML = ajaxObj.responseText;
+            }
+        }
+    }
+</script>
+
+</html>
