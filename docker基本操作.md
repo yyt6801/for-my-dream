@@ -46,7 +46,7 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
     docker run -p 3306:3306 --name mymysql -v $PWD/test-mysql/conf:/etc/mysql/conf.d -v $PWD/test-mysql/logs:/logs -v $PWD/test-mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.6
 ### 各参数含义:
 * `--name` 设置了容器的自定义名字
-* `-v` 设置了路径的映射, 将本地路径映射到容器中. 此处, 路径可以自定义  
+* `-v` 设置了路径的映射, 将本地路径映射到容器中（把一个本地/宿主机上的目录挂载到镜像里）. 此处, 路径可以自定义：冒号前为宿主机目录，必须为绝对路径，冒号后为镜像内挂载的路径。 
 -v $PWD/conf:/etc/mysql/conf.d：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf  
 -v $PWD/logs:/logs：将主机当前目录下的 logs 目录挂载到容器的 /logs  
 -v $PWD/data:/var/lib/mysql ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql
