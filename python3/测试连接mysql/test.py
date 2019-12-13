@@ -14,19 +14,21 @@ cursor = db.cursor()
 # print("the data : %s " % data)
 
 # # 使用预处理语句创建表
-# sql = """CREATE TABLE EMPLOYEE (
+#====================================== SQL 创建表start========================================
+# sql = "CREATE TABLE EMPLOYEE (
 #          FIRST_NAME  CHAR(20) NOT NULL,
 #          LAST_NAME  CHAR(20),
 #          AGE INT,
 #          SEX CHAR(1),
-#          INCOME FLOAT )"""
+#          INCOME FLOAT )"
 # cursor.execute(sql)
+#====================================== SQL 创建表end========================================
 
 # # SQL 插入语句
 #====================================== SQL 插入语句start========================================
-# sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
+# sql = "INSERT INTO EMPLOYEE(FIRST_NAME,
 #          LAST_NAME, AGE, SEX, INCOME)
-#          VALUES ('Macbook', 'Jojo', 23, 'M', 4000)"""
+#          VALUES ('Macbook', 'Jojo', 23, 'M', 4000)"
 # # SQL 插入语句
 # sql = "INSERT INTO EMPLOYEE(FIRST_NAME, \
 #        LAST_NAME, AGE, SEX, INCOME) \
