@@ -8,7 +8,7 @@ if __name__ == '__main__':
             "INSERT INTO TB_URL_COLLECTIONS(URL_ID, \
             URL, TITLE, NOTES, TAG_ID,USER_ID) \
             VALUES ( %s, '%s', '%s',  '%s',  %s,  %s)"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           % \
-            (1,'https://www.baidu.com','百度一下','百度',1,1)
+            (2,'https://www.google.com','google','谷歌',2,1)
         )
         print(db)
         for i in db:

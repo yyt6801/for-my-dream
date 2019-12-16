@@ -112,9 +112,6 @@ int main(int argc, char **argv)
 	strncpy(&t1, t2,1);
 
 
-
-
-	
     // Parse the command line and load Winsock
     //
 //    ValidateArgs(argc, argv);

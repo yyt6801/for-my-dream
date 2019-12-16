@@ -4,10 +4,11 @@ import json
 
 
 def loadjsonfile():
-    f = open(
-        "H:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\Default\\Bookmarks",
-        encoding='utf-8'
-    )  # 设置以utf-8解码模式读取文件，encoding参数必须设置，否则默认以gbk模式读取文件，当文件中包含中文时，会报错
+    f = open("FrontEnd\解析json文件数据并保存到本地\Bookmarks.json", encoding='utf-8')
+    # f = open(
+    #     "H:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\Default\\Bookmarks",
+    #     encoding='utf-8'
+    # )  # 设置以utf-8解码模式读取文件，encoding参数必须设置，否则默认以gbk模式读取文件，当文件中包含中文时，会报错
     Bookmarks_file = json.load(f)
     return Bookmarks_file
 
@@ -32,5 +33,6 @@ def json_txt(dic_json):
 
 
 t = loadjsonfile()
-json_txt(t)
+print(t)
+# json_txt(t)
 # print(final_json)
