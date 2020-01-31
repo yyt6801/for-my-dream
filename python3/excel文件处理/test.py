@@ -2,7 +2,7 @@
 import xlrd
 import xlwt
 
-book = xlrd.open_workbook('test.xls')
+book = xlrd.open_workbook('123.xls')
 sheet1 = book.sheet_by_index(0)
 print("表单名：", sheet1.name)
 print("行数：", sheet1.nrows)
@@ -14,12 +14,12 @@ sheet_new.write(0, 0, '问题描述')
 sheet_new.write(0, 1, '问题分类')
 
 if __name__ == "__main__":
-    for i in range(2185, 2984):
+    for i in range(4056, 4248):
         row = sheet1.row(i)
-        questions = sheet1.cell_value(i, 6)
+        questions = sheet1.cell_value(i, 4)
         questions = questions.upper()
         print(sheet1.cell_value(i, 6))
-        sheet_new.write(i - 2184, 0, questions)
+        sheet_new.write(i - 4055, 0, questions)
         fenlei = ' '
 
 
@@ -27,10 +27,18 @@ if __name__ == "__main__":
             fenlei = '体检云系统问题'
             print("包含体检云,分类为 '体检云系统问题'")
 
-        if "钼靶设备" in questions or "CT" in questions or "DR" in questions:
+        if "钼靶设备" in questions or "CT" in questions or "DR" in questions \
+            or "PACS" in questions :
             fenlei = '医疗设备问题'
             print("分类为 '医疗设备问题'")
 
+        if "删号" in questions:
+            fenlei = '业务支持'
+            print("包含删号,分类为 '业务支持'")
+
+        if "停电" in questions:
+            fenlei = '分院正常停电'
+            print("包含停电,分类为 '分院正常停电'")
 
         if "电源" in questions or "关机" in questions \
         or "鼠标" in questions or "电脑" in questions \
@@ -62,5 +70,5 @@ if __name__ == "__main__":
             fenlei = '打印机问题'
             print("包含打印,分类为 '打印机问题'")
             
-        sheet_new.write(i - 2184, 1, fenlei)
+        sheet_new.write(i - 4055, 1, fenlei)
     workbook.save('jieguo1.xls')
