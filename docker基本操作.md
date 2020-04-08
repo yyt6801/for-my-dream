@@ -132,3 +132,15 @@ commit镜像：docker commit <container id(不用打全，前缀区分)>  <name>
 容器内外端口映射：-p 内部端口号:外部端口号
 目录映射：-v 'dir name' : <dir>
 指定映像版本：<name>:<ver>
+
+
+----------------
+
+docker中宿主机与容器（container）互相拷贝传递文件的方法
+
+### 1、从容器拷贝文件到宿主机
+
+docker cp mycontainer:/opt/testnew/file.txt /opt/test/
+### 2、从宿主机拷贝文件到容器
+
+docker cp /opt/test/file.txt mycontainer:/opt/testnew/
