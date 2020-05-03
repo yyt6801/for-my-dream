@@ -9,9 +9,15 @@ function xing123(){
 function xing444(){
     document.getElementById("xing").innerHTML = 9999e9;
     alert(document.getElementById("xing").innerHTML);
+    alert("jdlfkaj'gsg'dfafjl");
     
-       
 } 
+
+function  add(x,y) {
+    var z = x+y;
+    alert(z);
+    return z;
+}
 
 
 // a={
