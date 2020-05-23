@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "ostream": "cpp"
-    }
+        "ostream": "cpp",
+        "windows.h": "c"
+    },
+    "python.formatting.provider": "yapf"
 }

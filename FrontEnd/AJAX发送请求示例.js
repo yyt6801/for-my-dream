@@ -38,3 +38,25 @@ $.ajax({
 				console.log(res);
 			},
 		});
+
+
+
+
+		//用getHmiData获取中间件内部变量值
+		$.ajax({
+			type: 'POST',
+			url: 'http://192.168.237.130:8087/service_bkgy/webservice/getHmiData',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8'},
+            crossDomain: true,
+			data:JSON.stringify({
+                            msgs: [],
+                        tags: [
+                            {name: en_Tag001, ts: '0'},
+                            {name: en_Tag002, ts: "0"},
+                        ]
+					}),
+			success: function (res) {
+				console.log(res);
+			},
+		});

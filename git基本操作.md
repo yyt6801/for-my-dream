@@ -8,7 +8,7 @@ d)	Git commit –m “changes” (使用 git add 命令将想要快照的内容�
 e)	Git push (把本地代码放到远程仓库)
 3、	在本地仓库获取同步最新远程仓库：
 a)	Git pull (在本地pull远程仓库最新的代码到本地仓库，相当于git fetch + merge)
-b)	Git fetch 在本地仓库获取最新的代码同步（常用）
+b)	Git fetch 在本地仓库获取最新的代码同步（常用），检查更新，但并未改动本地文件；之后需要加上Git merge 才将本地仓库进行同步
 至此，修改全部结束。
 
 ### 在新环境中与仓库连接:

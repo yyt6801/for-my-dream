@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<p>如果你的变量没有声明，它将自动成为全局变量：</p>
+<p id="demo"></p>
+
+<script>
+
+myFunction();//2触发  调用  什么时候执行
+document.getElementById("demo").innerHTML = "我可以显示 " + carName;
+
+function myFunction() //1声明+定义 具体怎么去实现功能的
+{
+    carName = "Volvo";//只要不是在函数内部用var来声明/定义的变量，就属于全局变量
+}
+</script>
+
+</body>
+</html>

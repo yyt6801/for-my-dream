@@ -1,0 +1,21 @@
+{
+    "checksum": "fb9c177ef098eb833a880d753e04101b",
+    "roots": {
+       "bookmark_bar": {
+          "children": [ {
+             "children": [ {
+                "children": [ {
+                   "date_added": "13198489675422692",
+                   "guid": "0caf34b8-fa50-4c5e-8ac7-fa1464aca537",
+                   "id": "315",
+                   "name": "北京市人力资源和社会保障局",
+                   "show_icon": false,
+                }
+                ]
+             }
+            ]
+          }
+        ]
+       }
+    }
+ }

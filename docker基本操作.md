@@ -46,7 +46,7 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
     docker run -p 3306:3306 --name mymysql -v $PWD/test-mysql/conf:/etc/mysql/conf.d -v $PWD/test-mysql/logs:/logs -v $PWD/test-mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.6
 ### 各参数含义:
 * `--name` 设置了容器的自定义名字
-* `-v` 设置了路径的映射, 将本地路径映射到容器中. 此处, 路径可以自定义  
+* `-v` 设置了路径的映射, 将本地路径映射到容器中（把一个本地/宿主机上的目录挂载到镜像里）. 此处, 路径可以自定义：冒号前为宿主机目录，必须为绝对路径，冒号后为镜像内挂载的路径。 
 -v $PWD/conf:/etc/mysql/conf.d：将主机当前目录下的 conf/my.cnf 挂载到容器的 /etc/mysql/my.cnf  
 -v $PWD/logs:/logs：将主机当前目录下的 logs 目录挂载到容器的 /logs  
 -v $PWD/data:/var/lib/mysql ：将主机当前目录下的data目录挂载到容器的 /var/lib/mysql
@@ -103,4 +103,44 @@ Q:随机端口映射,如何设置
 A:用-P为随机端口映射,用-p为制定端口映射.但同一端口不能被两个容器使用.
 
 Q:已配置好的容器如何运行到其他电脑中? 如果跨平台呢?    
-A:    
+A:把容器打包save成镜像
+
+
+
+
+安装和常用CLI：
+添加阿里云镜像：sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+安装命令：sudo yum install -y  docker-ce docker-ce-cli containerd.io
+启动命令：sudo systemctl start docker
+添加当前用户到docker用户组：sudo usermod -aG docker $USER （需注销），newgrp docker （立即生效）
+Helloworld：docker run hello-world  （本地没有镜像的话会自动从远端仓库pull）
+pull nginx 镜像：docker pull nginx（等效于nginx:latest）
+运行：docker run -【d】（后台运行不阻塞shell） 【-p 80:80】（指定容器端口映射，内部：外部） nginx
+查看正在运行：docker ps
+删除容器：docker rm -f <container id(不用打全，前缀区分)>
+进入bash：docker exec -it <container id(不用打全，前缀区分)> bash
+commit镜像：docker commit <container id(不用打全，前缀区分)>  <name>
+查看镜像列表：docker images （刚才commit的镜像）
+使用运行刚才commit的镜像：docker run -d <name>
+使用Dockerfile构建镜像：docker build -t <name> <存放Dockerfile的文件夹>
+删除镜像：docker rmi <name>
+保存为tar：docker save <name> > <tar name>
+从tar加载：docker load < <tar name>
+
+一些启动参数：
+后台运行容器：-d
+容器内外端口映射：-p 内部端口号:外部端口号
+目录映射：-v 'dir name' : <dir>
+指定映像版本：<name>:<ver>
+
+
+----------------
+
+docker中宿主机与容器（container）互相拷贝传递文件的方法
+
+### 1、从容器拷贝文件到宿主机
+
+docker cp mycontainer:/opt/testnew/file.txt /opt/test/
+### 2、从宿主机拷贝文件到容器
+
+docker cp /opt/test/file.txt mycontainer:/opt/testnew/
