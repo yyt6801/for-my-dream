@@ -51,10 +51,10 @@ $.ajax({
             crossDomain: true,
 			data:JSON.stringify({
                             msgs: [],
-                        tags: [
-                            {name: en_Tag001, ts: '0'},
-                            {name: en_Tag002, ts: "0"},
-                        ]
+							tags: [
+								{name: en_Tag001, ts: '0'},
+								{name: en_Tag002, ts: "0"},
+							]
 					}),
 			success: function (res) {
 				console.log(res);
