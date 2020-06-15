@@ -22,6 +22,16 @@ ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建�
 `git config  'useremail@xx'`  
 接下来把仓库clone到本地,修改后 *`git commit -am "xxx"`* 提交; 再 *`git push`* 即可.  
 
+### git 使用 *`ssh`* 方式`clone`和`push` 无需用户名密码
+若用的是https而不是ssh则每次操作仍需账号和密码。
+可以更新一下origin
+
+`git remote remove origin`  
+`git remote add origin git@github.com:Username/Your_Repo_Name.git`  
+之后你还需要重新设置track branch，比如：  
+先 `git pull` 然后执行：
+`git branch --set-upstream-to=origin/master master`
+即可完成使用ssh连接本地
 ***
 ----
 
@@ -54,3 +64,4 @@ ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建�
 `git checkout`  与 git reset 不同，reset 是替换整个目录树，多余的文件将被删除。而 checkout 只是替换指定的文件，对多余的文件保留不做任何处理。  
 `git rm`  把文件从工作区和暂存区中删除。使用 *`—cached`* 只从暂存区中删除。使用 *`–rf <directory>`* 可删除指定目录下的所有文件和子目录。  
 `git mv <source> <destination>`  在工作区和暂存区中进行移动或重命名。若 *`<destination>`* 不为一个目录名，则执行重命名。如果为一个目录名，则执行移动。  
+
