@@ -1,0 +1,83 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ctrl + V</title>
+<script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(document.body).bind({
+			paste: function(e) {
+				if (window.clipboardData) {
+					return ;
+				}
+				var clipboardData = e.originalEvent.clipboardData;
+				processData(clipboardData);
+			}
+		});
+		
+		document.onkeyup = function(e) {
+			if (window.clipboardData) {
+				e = window.event || e;
+				var keyCode = e.keyCode || e.which || e.charCode;
+				var ctrlKey = e.ctrlKey || e.metaKey;
+				if (ctrlKey && keyCode == 86) {
+					var clipboardData = window.clipboardData;
+					processData(clipboardData);
+				}
+			}
+			return false;
+		}
+ 
+		var processData = function(clipboardData) {
+			$('table#dgBudget>tbody>tr.datarow').remove();
+			var data = clipboardData.getData('Text').split('\n');
+			var dataHtml = '';
+			for (var i = 0; i < data.length; i++) {
+				if (!data[i]) {
+					continue ;
+				}
+				var bugdetData = data[i].split('\t');
+				dataHtml += '<tr class="datarow">';
+				dataHtml += 	'<td>' + (bugdetData[0] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[1] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[2] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[3] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[4] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[5] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[6] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[7] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[8] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[9] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[10] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[11] || '&nbsp;') + '</td>';
+				dataHtml += 	'<td>' + (bugdetData[12] || '&nbsp;') + '</td>';
+				dataHtml += '</tr>';
+			}
+			$('table#dgBudget>tbody>tr').after(dataHtml);
+		};
+	});
+</script>
+</head>
+<body>
+<div>使用 Ctrl + V 可粘贴预算数据到下表中</div>
+<table id="dgBudget" border="1">
+	<tr>
+		<th>列</th>
+		<th>1月</th>
+		<th>2月</th>
+		<th>3月</th>
+		<th>4月</th>
+		<th>5月</th>
+		<th>6月</th>
+		<th>7月</th>
+		<th>8月</th>
+		<th>9月</th>
+		<th>10月</th>
+		<th>11月</th>
+		<th>12月</th>
+	</tr>
+</table>
+</body>
+</html>
