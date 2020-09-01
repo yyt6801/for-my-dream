@@ -1,0 +1,71 @@
+<!-- 通过该程序可以将数据保存到本地excel中，然后可以快速分析作图等 -->
+<html>
+    <head>
+      <p style="font-size: 20px;color: red;">使用a标签方式将json导出csv文件</p>
+      <button onclick='tableToExcel()'>导出</button>
+    </head>
+    <body>
+      <script>
+                
+        function tableToExcel(){
+          //要导出的json数据
+          var jsonData =[
+          -0.581,
+          -0.343,
+          -0.239,
+          -0.177,
+          -0.147,
+          -0.141,
+          -0.125,
+          -0.083,
+          -0.007,
+          0.052,
+          0.082,
+          0.082,
+          0.057,
+          0.043,
+          0.035,
+          0.078,
+          0.159,
+          0.208,
+          0.231,
+          0.216,
+          0.149,
+          0.114,
+          0.121,
+          0.096,
+          0.045,
+          -0.068,
+          -0.17,
+          -0.157,
+          -0.183,
+          -0.361,
+          -0.383,
+          -0.32,
+          ] 
+          //列标题，逗号隔开，每一个逗号就是隔开一个单元格
+          let str = `序号,板形值\n`;
+          //增加\t为了不让表格显示科学计数法或者其他格式
+          for(let i = 0 ; i < jsonData.length ; i++ ){
+            // for(let item in jsonData[i]){
+            //     str+=`${jsonData[i][item] + '\t'},`;     
+            // }
+                str+=`${i},${jsonData[i]},`;   
+            str+='\n';
+          }
+          //encodeURIComponent解决中文乱码
+          let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+          //通过创建a标签实现
+          let link = document.createElement("a");
+          link.href = uri;
+          //对下载的文件命名
+          link.download =  "板形数据.csv";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+     
+    </script>
+    </body>
+    </html>
+          
