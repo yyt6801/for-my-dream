@@ -35,6 +35,37 @@ ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建�
 ***
 ----
 
+
+## git分支操作：
+`$ git checkout -b iss1`  新建一个分支并同时切换到那个分支上   
+&nbsp;&nbsp;*`Switched to a new branch "iss1"  `*
+
+它是下面两条命令的简写：  
+`$ git branch iss1`  
+`$ git checkout iss1`
+
+开始在分支中修改代码...   
+...  
+修改完成，开始提交到分支iss1  
+`$ git commit -am "fix iss1"`  
+
+提交完成后先不要push，切换回master后 需要把分支iss1 合并到master中:  
+`$ git checkout master`   切换回master  
+`$ git merge iss1`    把iss1合并到当前master中  
+&nbsp;&nbsp;*`Updating f42c576..3a0874c`*  
+&nbsp;&nbsp;*`Fast-forward`*  
+&nbsp;&nbsp;&nbsp;&nbsp;*` index.html | 2 ++`*  
+&nbsp;&nbsp;&nbsp;&nbsp;*` 1 file changed, 2 insertions(+)`*  合并完成 
+
+现在分支的修改已完全合并到master中，可以删除分支iss1，然后再push到远程中：  
+`$ git branch -d iss1`  删除分支iss1  
+`$ git push`  把当前的修改push到远程仓库中  
+
+
+
+***
+----
+
 ## 回退命令：
 `$ git reset --hard HEAD^ `        回退到上个版本  
 `$ git reset --hard HEAD~3  `      回退到前3次提交之前，以此类推，回退到n次提交之前  
