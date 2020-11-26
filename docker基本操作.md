@@ -144,3 +144,11 @@ docker cp mycontainer:/opt/testnew/file.txt /opt/test/
 ### 2、从宿主机拷贝文件到容器
 
 docker cp /opt/test/file.txt mycontainer:/opt/testnew/
+
+
+
+### 1、 根据requirements.txt 和Dockerfile打包成镜像
+`docker build -t docker-flask:0.1 .`   注意最后一个点
+
+### 2、 将镜像运行(容器运行)，后台-d，映射-v 
+`docker run -d --name flask_app -v $PWD/app:/app -p 5000:5000 docker-flask:0.2`
