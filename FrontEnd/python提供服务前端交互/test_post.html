@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+
+    <title>Document</title>
+	<input id="a" / >
+	<input id = "b"/>
+	<button onclick="my_fun()">run</button>
+	<br>
+	结果:<input id = "result" readonly/>
+</head>
+<body>
+    <script>
+	function my_fun(){
+        $.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000/fun_add/',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8',
+			'Access-Control-Allow-Origin':'*',
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'},
+			crossDomain: true,   // 会让请求头中包含跨域的额外信息，但不会含cookie
+			data:JSON.stringify(
+						{
+                            "a":$("#a").val(),
+                            "b":$("#b").val()
+						}),
+			success: function (res) {
+				console.log(res);
+				$("#result").val(res.result)
+			},
+		});}
+    </script>
+</body>
+</html>
