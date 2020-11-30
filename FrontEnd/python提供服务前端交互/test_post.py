@@ -8,7 +8,7 @@
 
 from flask import Flask, abort, request, jsonify
 from flask_cors import CORS
-
+import test_post2
 
 app = Flask(__name__)
 
@@ -22,6 +22,14 @@ def add_task():
     y = int(request.json['b'])
     return jsonify({'result': x + y})
 
+@app.route('/fun_add2/', methods=['POST'])
+def get_task2():
+    if not request.json or 'a' not in request.json or 'b' not in request.json:
+        abort(400)
+    x = int(request.json['a'])
+    y = int(request.json['b'])
+    z=test_post2.add(x,y)
+    return jsonify({'result': z})
 
 @app.route('/get_task/', methods=['GET'])
 def get_task():

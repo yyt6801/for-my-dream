@@ -11,7 +11,10 @@
 	<input id="a" />
 	<input id = "b"/>
 	<button onclick="my_fun()">run</button>
+	<br>	
+	<button onclick="my_fun2()">run2</button>
 	<br>
+
 	结果:<input id = "result" readonly/>
 </head>
 <body>
@@ -19,7 +22,7 @@
 	function my_fun(){
         $.ajax({
 			type: 'POST',
-			url: 'http://192.168.56.101:5000/fun_add/',
+			url: 'http://127.0.0.1:5000/fun_add/',
 			dataType:"json",
 			headers:{'Content-Type':'application/json;charset=utf8',
 			'Access-Control-Allow-Origin':'*',
@@ -35,6 +38,26 @@
 				$("#result").val(res.result)
 			},
 		});}
+	function my_fun2(){
+        $.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000/fun_add2/',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8',
+			'Access-Control-Allow-Origin':'*',
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'},
+			crossDomain: true,   // 会让请求头中包含跨域的额外信息，但不会含cookie
+			data:JSON.stringify(
+						{
+                            "a":$("#a").val(),
+                            "b":$("#b").val()
+						}),
+			success: function (res) {
+				console.log(res);
+				$("#result").val(res.result)
+			},
+		});}
+
     </script>
 </body>
 </html>
