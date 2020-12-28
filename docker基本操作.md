@@ -56,6 +56,11 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
 * `-d` 设置当前容器为守护进程,后台运行    
 * `-e` MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。    
 
+
+#### 例:    构建nginx容器映射到本机html目录中
+* `docker run  --name nginx -d -p 80:80 -v /my_folder/my_nginx/html:/usr/share/nginx/html  -v /my_folder/my_nginx/logs:/var/log/nginx nginx`
+
+
 ## 查看所有的容器
     docker ps -a
 
