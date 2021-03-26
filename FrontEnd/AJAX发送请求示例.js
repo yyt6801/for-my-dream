@@ -24,6 +24,7 @@ $.ajax({
 			},
 		});
 
+
 		$.ajax({
 			type: 'POST',
 			url: 'http://127.0.0.1:8087/service_bkgy/common/findData',
@@ -60,3 +61,17 @@ $.ajax({
 				console.log(res);
 			},
 		});
+
+				
+$.ajax({
+	type: "GET",
+	url: "http://127.0.0.1:8000/get_pcdp_record?recordname=INFCE1",
+	contentType: 'application/json;charset=utf-8', //设置请求头信息
+	dataType: "json",
+	success: function (res) {
+		console.log(res);
+	},
+	error: function (result) {
+		errorToast(result.msg);
+	}
+});
