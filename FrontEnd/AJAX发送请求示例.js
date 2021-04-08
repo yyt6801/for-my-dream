@@ -61,6 +61,26 @@ $.ajax({
 				console.log(res);
 			},
 		});
+		//new-待测试
+		
+		$.ajax({
+			type: 'POST',
+			url: 'http://121.89.178.128:8000/get_pcdp_data',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8'},
+            crossDomain: true,
+			data:JSON.stringify({
+                            msgs: [],
+							tags: [
+								{name: 'INFCE1_NUM', ts: '0'},
+								{name: 'INFCE2_NUM', ts: "0"},
+								{name: 'INFCE3_NUM', ts: "0"}
+							]
+					}),
+			success: function (res) {
+				console.log(res);
+			},
+		});
 
 				
 $.ajax({
