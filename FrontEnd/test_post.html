@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <script type="text/javascript" src="jquery-3.2.1.min.js"></script> -->
+	
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <title>Document</title>
+	<button onclick="my_fun()">run</button>
+	<br>	
+
+</head>
+<body>
+    <script>
+	function my_fun(){
+		
+		$.ajax({
+			type: 'POST',
+			url: 'http://121.89.178.128:8000/get_pcdp_data',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8'},
+            crossDomain: true,
+			data:JSON.stringify({
+                            msgs: [],
+							tags: [
+								{name: 'INFCE1_NUM', ts: '0'},
+								{name: 'INFCE2_NUM', ts: "0"},
+								{name: 'INFCE3_NUM', ts: "0"}
+							]
+					}),
+			success: function (res) {
+				console.log(res);
+			},
+		});
+	};
+	function my_fun2(){
+        $.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000/fun_add2/',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8',
+			'Access-Control-Allow-Origin':'*',
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'},
+			crossDomain: true,   // 会让请求头中包含跨域的额外信息，但不会含cookie
+			data:JSON.stringify(
+						{
+                            "a":$("#a").val(),
+                            "b":$("#b").val()
+						}),
+			success: function (res) {
+				console.log(res);
+				$("#result").val(res.result)
+			},
+		});}
+
+    </script>
+</body>
+</html>

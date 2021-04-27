@@ -118,3 +118,13 @@ new的用法，从内存区开辟空间？
 
 开始测试使用gitee同步代码
 添加  url = https://github.com/yyt6801/for-my-dream
+
+
+开始尝试构建自己的自动化测试工具
+http请求测试；
+TCP/UDP测试；
+使用wireshark进行抓包，要熟悉常用协议，http、tcp、udp、restful、webservice、socket,以及网页,ping,ftp等的传输格式
+尝试使用linux进行c/c++开发，使用cmake
+使用docker file快速构建开发环境，c/c++、 python、 现有项目tomcat中的service_bkgy和ustb项目，可映射配置文件、 nginx快速搭建
+
+以考代评
