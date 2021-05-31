@@ -15,6 +15,17 @@ e)	`git push` (把本地代码放到远程仓库)
 
 ***
 ----
+## 将本地代码上传到git新仓库中
+1.本地仓库中添加Readme.md文件和.gitignore文件
+2.初始化仓库 `git init`
+3.添加当前目录下的所有文件到暂存区： `git add . `
+4.将暂存区内容添加到本地仓库中。： `git commit -m "first commit"`
+5.将本地仓库和github远程仓库绑定：`git remote add origin https://github.com/....git`
+6.提交至远程仓库：`git push -u origin main`
+
+
+***
+----
 ## 在新环境中与仓库连接:
 ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建立了联系才能把你本地的代码提交到github上。首先要获取到ssh key公钥。  
 1.在终端输运行命令：  
