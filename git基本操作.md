@@ -80,11 +80,27 @@ ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建�
 ***
 ----
 
-## 回退命令：
+## 回退命令git reset：
 `$ git reset --hard HEAD^ `        回退到上个版本  
 `$ git reset --hard HEAD~3  `      回退到前3次提交之前，以此类推，回退到n次提交之前  
 `$ git reset --hard commit_id `    	 退到/进到 指定commit的sha码
 
+***
+
+----
+
+## 修改已提交命令git rebase：
+`$ git rebase -i`        弹出交互式的界面让用户编辑完成合并操作 
+上面未被注释的部分列出的是我们本次rebase操作包含的所有提交，下面注释部分是git为我们提供的命令说明。每一个commit id 前面的pick表示指令类型，git为我们提供了以下几个命令：
+
+    pick：保留该commit（缩写：p）  
+    reword：保留该commit，但我需要修改该commit的注释（缩写：r）  
+    edit：保留该commit, 但我要停下来修改该提交（不仅仅修改注释）（缩写：e）  
+    squash：将该commit和前一个commit合并（缩写：s）  
+    fixup：将该commit和前一个commit合并，但我不要保留该提交的注释信息（缩写：f）  
+    exec：执行shell命令（缩写：x）  
+    drop：我要丢弃该commit（缩写：d） 
+把对应commit前改为edit可修改此次提交，修改完后重新提交即可；
 ***
 ----
 
