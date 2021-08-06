@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>test</title>
+</head>
+<script>
+    function getXMLHTTPObj(){
+      var xmlHttp=null;
+      try{xmlHttp=new XMLHttpRequest();}// Firefox, Opera 8.0+, Safari
+      catch (MSIEx){// Internet Explorer
+        try{xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");}
+        catch (e){
+          try{xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");}
+          catch(e){alert('您的浏览器不支持AJAX！');}
+        }
+      }
+      return xmlHttp;
+    }
+    function ajax(url){
+      var x=getXMLHTTPObj();
+      x.onreadystatechange =function(){
+        if (x.readyState==4){
+          if (x.status==200||x.status==0){
+            var s=x.responseText
+            s=s.split("<title>")[1]
+            s=s.split("</title>")[0]
+            document.getElementById("b").value=s//x.responseText;
+            x=null;
+          }
+        }
+      }
+     
+     
+      x.open("GET",url,true)
+      x.send(null);
+    }
+    </script>
+<body>
+输入后双击<input type=text id=a value="http://www.163.com" ondblclick="javascript:ajax(this.value);">
+<br>查询的标题<input type="text" id="b">
+</body>
+</html>
