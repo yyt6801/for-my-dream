@@ -71,11 +71,19 @@
 # -------------------------开始实现----------------------------------------
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
+import xmltodict
 from flask import Flask, abort, request, jsonify
 from zeep import Client
-import json
 from xml.dom.minidom import parseString
  
+def xml_to_json(xml_str):
+    # parse是的xml解析器
+    xml_parse = xmltodict.parse(xml_str, attr_prefix='', cdata_key='') # 通过两参数可以去掉@和# (用于表示属性和文本节点使它们从元件区分开来)
+    # json库dumps()是将dict转化成json格式,loads()是将json转化成dict格式。
+    # dumps()方法的ident=1,格式化json
+    json_str = json.dumps(xml_parse, indent=1)
+    return json_str
 
 AOurl="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
 app = Flask(__name__)
@@ -97,7 +105,10 @@ def add_task():
     ReqList = '''<ReqDat><TagList>''' + tag_list + '''</TagList></ReqDat>'''
     # print (ReqList)
     result = client.service.GetHmiData(ReqList)
-    # return jsonify({'result': result})
+    xml_str = '<result>' + result + '</result>'
+    # 定义xml转json的函数
+    return (xml_to_json(xml_str))
+    
     # 把请求的结果xml转化为json，返回以供直接使用
     # <TagList>
     #     <Tag Name="test" TS="132533330707268108" Value="123"/>
@@ -110,24 +121,29 @@ def add_task():
     # </TagList>
     # <MsgList></MsgList>
     # 使用minidom解析器打开 XML 文档
-    xml_str = '<result>' + result + '</result>'
-    xml_dom = parseString(xml_str)
-    TagLists = xml_dom.getElementsByTagName("TagList")
-    tasks = []
-
-    for TagList in TagLists:
-        Tags = TagList.getElementsByTagName("Tag")
-        for Tag in Tags:
-            if Tag.hasAttribute("Name"):
-                task = {
-                    'Name': Tag.getAttribute("Name"),
-                    'Value': Tag.getAttribute("Value")
-                }
-                tasks.append(task)
-                # print ("Name: %s" % Tag.getAttribute("Name"))
-                # print ("Value: %s" % Tag.getAttribute("Value"))
-    
-    return jsonify(tasks)
+    # print(xml_to_json(xml_str))
+    # xml_dom = parseString(xml_str)
+    # TagLists = xml_dom.getElementsByTagName("TagList")
+    # tasks = []
+    # for TagList in TagLists:
+    #     Tags = TagList.getElementsByTagName("Tag")
+    #     for Tag in Tags:
+    #         if Tag.hasAttribute("Name"):
+    #             task = {
+    #                 'Name': Tag.getAttribute("Name"),
+    #                 'Value': Tag.getAttribute("Value")
+    #             }
+    #             if Tag.hasChildNodes(): # 判断是否为记录集变量
+    #                 Dats = Tag.getElementsByTagName("Dat")
+    #                 for Dat in Dats: # 这里有些问题--（不知道记录集结构）无法继续解析
+    #                     task = {
+    #                         'Name': Dat.getAttribute("Name"),
+    #                         'Value': Dat.getAttribute("Value")
+    #                     }
+    #                 tasks.append(task)
+    #             # print ("Name: %s" % Tag.getAttribute("Name"))
+    #             # print ("Value: %s" % Tag.getAttribute("Value"))
+    # return jsonify(tasks)
     
 
 
