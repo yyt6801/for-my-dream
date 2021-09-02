@@ -84,12 +84,18 @@ def xml_to_json(xml_str):
     # dumps()方法的ident=1,格式化json
     json_str = json.dumps(xml_parse, indent=1)
     return json_str
+# json转xml函数
+def json_to_xml(json_str):
+    # xmltodict库的unparse()json转xml
+    # 参数pretty 是格式化xml
+    xml_str = xmltodict.unparse(json_str, pretty=1)
+    return xml_str
 
-AOurl="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
+Webservice_url="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
 app = Flask(__name__)
-# {"msgs":[],"tags":[{"name":"Z.1.ZONE1.TCM3_S1.ACT_SPEED","ts":"0"},{"name":"Z.1.ZONE1.TCM3_S5.GAP_ACT","ts":"0"}]}
+# 请求格式    {"msgs":[],"tags":[{"name":"Z.1.ZONE1.TCM3_S1.ACT_SPEED","ts":"0"},{"name":"Z.1.ZONE1.TCM3_S5.GAP_ACT","ts":"0"}]}
 @app.route('/webservice/getHmiData', methods=['POST'])
-def add_task():
+def getHmiData():
     print(request.json)
     if not request.json or 'msgs' not in request.json or 'tags' not in request.json:
         abort(400)
@@ -100,8 +106,7 @@ def add_task():
         # print (tags['name'])
         tag_list += '''<Tag Name="'''+tags['name']+ '''" TS="0"/>'''
 
-    client = Client(AOurl)
-    tag_name = "test"
+    client = Client(Webservice_url)
     ReqList = '''<ReqDat><TagList>''' + tag_list + '''</TagList></ReqDat>'''
     # print (ReqList)
     result = client.service.GetHmiData(ReqList)
@@ -144,7 +149,34 @@ def add_task():
     #             # print ("Name: %s" % Tag.getAttribute("Name"))
     #             # print ("Value: %s" % Tag.getAttribute("Value"))
     # return jsonify(tasks)
-    
+
+# 请求格式    {"msgList":[{"id":"MSG3301","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]}
+@app.route('/webservice/sendMessage', methods=['POST'])
+def sendMessage():
+    print(request.json)
+    datas = ""
+    if not request.json or 'msgList' not in request.json :
+        abort(400)
+    req_data = json_to_xml(request.json)
+    msgList_data = []
+    msgList_data = request.json['msgList'] #[{"id":"MSG1401","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]
+    msg_id = msgList_data[0]["id"]
+    msg_data = msgList_data[0]["data"]
+    datas = msg_data[0]
+    # for datas in msg_data:
+    #     for tag_names in datas:
+    #         tag_names[]
+
+    # DatXml = '''<DatXml>''' + req_data + '''</DatXml>'''
+    print (req_data) # 请求内容xml
+
+    client = Client(Webservice_url)
+    result = client.service.SendData(req_data)
+    print (result) # 请求内容xml
+    xml_str = '<result>' + result + '</result>'
+    # 定义xml转json的函数
+    return (xml_to_json(result))
+   
 
 
 if __name__ == "__main__":
