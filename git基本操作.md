@@ -30,7 +30,7 @@ e)	`git push` (把本地代码放到远程仓库)
 ssh key是连接你的电脑和GitHub服务器的一把钥匙，只有两者建立了联系才能把你本地的代码提交到github上。首先要获取到ssh key公钥。  
 1.在终端输运行命令：  
 `ssh-keygen`  获取ssh-key;  
-把获取到的ssh-key复制到github自己账户setting中,然后回到终端，设置用户名和邮箱，最好与注册的github一致。这个用户名和邮箱是非常重要的，因为每次Git提交都会使用该信息。它被永远的嵌入到了你的提交中。在团队开发中，可以清楚地看到是谁的提交。  
+把生成文件夹中的id_rsa.pub内容(获取到的ssh-key)复制到github自己账户setting中,然后回到终端，设置用户名和邮箱，最好与注册的github一致。这个用户名和邮箱是非常重要的，因为每次Git提交都会使用该信息。它被永远的嵌入到了你的提交中。在团队开发中，可以清楚地看到是谁的提交。  
 在终端中输入命令：  
 `git config  'user.name'`  
 `git config  'useremail@xx'`  
