@@ -72,7 +72,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
+from werkzeug.sansio.response import Response
 import xmltodict
+import uuid
+import time
 from flask import Flask, abort, request, jsonify
 from zeep import Client
 from xml.dom.minidom import parseString
@@ -93,6 +96,9 @@ def json_to_xml(json_str):
 
 Webservice_url="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
 app = Flask(__name__)
+
+# //测试ok
+# <TagList><Tag Name="Tag001" TS="0"/></TagList>
 # 请求格式    {"msgs":[],"tags":[{"name":"Z.1.ZONE1.TCM3_S1.ACT_SPEED","ts":"0"},{"name":"Z.1.ZONE1.TCM3_S5.GAP_ACT","ts":"0"}]}
 @app.route('/webservice/getHmiData', methods=['POST'])
 def getHmiData():
@@ -150,6 +156,9 @@ def getHmiData():
     #             # print ("Value: %s" % Tag.getAttribute("Value"))
     # return jsonify(tasks)
 
+
+
+
 # 请求格式    {"msgList":[{"id":"MSG3301","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]}
 @app.route('/webservice/sendMessage', methods=['POST'])
 def sendMessage():
@@ -158,24 +167,72 @@ def sendMessage():
     if not request.json or 'msgList' not in request.json :
         abort(400)
     req_data = json_to_xml(request.json)
+    print (req_data) 
     msgList_data = []
     msgList_data = request.json['msgList'] #[{"id":"MSG1401","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]
     msg_id = msgList_data[0]["id"]
+    msg_timeout = msgList_data[0]["timeout"]
+    msg_reply = "1" if msgList_data[0]["reply"] == True else "0"
     msg_data = msgList_data[0]["data"]
-    datas = msg_data[0]
-    # for datas in msg_data:
-    #     for tag_names in datas:
-    #         tag_names[]
+    Dat = " "
+    for datas in msg_data:
+        Dat += '''<Dat '''
+        for key in  datas :
+        #    print ('======key========:'+key+"************value******"+datas[key])
+            Dat += key +'''="'''+ datas[key] +'''" '''
+        Dat += ''' />'''
 
-    # DatXml = '''<DatXml>''' + req_data + '''</DatXml>'''
-    print (req_data) # 请求内容xml
-
+    print (Dat) 
+    # 请求内容xml
+    # //测试ok
+    # <MsgList><Msg Id="MSG3000" Ticket="132164530356104234" Timeout="0" Reply="0"><Dat x="30" y="1000"/></Msg></MsgList>
+    # Ticket = uuid.uuid4()
+    Ticket = uuid.uuid4().hex[16:]
+    print (Ticket) 
+    DatXml = '''<MsgList> <Msg Id="''' + str(msg_id) + '''" Ticket="'''+ str(Ticket) +'''" Timeout="'''+ str(msg_timeout) +'''" Reply="'''+ str(msg_reply) +'''"> '''+ Dat +'''</Msg></MsgList>'''
+    print (DatXml) 
     client = Client(Webservice_url)
-    result = client.service.SendData(req_data)
+    result = client.service.SendData(DatXml)
     print (result) # 请求内容xml
-    xml_str = '<result>' + result + '</result>'
+
+    #再次根据ID和ticket调用getHMIData方法获取返回值
+    #<MsgList><Msg Id="MSG3000" Ticket="132164530356104234" Timeout="0" Reply="0"><Dat x="30" y="1000"/></Msg></MsgList>
+    ReqList = '''<ReqDat><MsgList><Msg Id="''' + str(msg_id) + '''" Ticket="''' + str(Ticket) + '''" Timeout="0" Reply="0"/></MsgList></ReqDat>'''
+    print (ReqList)
+    result = client.service.GetHmiData(ReqList)
+    print (result)
+    i=1
+    code=0
+    while (result == None ):
+        time.sleep(0.5) # 休眠1秒
+        i += 1
+        result = client.service.GetHmiData(ReqList)
+        print (result)
+        if i > 30:     # 当i大于10时跳出循环
+            break
+    #将返回结果封装为所需格式
+    # {
+    #     "TagList": null,
+    #     "MsgList": {
+    #         "Msg": {
+    #             "Id": "MSG3000",
+    #             "Ticket": "91e652a925c07a73",
+    #             "Dat": {
+    #               "ID": "PartCanRecord",
+    #               "INFO": "\u6279\u91cf\u540a\u9500\u6210\u529f"
+    #             }
+    #         }
+    #     }
+    # }
+    #{"code":0,"msg":"","extraMsg":"","data":{"tagList":null,"msgList":[{"id":"MSG2020","ticket":"1028f102-d72e-4857-b485-f62ecf1fe182","dataList":[{"ID":"ModCal","INFO":"模拟计算成功","e":"313.535"}]}]}}
+    
+    xml_str = '<data>' + result + '</data>'
     # 定义xml转json的函数
-    return (xml_to_json(result))
+    result_json = (xml_to_json(xml_str))
+    print (result_json)
+    res = {'code': code,'data':result_json}
+    resp = json.dumps(res, ensure_ascii=False)
+    return resp
    
 
 
