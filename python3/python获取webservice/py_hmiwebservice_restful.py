@@ -1,8 +1,9 @@
-#todo:å®ç°ä¸€ä¸ªrestful server ç›‘å¬http clientè¯·æ±‚
-#è§£æè¯·æ±‚å†…å®¹ï¼Œå»è¯·æ±‚webserviceï¼Œå°†è¿”å›ç»“æœè¿”å›ç»™http client
-# 1. å®ç°getHmiDataæ¥å£ï¼Œè·å–å˜é‡æ•°æ®(æ™®é€šå˜é‡andè®°å½•é›†å˜é‡)
-# 2. å®ç°å‘é€æ¶ˆæ¯sendMassageç­‰æ¥å£ï¼Œ æ”¹å†™sendMessageNewæ–¹æ³•ï¼Œè·å–æ ‡å‡†è¿”å›å€¼
-# 3. å®ç°æ•°æ®åº“æŸ¥è¯¢ç›¸å…³æ“ä½œ
+#-*- coding: gb2312 -*-
+#todo:ÊµÏÖÒ»¸örestful server ¼àÌıhttp clientÇëÇó
+#½âÎöÇëÇóÄÚÈİ£¬È¥ÇëÇówebservice£¬½«·µ»Ø½á¹û·µ»Ø¸øhttp client
+# 1. ÊµÏÖgetHmiData½Ó¿Ú£¬»ñÈ¡±äÁ¿Êı¾İ(ÆÕÍ¨±äÁ¿and¼ÇÂ¼¼¯±äÁ¿)
+# 2. ÊµÏÖ·¢ËÍÏûÏ¢sendMassageµÈ½Ó¿Ú£¬ ¸ÄĞ´sendMessageNew·½·¨£¬»ñÈ¡±ê×¼·µ»ØÖµ
+# 3. ÊµÏÖÊı¾İ¿â²éÑ¯Ïà¹Ø²Ù×÷
 
 # from zeep import Client
 # AOurl="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
@@ -17,15 +18,12 @@
 # # -*- coding: utf-8 -*-
 # from flask import Flask
 
-# # Flaskåˆå§‹åŒ–å‚æ•°å°½é‡ä½¿ç”¨ä½ çš„åŒ…åï¼Œè¿™ä¸ªåˆå§‹åŒ–æ–¹å¼æ˜¯å®˜æ–¹æ¨èçš„ï¼Œå®˜æ–¹è§£é‡Šï¼šhttp://flask.pocoo.org/docs/0.12/api/#flask.Flask
+# # Flask³õÊ¼»¯²ÎÊı¾¡Á¿Ê¹ÓÃÄãµÄ°üÃû£¬Õâ¸ö³õÊ¼»¯·½Ê½ÊÇ¹Ù·½ÍÆ¼öµÄ£¬¹Ù·½½âÊÍ£ºhttp://flask.pocoo.org/docs/0.12/api/#flask.Flask
 # app = Flask(__name__)
 
-# @app.route('/HelloWorld')
-# def hello_world():
-#     return "Hello World!"
 
 # if __name__ == "__main__":
-#     # è¿™ç§æ˜¯ä¸å¤ªæ¨èçš„å¯åŠ¨æ–¹å¼ï¼Œæˆ‘è¿™åªæ˜¯åšæ¼”ç¤ºç”¨ï¼Œå®˜æ–¹å¯åŠ¨æ–¹å¼å‚è§ï¼šhttp://flask.pocoo.org/docs/0.12/quickstart/#a-minimal-application
+#     # ÕâÖÖÊÇ²»Ì«ÍÆ¼öµÄÆô¶¯·½Ê½£¬ÎÒÕâÖ»ÊÇ×öÑİÊ¾ÓÃ£¬¹Ù·½Æô¶¯·½Ê½²Î¼û£ºhttp://flask.pocoo.org/docs/0.12/quickstart/#a-minimal-application
 #     app.run(debug=True)
 
 
@@ -35,7 +33,7 @@
 
 # app = Flask(__name__)
 
-# # æµ‹è¯•æ•°æ®æš‚æ—¶å­˜æ”¾
+# # ²âÊÔÊı¾İÔİÊ±´æ·Å
 # tasks = []
 
 # @app.route('/add_task/', methods=['POST'])
@@ -53,7 +51,7 @@
 # @app.route('/get_task/', methods=['GET'])
 # def get_task():
 #     if not request.args or 'id' not in request.args:
-#         # æ²¡æœ‰æŒ‡å®šidåˆ™è¿”å›å…¨éƒ¨
+#         # Ã»ÓĞÖ¸¶¨idÔò·µ»ØÈ«²¿
 #         return jsonify(tasks)
 #     else:
 #         task_id = request.args['id']
@@ -62,13 +60,13 @@
 
 
 # if __name__ == "__main__":
-#     # å°†hostè®¾ç½®ä¸º0.0.0.0ï¼Œåˆ™å¤–ç½‘ç”¨æˆ·ä¹Ÿå¯ä»¥è®¿é—®åˆ°è¿™ä¸ªæœåŠ¡
+#     # ½«hostÉèÖÃÎª0.0.0.0£¬ÔòÍâÍøÓÃ»§Ò²¿ÉÒÔ·ÃÎÊµ½Õâ¸ö·şÎñ
 #     app.run(host="0.0.0.0", port=9999, debug=True)
 
 
 
 
-# -------------------------å¼€å§‹å®ç°----------------------------------------
+# -------------------------¿ªÊ¼ÊµÏÖ----------------------------------------
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
@@ -81,25 +79,29 @@ from zeep import Client
 from xml.dom.minidom import parseString
  
 def xml_to_json(xml_str):
-    # parseæ˜¯çš„xmlè§£æå™¨
-    xml_parse = xmltodict.parse(xml_str, attr_prefix='', cdata_key='') # é€šè¿‡ä¸¤å‚æ•°å¯ä»¥å»æ‰@å’Œ# (ç”¨äºè¡¨ç¤ºå±æ€§å’Œæ–‡æœ¬èŠ‚ç‚¹ä½¿å®ƒä»¬ä»å…ƒä»¶åŒºåˆ†å¼€æ¥)
-    # jsonåº“dumps()æ˜¯å°†dictè½¬åŒ–æˆjsonæ ¼å¼,loads()æ˜¯å°†jsonè½¬åŒ–æˆdictæ ¼å¼ã€‚
-    # dumps()æ–¹æ³•çš„ident=1,æ ¼å¼åŒ–json
+    # parseÊÇµÄxml½âÎöÆ÷
+    xml_parse = xmltodict.parse(xml_str, attr_prefix='', cdata_key='') # Í¨¹ıÁ½²ÎÊı¿ÉÒÔÈ¥µô@ºÍ# (ÓÃÓÚ±íÊ¾ÊôĞÔºÍÎÄ±¾½ÚµãÊ¹ËüÃÇ´ÓÔª¼şÇø·Ö¿ªÀ´)
+    # json¿âdumps()ÊÇ½«dict×ª»¯³Éjson¸ñÊ½,loads()ÊÇ½«json×ª»¯³Édict¸ñÊ½¡£
+    # dumps()·½·¨µÄident=1,¸ñÊ½»¯json
     json_str = json.dumps(xml_parse, indent=1)
     return json_str
-# jsonè½¬xmlå‡½æ•°
+# json×ªxmlº¯Êı
 def json_to_xml(json_str):
-    # xmltodictåº“çš„unparse()jsonè½¬xml
-    # å‚æ•°pretty æ˜¯æ ¼å¼åŒ–xml
+    # xmltodict¿âµÄunparse()json×ªxml
+    # ²ÎÊıpretty ÊÇ¸ñÊ½»¯xml
     xml_str = xmltodict.unparse(json_str, pretty=1)
     return xml_str
 
 Webservice_url="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
 app = Flask(__name__)
 
-# //æµ‹è¯•ok
+@app.route('/test')
+def hello_world():
+    return "Welcome!   Python_hmiwebservice is  running..."
+
+# //²âÊÔok
 # <TagList><Tag Name="Tag001" TS="0"/></TagList>
-# è¯·æ±‚æ ¼å¼    {"msgs":[],"tags":[{"name":"Z.1.ZONE1.TCM3_S1.ACT_SPEED","ts":"0"},{"name":"Z.1.ZONE1.TCM3_S5.GAP_ACT","ts":"0"}]}
+# ÇëÇó¸ñÊ½    {"msgs":[],"tags":[{"name":"Z.1.ZONE1.TCM3_S1.ACT_SPEED","ts":"0"},{"name":"Z.1.ZONE1.TCM3_S5.GAP_ACT","ts":"0"}]}
 @app.route('/webservice/getHmiData', methods=['POST'])
 def getHmiData():
     print(request.json)
@@ -117,10 +119,10 @@ def getHmiData():
     # print (ReqList)
     result = client.service.GetHmiData(ReqList)
     xml_str = '<result>' + result + '</result>'
-    # å®šä¹‰xmlè½¬jsonçš„å‡½æ•°
+    # ¶¨Òåxml×ªjsonµÄº¯Êı
     return (xml_to_json(xml_str))
     
-    # æŠŠè¯·æ±‚çš„ç»“æœxmlè½¬åŒ–ä¸ºjsonï¼Œè¿”å›ä»¥ä¾›ç›´æ¥ä½¿ç”¨
+    # °ÑÇëÇóµÄ½á¹ûxml×ª»¯Îªjson£¬·µ»ØÒÔ¹©Ö±½ÓÊ¹ÓÃ
     # <TagList>
     #     <Tag Name="test" TS="132533330707268108" Value="123"/>
     #     <Tag Name="test2" TS="132066355506925179" Value="0.123"/>
@@ -131,7 +133,7 @@ def getHmiData():
     #     </Tag>
     # </TagList>
     # <MsgList></MsgList>
-    # ä½¿ç”¨minidomè§£æå™¨æ‰“å¼€ XML æ–‡æ¡£
+    # Ê¹ÓÃminidom½âÎöÆ÷´ò¿ª XML ÎÄµµ
     # print(xml_to_json(xml_str))
     # xml_dom = parseString(xml_str)
     # TagLists = xml_dom.getElementsByTagName("TagList")
@@ -144,9 +146,9 @@ def getHmiData():
     #                 'Name': Tag.getAttribute("Name"),
     #                 'Value': Tag.getAttribute("Value")
     #             }
-    #             if Tag.hasChildNodes(): # åˆ¤æ–­æ˜¯å¦ä¸ºè®°å½•é›†å˜é‡
+    #             if Tag.hasChildNodes(): # ÅĞ¶ÏÊÇ·ñÎª¼ÇÂ¼¼¯±äÁ¿
     #                 Dats = Tag.getElementsByTagName("Dat")
-    #                 for Dat in Dats: # è¿™é‡Œæœ‰äº›é—®é¢˜--ï¼ˆä¸çŸ¥é“è®°å½•é›†ç»“æ„ï¼‰æ— æ³•ç»§ç»­è§£æ
+    #                 for Dat in Dats: # ÕâÀïÓĞĞ©ÎÊÌâ--£¨²»ÖªµÀ¼ÇÂ¼¼¯½á¹¹£©ÎŞ·¨¼ÌĞø½âÎö
     #                     task = {
     #                         'Name': Dat.getAttribute("Name"),
     #                         'Value': Dat.getAttribute("Value")
@@ -159,7 +161,7 @@ def getHmiData():
 
 
 
-# è¯·æ±‚æ ¼å¼    {"msgList":[{"id":"MSG3301","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]}
+# ÇëÇó¸ñÊ½    {"msgList":[{"id":"MSG3301","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]}
 @app.route('/webservice/sendMessage', methods=['POST'])
 def sendMessage():
     print(request.json)
@@ -167,7 +169,7 @@ def sendMessage():
     if not request.json or 'msgList' not in request.json :
         abort(400)
     req_data = json_to_xml(request.json)
-    print (req_data) 
+    # print (req_data) 
     msgList_data = []
     msgList_data = request.json['msgList'] #[{"id":"MSG1401","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]
     msg_id = msgList_data[0]["id"]
@@ -182,35 +184,39 @@ def sendMessage():
             Dat += key +'''="'''+ datas[key] +'''" '''
         Dat += ''' />'''
 
-    print (Dat) 
-    # è¯·æ±‚å†…å®¹xml
-    # //æµ‹è¯•ok
+    # print (Dat) 
+    # ÇëÇóÄÚÈİxml
+    # //²âÊÔok
     # <MsgList><Msg Id="MSG3000" Ticket="132164530356104234" Timeout="0" Reply="0"><Dat x="30" y="1000"/></Msg></MsgList>
     # Ticket = uuid.uuid4()
     Ticket = uuid.uuid4().hex[16:]
-    print (Ticket) 
+    # print (Ticket) 
     DatXml = '''<MsgList> <Msg Id="''' + str(msg_id) + '''" Ticket="'''+ str(Ticket) +'''" Timeout="'''+ str(msg_timeout) +'''" Reply="'''+ str(msg_reply) +'''"> '''+ Dat +'''</Msg></MsgList>'''
-    print (DatXml) 
+    # print (DatXml) 
     client = Client(Webservice_url)
     result = client.service.SendData(DatXml)
-    print (result) # è¯·æ±‚å†…å®¹xml
+    # print (result) # ÇëÇóÄÚÈİxml
 
-    #å†æ¬¡æ ¹æ®IDå’Œticketè°ƒç”¨getHMIDataæ–¹æ³•è·å–è¿”å›å€¼
+    #ÔÙ´Î¸ù¾İIDºÍticketµ÷ÓÃgetHMIData·½·¨»ñÈ¡·µ»ØÖµ
     #<MsgList><Msg Id="MSG3000" Ticket="132164530356104234" Timeout="0" Reply="0"><Dat x="30" y="1000"/></Msg></MsgList>
     ReqList = '''<ReqDat><MsgList><Msg Id="''' + str(msg_id) + '''" Ticket="''' + str(Ticket) + '''" Timeout="0" Reply="0"/></MsgList></ReqDat>'''
-    print (ReqList)
+    # print (ReqList)
+    code = 0
     result = client.service.GetHmiData(ReqList)
-    print (result)
-    i=1
-    code=0
-    while (result == None ):
-        time.sleep(0.5) # ä¼‘çœ 1ç§’
-        i += 1
-        result = client.service.GetHmiData(ReqList)
-        print (result)
-        if i > 30:     # å½“iå¤§äº10æ—¶è·³å‡ºå¾ªç¯
-            break
-    #å°†è¿”å›ç»“æœå°è£…ä¸ºæ‰€éœ€æ ¼å¼
+    if result != None:
+        code = 200
+    else:
+        i=1
+        while (result == None ):
+            time.sleep(0.5) # ĞİÃß1Ãë
+            i += 1
+            result = client.service.GetHmiData(ReqList)
+            # print (result)
+            if result != None:
+                code = 200
+            if i > 20:     # µ±i´óÓÚ10Ê±Ìø³öÑ­»·
+                break
+    #½«·µ»Ø½á¹û·â×°ÎªËùĞè¸ñÊ½
     # {
     #     "TagList": null,
     #     "MsgList": {
@@ -224,18 +230,30 @@ def sendMessage():
     #         }
     #     }
     # }
-    #{"code":0,"msg":"","extraMsg":"","data":{"tagList":null,"msgList":[{"id":"MSG2020","ticket":"1028f102-d72e-4857-b485-f62ecf1fe182","dataList":[{"ID":"ModCal","INFO":"æ¨¡æ‹Ÿè®¡ç®—æˆåŠŸ","e":"313.535"}]}]}}
+    #{"code":0,"msg":"","extraMsg":"","data":{"tagList":null,"msgList":[{"id":"MSG2020","ticket":"1028f102-d72e-4857-b485-f62ecf1fe182","dataList":[{"ID":"ModCal","INFO":"Ä£Äâ¼ÆËã³É¹¦","e":"313.535"}]}]}}
     
     xml_str = '<data>' + result + '</data>'
-    # å®šä¹‰xmlè½¬jsonçš„å‡½æ•°
+    # ¶¨Òåxml×ªjsonµÄº¯Êı
+    # return (xml_to_json(xml_str))
     result_json = (xml_to_json(xml_str))
-    print (result_json)
-    res = {'code': code,'data':result_json}
-    resp = json.dumps(res, ensure_ascii=False)
+    # print ("result  is " +  result_json)
+    results = json.loads(result_json)
+    data = results["data"]["MsgList"]["Msg"]["Dat"]
+    # print(data)
+    datalist = []
+    datalist.append(results["data"]["MsgList"]["Msg"]["Dat"])
+    msg_res = {"id":results["data"]["MsgList"]["Msg"]["Id"],"ticket":results["data"]["MsgList"]["Msg"]["Ticket"],"dataList":datalist}
+    msgList = []
+    msgList.append(msg_res)
+    resp1 = {'code': code,'data':{"tagList":None,"msgList": msgList }}
+    print (resp1)
+    resp = jsonify(resp1)
     return resp
    
 
 
 if __name__ == "__main__":
-    # å°†hostè®¾ç½®ä¸º0.0.0.0ï¼Œåˆ™å¤–ç½‘ç”¨æˆ·ä¹Ÿå¯ä»¥è®¿é—®åˆ°è¿™ä¸ªæœåŠ¡
-    app.run(host="0.0.0.0", port=9999, debug=True)
+    # ½«hostÉèÖÃÎª0.0.0.0£¬ÔòÍâÍøÓÃ»§Ò²¿ÉÒÔ·ÃÎÊµ½Õâ¸ö·şÎñ
+    # app.run(host="0.0.0.0", port=9999, debug=True)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=9999)
