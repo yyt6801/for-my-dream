@@ -70,11 +70,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
+from flask.json import tag
 from werkzeug.sansio.response import Response
 import xmltodict
 import uuid
 import time
 from flask import Flask, abort, request, jsonify
+from flask_cors import CORS 
 from zeep import Client
 from xml.dom.minidom import parseString
  
@@ -92,8 +94,10 @@ def json_to_xml(json_str):
     xml_str = xmltodict.unparse(json_str, pretty=1)
     return xml_str
 
-Webservice_url="http://127.0.0.1/hmiDataGate/HmiDataGate.asmx?WSDL"
+Webservice_url="http://62.234.75.131/hmiDataGate/HmiDataGate.asmx?WSDL"
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+CORS(app, supports_credentials=True)  # 设置跨域
 
 @app.route('/test')
 def hello_world():
@@ -117,11 +121,61 @@ def getHmiData():
     client = Client(Webservice_url)
     ReqList = '''<ReqDat><TagList>''' + tag_list + '''</TagList></ReqDat>'''
     # print (ReqList)
+    code = 0
     result = client.service.GetHmiData(ReqList)
-    xml_str = '<result>' + result + '</result>'
+    if result != None:
+        code=200
+    xml_str = '<data>' + result + '</data>'
     # 定义xml转json的函数
-    return (xml_to_json(xml_str))
-    
+    # return (xml_to_json(xml_str))      #到这里应该结束，但现有格式不一样，为兼容之前接口，使用如下拼接
+# {
+#  "data": {
+#   "TagList": {
+#    "Tag": [
+#     {
+#      "Name": "C",
+#      "TS": "132332226832889690",
+#      "Value": "1.068"
+#     },
+#     {
+#      "Name": "FMRsFlag",
+#      "TS": "132745119208578183",
+#      "Dat": []
+#     }
+#    ]
+#   },
+#   "MsgList": null
+#  }
+# }
+    #前端用法：res.data.tagList[0].value  记录集 res.data.tagList[51].dataList
+    # {"code":0,"msg":"","extraMsg":"","data":{"tagList":[{"name":"C","ts":"132332226832889690","value":"1.068","dataList":null},{"name":"FMRsD","ts":"132745119208588040","value":null,"dataList":[{"d":"76.487"},{"d":"27.042"},{"d":"22.715"},{"d":"19.176"},{"d":"16.464"},{"d":"19.746"},{"d":"18.169"}]}],"msgList":null}}
+    result_json = (xml_to_json(xml_str))
+    # print ("result  is " +  result_json)
+    results = json.loads(result_json)
+    tagList = {}
+    tagList = results["data"]["TagList"]
+    if (tagList != None) :
+        results_Tag = []
+        results_Tag = tagList["Tag"]
+        if (isinstance(results_Tag,list)) :
+            tagLists = []
+            for Tag in results_Tag:
+                print (Tag)
+                if "Value" in Tag:
+                    tag = {"name":Tag["Name"],"ts":Tag["TS"],"value":Tag["Value"]}
+                    tagLists.append(tag)
+                if "Dat" in Tag:
+                    tag = {"name":Tag["Name"],"ts":Tag["TS"],"dataList":Tag["Dat"]}
+                    tagLists.append(tag)
+        else:
+            tagLists = results_Tag
+    else:
+        tagLists = None
+    resp1 = {'code': code,'data':{"tagList":tagLists,"msgList": None }}
+    print (resp1)
+    resp = jsonify(resp1)
+    return resp
+
     # 把请求的结果xml转化为json，返回以供直接使用
     # <TagList>
     #     <Tag Name="test" TS="132533330707268108" Value="123"/>
@@ -133,11 +187,13 @@ def getHmiData():
     #     </Tag>
     # </TagList>
     # <MsgList></MsgList>
+
     # 使用minidom解析器打开 XML 文档
     # print(xml_to_json(xml_str))
     # xml_dom = parseString(xml_str)
     # TagLists = xml_dom.getElementsByTagName("TagList")
-    # tasks = []
+    # tagList = []
+    # dataList = []
     # for TagList in TagLists:
     #     Tags = TagList.getElementsByTagName("Tag")
     #     for Tag in Tags:
@@ -147,22 +203,21 @@ def getHmiData():
     #                 'Value': Tag.getAttribute("Value")
     #             }
     #             if Tag.hasChildNodes(): # 判断是否为记录集变量
-    #                 Dats = Tag.getElementsByTagName("Dat")
-    #                 for Dat in Dats: # 这里有些问题--（不知道记录集结构）无法继续解析
-    #                     task = {
-    #                         'Name': Dat.getAttribute("Name"),
-    #                         'Value': Dat.getAttribute("Value")
-    #                     }
-    #                 tasks.append(task)
+    #                 # Dats = Tag.getElementsByTagName("Dat")
+    #                 task["dataList"] = Tag["Dat"]
+    #             else:
+    #                 task["value"] = Tag["Value"]
+                    
     #             # print ("Name: %s" % Tag.getAttribute("Name"))
     #             # print ("Value: %s" % Tag.getAttribute("Value"))
-    # return jsonify(tasks)
+    #         tagList.append(task)
+    # return jsonify(tagList)
 
 
 
 
 # 请求格式    {"msgList":[{"id":"MSG3301","timeout":60,"reply":true,"data":[{"EntryThk":"30","BarTemp":"1000","TimeOf1To2":"20"}]}]}
-@app.route('/webservice/sendMessage', methods=['POST'])
+@app.route('/webservice/sendMessageNew', methods=['POST'])
 def sendMessage():
     print(request.json)
     datas = ""
@@ -180,8 +235,8 @@ def sendMessage():
     for datas in msg_data:
         Dat += '''<Dat '''
         for key in  datas :
-        #    print ('======key========:'+key+"************value******"+datas[key])
-            Dat += key +'''="'''+ datas[key] +'''" '''
+            # print ('======key========:'+str(key)+"************value******"+str(datas[key]))
+            Dat += str(key) +'''="'''+ str(datas[key]) +'''" '''
         Dat += ''' />'''
 
     # print (Dat) 
@@ -199,23 +254,9 @@ def sendMessage():
 
     #再次根据ID和ticket调用getHMIData方法获取返回值
     #<MsgList><Msg Id="MSG3000" Ticket="132164530356104234" Timeout="0" Reply="0"><Dat x="30" y="1000"/></Msg></MsgList>
-    ReqList = '''<ReqDat><MsgList><Msg Id="''' + str(msg_id) + '''" Ticket="''' + str(Ticket) + '''" Timeout="0" Reply="0"/></MsgList></ReqDat>'''
-    # print (ReqList)
-    code = 0
-    result = client.service.GetHmiData(ReqList)
-    if result != None:
-        code = 200
-    else:
-        i=1
-        while (result == None ):
-            time.sleep(0.5) # 休眠1秒
-            i += 1
-            result = client.service.GetHmiData(ReqList)
-            # print (result)
-            if result != None:
-                code = 200
-            if i > 20:     # 当i大于10时跳出循环
-                break
+    ReqList = '''<ReqDat><MsgList><Msg Id="''' + str(msg_id) + '''" Ticket="''' + str(Ticket) + '''" Timeout="'''+ str(msg_timeout) +'''" Reply="0"/></MsgList></ReqDat>'''
+    # print ("ReqList"+ReqList)
+   
     #将返回结果封装为所需格式
     # {
     #     "TagList": null,
@@ -232,20 +273,45 @@ def sendMessage():
     # }
     #{"code":0,"msg":"","extraMsg":"","data":{"tagList":null,"msgList":[{"id":"MSG2020","ticket":"1028f102-d72e-4857-b485-f62ecf1fe182","dataList":[{"ID":"ModCal","INFO":"模拟计算成功","e":"313.535"}]}]}}
     
+
+    code = 0
+    # time.sleep(0.5) # 休眠1秒
+    result = client.service.GetHmiData(ReqList)
     xml_str = '<data>' + result + '</data>'
     # 定义xml转json的函数
     # return (xml_to_json(xml_str))
     result_json = (xml_to_json(xml_str))
     # print ("result  is " +  result_json)
     results = json.loads(result_json)
-    data = results["data"]["MsgList"]["Msg"]["Dat"]
-    # print(data)
-    datalist = []
-    datalist.append(results["data"]["MsgList"]["Msg"]["Dat"])
-    msg_res = {"id":results["data"]["MsgList"]["Msg"]["Id"],"ticket":results["data"]["MsgList"]["Msg"]["Ticket"],"dataList":datalist}
-    msgList = []
-    msgList.append(msg_res)
-    resp1 = {'code': code,'data':{"tagList":None,"msgList": msgList }}
+    MsgList = {}
+    MsgList = results["data"]["MsgList"]
+    i=1
+    while (MsgList == None ):
+        time.sleep(0.3) # 休眠1秒
+        result = client.service.GetHmiData(ReqList)
+        xml_str = '<data>' + result + '</data>'
+        result_json = (xml_to_json(xml_str))
+        # print ("result  is " +  result_json)
+        results = json.loads(result_json)
+        MsgList = results["data"]["MsgList"]
+        i += 1
+        # print (result)
+        if i > 30:     # 当i大于10时跳出循环
+            break
+    if (MsgList != None) :
+        code = 200
+        data = results["data"]["MsgList"]["Msg"]["Dat"]
+        datalist = []
+        if (isinstance(data,list)) :
+            datalist = data
+        else:
+            datalist.append(data)
+        msg_res = {"id":results["data"]["MsgList"]["Msg"]["Id"],"ticket":results["data"]["MsgList"]["Msg"]["Ticket"],"dataList":datalist}
+        MsgList = []
+        MsgList.append(msg_res)
+    else:
+        MsgList = None
+    resp1 = {'code': code,'data':{"tagList":None,"msgList": MsgList }}
     print (resp1)
     resp = jsonify(resp1)
     return resp
