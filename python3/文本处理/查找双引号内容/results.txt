@@ -1,0 +1,660 @@
+421 results - 24 files
+
+TESTpcdpAPI.cpp:
+  2094  //int	p[10] = {25,39,51,62,93,108,123,146};
+  2095: //char* cpcname[8] = {"Z.1.ZONE2.CAL3_EJ2.CPC8_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC9_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC10_ROLL1_POS"};
+  2096  //
+
+  2159  	//	for(int i=0;i<9;i++){
+  2160: 	//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y0";
+  2161  	//	char ss[20];
+
+  2171  	//for(int i=9;i<62;i++){
+  2172: 	//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y";
+  2173  	//	char ss[20];
+
+  2187  	//for(int i=0;i<3;i++){
+  2188: 	//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y0";
+  2189  	//	char ss[20];
+
+  2569  //
+  2570: //	char coil[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y";
+  2571  //	int i = 23432;
+
+ANSteel\getASC\test123.cpp:
+   76  				ALARM(AL_INFO,8230,"周期监测开卷机是否有新卷");
+   77: 				if ( ((int)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_OCCUPIED") == 1) && ((float)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_ACT_SPEED") > 1 ) && ((const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID") != ""))//开卷机1开卷信号等于TRUE而且速度大于零
+   78  				{
+   79: 					if (strcmp(por_id1,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID")) != 0 )//开卷机1处带钢卷号变化
+   80  					{
+   81: 						strcpy(por_id1,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID"));
+   82  						TAG("POR1_test") = por_id1,
+
+  134  
+  135: 				if ( ((int)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_OCCUPIED") == 1 ) && 
+  136: 					((float)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_ACT_SPEED") > 1 ) && 
+  137: 					((const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_COIL_ID") != ""))//开卷机2开卷信号等于TRUE而且速度大于零
+  138  				{
+  139: 					if (strcmp(por_id2,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_COIL_ID")) != 0 )//开卷机2处带钢卷号变化
+  140  					{
+  141: 						strcpy(por_id2,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_COIL_ID"));
+  142  						TAG("POR2_test") = por_id2,
+
+  205  				char* cpcname[20] = {
+  206: 					"Z.1.ZONE2.CAL3_EJ2.CPC3_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC4_ROLL_POS",
+  207: 					"Z.1.ZONE2.CAL3_EJ2.CPC5_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC6_ROLL_POS",
+  208: 					"Z.1.ZONE2.CAL3_EJ2.CPC7_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC8A_ROLL_POS",
+  209: 					"Z.1.ZONE2.CAL3_EJ2.CPC8_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC9_ROLL1_POS",
+  210: 					"Z.1.ZONE2.CAL3_EJ2.CPC10_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC11_ROLL1_POS",
+  211: 					"Z.1.ZONE2.CAL3_EJ2.CPC12_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC13_ROLL1_POS",
+  212: 					"Z.1.ZONE2.CAL3_EJ2.CPC14_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC15_ROLL1_POS",
+  213  				};
+
+  215  				char* strip_pos_tagname[20] = {
+  216: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_3","Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_4",
+  217: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_5","Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_6",
+  218: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_7","Z.1.ZONE2.CAL3_EJ2.CPC8A_STRIP_POS",
+  219: 					"Z.1.ZONE2.CAL3_EJ2.CPC8_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC9_STRIP_POS",
+  220: 					"Z.1.ZONE2.CAL3_EJ2.CPC10_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC11_STRIP_POS",
+  221: 					"Z.1.ZONE2.CAL3_EJ2.CPC12_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC13_STRIP_POS",
+  222: 					"Z.1.ZONE2.CAL3_EJ2.CPC14_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC15_STRIP_POS",
+  223  				};
+
+  225  
+  226: 				if (TAG("Z.1.ZONE2.CAL3_MBA.SPEED") > 0 )
+  227  				{
+
+ANSteel\GetPL3_PRO_ID\GetPL3_PRO_IDMsgLooper.cpp:
+   43  		memset(coil_id4, '\0', sizeof(coil_id4));
+   44: 		strcpy(POR_ID_1,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID1"));
+   45: 		strcpy(POR_ID_2,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID2"));
+   46: 		strcpy(coil_id1,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID1"));
+   47: 		strcpy(coil_id2,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID2"));
+   48: 		strcpy(coil_id3,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID3"));
+   49: 		strcpy(coil_id4,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID4"));
+   50  		//ALARM(AL_INFO,8222,POR_ID_1);
+
+  111  		//for(int i=0;i<9;i++){
+  112: 		//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y0";
+  113  		//	char ss[20];
+
+  123  		//for(int i=9;i<62;i++){
+  124: 		//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y";
+  125  		//	char ss[20];
+
+  137  		//for(int i=0;i<62;i++){
+  138: 		//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y";
+  139  		//	if(i<10)
+  140  		//	{
+  141: 		//		char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y0";
+  142  		//	}
+
+ANSteel\pltcm_paopian\PLTCM_DeviateMsgLooper.cpp:
+  253  	{
+  254: 		if (TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED") > 1 || TAG("Z.1.ZONE1.PL3_CL.SPEED") > 0 )//��������plc���ݿ��ܳ�������,����������ϴ�ٶ�Ҳ>0ʱ�ͼ�¼
+  255  		{
+
+  258  			int	sx[10] = {0,1,2,3,4,6,7,9,10,12};//��¼����ÿ��cpc���ڵ�����
+  259: 		char* cpc_tag_name[10] = {"Z.1.ZONE1.PL3_TRK.CPC_POS_1","Z.1.ZONE1.PL3_TRK.CPC_POS_2",
+  260: 			"Z.1.ZONE1.PL3_TRK.CPC_POS_3","Z.1.ZONE1.PL3_TRK.CPC_POS_4",
+  261: 			"Z.1.ZONE1.PL3_TRK.CPC_POS_5","Z.1.ZONE1.PL3_TRK.CPC_POS_6",
+  262: 			"Z.1.ZONE1.PL3_TRK.CPC_POS_7","Z.1.ZONE1.PL3_TRK.CPC_POS_8",
+  263: 			"Z.1.ZONE1.PL3_TRK.CPC_POS_9","Z.1.ZONE1.TCM3_TRK.CPC10_POS"};
+  264  
+  265: 		char* cpc_strip_tag_name[10] = {"Z.1.ZONE1.PL3_TRK.STRIP_POS_1","Z.1.ZONE1.PL3_TRK.STRIP_POS_2",
+  266: 			"Z.1.ZONE1.PL3_TRK.STRIP_POS_3","Z.1.ZONE1.PL3_TRK.STRIP_POS_4",
+  267: 			"Z.1.ZONE1.PL3_TRK.STRIP_POS_5","Z.1.ZONE1.PL3_TRK.STRIP_POS_6",
+  268: 			"Z.1.ZONE1.PL3_TRK.STRIP_POS_7","Z.1.ZONE1.PL3_TRK.STRIP_POS_8",
+  269: 			"Z.1.ZONE1.PL3_TRK.STRIP_POS_9","Z.1.ZONE1.TCM3_TRK.CPC10_STRIP_POS"};
+  270  
+
+ANSTEEL2130\getASC\getASC.cpp:
+   84  				ALARM(AL_INFO,8230,"周期监测开卷机是否有新卷");
+   85: 				if ( ((int)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_OCCUPIED") == 1) && ((float)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_ACT_SPEED") > 1 ) && ((const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID") != ""))//开卷机1开卷信号等于TRUE而且速度大于零
+   86  				{
+   87: 					if (strcmp(por_id1,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID")) != 0 )//开卷机1处带钢卷号变化
+   88  					{
+   89: 						strcpy(por_id1,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID"));
+   90  						TAG("POR1_test") = por_id1,
+
+  163  
+  164: 				if ( ((int)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_OCCUPIED") == 1 ) && 
+  165: 					((float)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_ACT_SPEED") > 1 ) && 
+  166: 					((const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_COIL_ID") != ""))//开卷机2开卷信号等于TRUE而且速度大于零
+  167  				{
+  168: 					if (strcmp(por_id2,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_COIL_ID")) != 0 )//开卷机2处带钢卷号变化
+  169  					{
+  170: 						strcpy(por_id2,(const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR2_COIL_ID"));
+  171  						TAG("POR2_test") = por_id2,
+
+  258  
+  259: 				/*strcpy(tr1_coil_id, (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.TR1_COIL_ID"));
+  260: 				strcpy(tr2_coil_id, (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.TR2_COIL_ID"));*/
+  261  				//新增变量CRM.CAL3_EJ2.TR1_COIL_ID
+  262: 				strncpy(tr1_coil_id, (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.TR1_COIL_ID"), 14);
+  263: 				strncpy(tr2_coil_id, (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.TR2_COIL_ID"),14);
+  264  				ALARM(AL_INFO, 8230, "卷取机1的卷号为%s;卷取机2的卷号为%s;", tr1_coil_id, tr2_coil_id);
+
+  272  
+  273: 				if ((float)TAG("Z.1.ZONE2.CAL3_EJ2.TR1_ACT_SPEED")> 2 || (float)TAG("Z.1.ZONE2.CAL3_EJ2.TR2_ACT_SPEED")> 2 )
+  274  				{
+
+  322  				char* cpcname[20] = {
+  323: 					"Z.1.ZONE2.CAL3_EJ2.CPC3_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC4_ROLL_POS",
+  324: 					"Z.1.ZONE2.CAL3_EJ2.CPC5_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC6_ROLL_POS",
+  325: 					"Z.1.ZONE2.CAL3_EJ2.CPC7_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC8A_ROLL_POS",
+  326: 					"Z.1.ZONE2.CAL3_EJ2.CPC8_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC9_ROLL1_POS",
+  327: 					"Z.1.ZONE2.CAL3_EJ2.CPC10_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC11_ROLL1_POS",
+  328: 					"Z.1.ZONE2.CAL3_EJ2.CPC12_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC13_ROLL1_POS",
+  329: 					"Z.1.ZONE2.CAL3_EJ2.CPC14_ROLL1_POS","Z.1.ZONE2.CAL3_EJ2.CPC15_ROLL1_POS",
+  330: 					"Z.1.ZONE2.CAL3_EJ2.CPC1_ROLL_POS","Z.1.ZONE2.CAL3_EJ2.CPC2_ROLL_POS"
+  331  				};
+
+  333  				char* strip_pos_tagname[20] = {
+  334: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_3","Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_4",
+  335: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_5","Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_6",
+  336: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_7","Z.1.ZONE2.CAL3_EJ2.CPC8A_STRIP_POS",
+  337: 					"Z.1.ZONE2.CAL3_EJ2.CPC8_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC9_STRIP_POS",
+  338: 					"Z.1.ZONE2.CAL3_EJ2.CPC10_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC11_STRIP_POS",
+  339: 					"Z.1.ZONE2.CAL3_EJ2.CPC12_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC13_STRIP_POS",
+  340: 					"Z.1.ZONE2.CAL3_EJ2.CPC14_STRIP_POS","Z.1.ZONE2.CAL3_EJ2.CPC15_STRIP_POS",
+  341: 					"Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_1","Z.1.ZONE2.CAL3_MBA.SCRIP_ACT_2"
+  342  				};
+
+  344  
+  345: 				if (TAG("Z.1.ZONE2.CAL3_MBA.SPEED") > 0 )
+  346  				{
+
+  599  				
+  600: 				float ENTRY_LOOPER1_POS = TAG("Z.1.ZONE2.CAL3_EJ2.ENTRY_LOOPER1_POS_ACT");
+  601  				float ENTRY_LOOPER1_POS_ALARM = TAG("ENTRY_LOOPER1_POS_ALARM");
+  602: 				float CLEAR_SPEED = TAG("Z.1.ZONE2.CAL3_CLEAR.SPEED");
+  603: 				float MBA_SPEED = TAG("Z.1.ZONE2.CAL3_MBA.SPEED");
+  604  				int ENTRY_LOOPER_alarm_round_cycle_times = TAG("ENTRY_LOOPER_alarm_round_cycle_times"); //5s监测一次,10次报警一次
+
+  638  				//判断1700mm以上带钢的活套是否高于80%
+  639: 				float LINE1_WIDTH = TAG("Z.1.ZONE2.CAL3_TRACK.LINE1_WIDTH");
+  640  				//近期未语音报警、入口活套套量大于80%、带钢宽度>1700、入口速度>0
+
+ANSTEEL2130\GetPL3_PRO_ID\GetPL3_PRO_IDMsgLooper.cpp:
+   58  		memset(coil_id4, '\0', sizeof(coil_id4));
+   59: 		strcpy(POR_ID_1,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID1"));
+   60: 		strcpy(POR_ID_2,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID2"));
+   61: 		strcpy(coil_id1,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID1"));
+   62: 		strcpy(coil_id2,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID2"));
+   63: 		strcpy(coil_id3,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID3"));
+   64: 		strcpy(coil_id4,(const char*)(FormatString)TAG("Z.1.ZONE1.PL3_EJ.COIL_ID4"));
+   65  		//ALARM(AL_INFO,8222,POR_ID_1);
+
+  126  		//for(int i=0;i<9;i++){
+  127: 		//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y0";
+  128  		//	char ss[20];
+
+  138  		//for(int i=9;i<62;i++){
+  139: 		//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y";
+  140  		//	char ss[20];
+
+  152  		//for(int i=0;i<62;i++){
+  153: 		//	char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y";
+  154  		//	if(i<10)
+  155  		//	{
+  156: 		//		char FL_Y[30] = "Z.1.ZONE1.TCM3_ASC.FL_Y0";
+  157  		//	}
+
+  177  		memset(por_id1, 0x00, sizeof(por_id1));
+  178: 		strcpy(por_id1, (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_EJ2.POR1_COIL_ID"));
+  179  		CSPLITSTR::trim_r(por_id1);*/
+
+  181  		FormatString s;
+  182: 		string POR_ID_1 = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.POR1_COIL_ID");
+  183: 		string POR2_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.POR2_COIL_ID");
+  184: 		string LINE1_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE1_COIL_ID");
+  185: 		string LINE2_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE2_COIL_ID");
+  186: 		string LINE3_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE3_COIL_ID");
+  187: 		string LINE4_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE4_COIL_ID");
+  188: 		string LINE5_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE5_COIL_ID");
+  189: 		string LINE6_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE6_COIL_ID");
+  190: 		string LINE7_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE7_COIL_ID");
+  191: 		string LINE8_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.LINE8_COIL_ID");
+  192: 		string TR1_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.TR1_COIL_ID");
+  193: 		string TR2_COIL_ID = (const char*)(FormatString)TAG("Z.1.ZONE2.CAL3_TRACK.TR2_COIL_ID");
+  194  		string Coil_id[12] = { trim(POR_ID_1) ,trim(POR2_COIL_ID) ,trim(LINE1_COIL_ID),trim(LINE2_COIL_ID),trim(LINE3_COIL_ID),trim(LINE4_COIL_ID),trim(LINE5_COIL_ID),trim(LINE6_COIL_ID),trim(LINE7_COIL_ID),trim(LINE8_COIL_ID),trim(TR1_COIL_ID),trim(TR2_COIL_ID)};
+
+ANSTEEL2130\pltcm_paopian\PLTCM_DeviateMsgLooper.cpp:
+  279  			//�¾����ߺ��þ���ȥƥ�������������ľ���ֵ��ƥ��ɹ����¼��Ӧ������
+  280: 			if (strcmp(pltcm_new_en_coil_id, (const char *)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID1")) == 0)
+  281  			{
+
+  283  			}
+  284: 			else if (strcmp(pltcm_new_en_coil_id, (const char *)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID2")) == 0)
+  285  			{
+
+  426  																								 //�жϾ�ȡ��ռ��(REC_TRACK_QUE[206]["coilno"]�仯) ���ٶȴ���80 ����Ϊ���ڿ�������¼��Ӧ��ȡ���ŵ���Ӧ�����ڴ���
+  427: 																								 //��ȡ��ռ��(const char *)(FormatString)TAG("Z.1.ZONE1.TCM3_COILER.TR1_OCCUPIED")
+  428: 																								 //��ȡ���ٶ�(const char *)(FormatString)TAG("Z.1.ZONE1.TCM3_COILER.COILER1_SPEED")
+  429  			if (sx_buff == 207)    //207��Ӧ1�ž�ȡ��ռ��
+
+  517  	{
+  518: 		if (TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED") > 1.6 || TAG("Z.1.ZONE1.PL3_CL.SPEED") > 0) //��������plc���ݿ��ܳ�������,����������ϴ�ٶ�Ҳ>0ʱ�ͼ�¼
+  519  		{
+
+  522  			int sx[10] = { 0, 1, 2, 3, 4, 6, 7, 9, 10, 12 }; //��¼����ÿ��cpc���ڵ��±�
+  523: 			char *cpc_tag_name[10] = { "Z.1.ZONE1.PL3_TRK.CPC_POS_1", "Z.1.ZONE1.PL3_TRK.CPC_POS_2",
+  524: 									  "Z.1.ZONE1.PL3_TRK.CPC_POS_3", "Z.1.ZONE1.PL3_TRK.CPC_POS_4",
+  525: 									  "Z.1.ZONE1.PL3_TRK.CPC_POS_5", "Z.1.ZONE1.PL3_TRK.CPC_POS_6",
+  526: 									  "Z.1.ZONE1.PL3_TRK.CPC_POS_7", "Z.1.ZONE1.PL3_TRK.CPC_POS_8",
+  527: 									  "Z.1.ZONE1.PL3_TRK.CPC_POS_9", "Z.1.ZONE1.TCM3_TRK.CPC10_POS" };
+  528  
+  529: 			char *cpc_strip_tag_name[10] = { "Z.1.ZONE1.PL3_TRK.STRIP_POS_1", "Z.1.ZONE1.PL3_TRK.STRIP_POS_2",
+  530: 											"Z.1.ZONE1.PL3_TRK.STRIP_POS_3", "Z.1.ZONE1.PL3_TRK.STRIP_POS_4",
+  531: 											"Z.1.ZONE1.PL3_TRK.STRIP_POS_5", "Z.1.ZONE1.PL3_TRK.STRIP_POS_6",
+  532: 											"Z.1.ZONE1.PL3_TRK.STRIP_POS_7", "Z.1.ZONE1.PL3_TRK.STRIP_POS_8",
+  533: 											"Z.1.ZONE1.PL3_TRK.STRIP_POS_9", "Z.1.ZONE1.TCM3_TRK.CPC10_STRIP_POS" };
+  534  
+
+CRM3_SBA-20210611\DEVICE_ANA\DEVICEANAMsgLooper.cpp:
+  257  		//30������
+  258: 		float rollingSpeedAct = (float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED")*60;
+  259  		if (rollingSpeedAct >= 200)	
+
+CRM3_SBA-20210611\SBA_WB\ITC.cpp:
+  31  	ALARM(AL_INFO, 8215, "Thickness5=%f", Thickness5);
+  32: 	//LengthWeld = TAG("Z.1.ZONE1.TCM3_TRK.WELD_S1");
+  33  	memset(COIL_ID1,0X00,sizeof(COIL_ID1));
+
+CRM3_SBA-20210611\SBA_WB\SBA_WBMsglooper.cpp:
+  148  	//处理热卷数据    考虑到拉矫机延伸率以后对应到热卷数据
+  149: 	TAG("WELD_SM_RAW") =(float) TAG("Z.1.ZONE1.PL3_TRK.WELD_SM")/1.015;
+  150  	float DATE_ROLL_END_LOW = 0.0;//画面判断带钢是否是热卷的阈值，由这里写到中间件中
+
+  396  		test1 = (int)TAG("SBA_TEST");
+  397: 		ITC1 = TAG("Z.1.ZONE1.TCM3_EJ1.ITC1_STRIP_BREAK");
+  398: 		ITC2 = TAG("Z.1.ZONE1.TCM3_EJ1.ITC2_STRIP_BREAK");
+  399: 		ITC3 = TAG("Z.1.ZONE1.TCM3_EJ1.ITC3_STRIP_BREAK");
+  400: 		ITC4 = TAG("Z.1.ZONE1.TCM3_EJ1.ITC4_STRIP_BREAK");
+  401: 		ITC5 = TAG("Z.1.ZONE1.TCM3_EJ1.ITC5_STRIP_BREAK");
+  402  		if ((ITC1 == 1) || (ITC2 == 1) || (ITC3 == 1) || (ITC4 == 1) || (ITC5 == 1)|| (test1 == 1))//断带信号
+
+  404  			ALARM(AL_INFO, 8215, "检测到断带");
+  405: 			//float LengthWeld = TAG("Z.1.ZONE1.TCM3_TRK.WELD_S1");//跟踪焊缝到1#轧机距离(m)   TAG("WELD_S1_RAW")
+  406  			//焊缝距离S1机架的距离
+  407: 			float LengthWeld = (float)TAG("Z.1.ZONE1.TCM3_TRK.WELD_S1") / 1.015;//断带时S1机架所处原料位置。焊缝距离S1机架长度，1.015是默认拉矫机延伸率
+  408  			ALARM(AL_INFO, 8215, "LengthWeld=%f", LengthWeld);
+
+  420  		int surfaceTCMwarnFLG_leve3 = 0;//重度
+  421: 		surfaceTCMwarnFLG_leve1 = (int)TAG("Z.1.ZONE1.PL3_EJ.SURFACE_WARN");//临时变量名等系统
+  422: 		surfaceTCMwarnFLG_leve2 = TAG("Z.1.ZONE1.PL3_EJ.SURFACE_REDUCE");
+  423: 		surfaceTCMwarnFLG_leve3 = TAG("Z.1.ZONE1.PL3_EJ.SURFACE_STOP");
+  424  		if (surfaceTCMwarnFLG_leve1==1)
+  425  		{TAG("surfaceTCMLeve") = 1;	//赋值PCDP表检缺陷等级变量
+  426: 		TAG("passSMLength") = (float)TAG("Z.1.ZONE1.PL3_SM.LENGTH");//获取带钢经过圆盘剪长度数据
+  427  		handleSurfaceTcmAlarm();//进行语音报警\获取表检缺陷等级、缺陷位置、对应卷号，保存到oracle的TB_TCMSURFALARM表中
+
+  431  			TAG("surfaceTCMLeve") = 2;
+  432: 			TAG("passSMLength") = (float)TAG("Z.1.ZONE1.PL3_SM.LENGTH");
+  433  			handleSurfaceTcmAlarm();//进行语音报警\获取表检缺陷等级、缺陷位置、对应卷号，保存到oracle的TB_TCMSURFALARM表中
+
+  437  			TAG("surfaceTCMLeve") = 3;
+  438: 			TAG("passSMLength") = (float)TAG("Z.1.ZONE1.PL3_SM.LENGTH");
+  439  			handleSurfaceTcmAlarm();//进行语音报警\获取表检缺陷等级、缺陷位置、对应卷号，保存到oracle的TB_TCMSURFALARM表中
+
+CRM3_SBA-20210611\SBA_WB\YPJ_PL_ALARM.cpp:
+    24  	TL_EXTENSION_ERROR_BEGIN_NOW_TIME.Now();//ÿ�����Ȼ�ȡ��ǰʱ���-���û��������쳣
+    25: 	int BAR1_TEMP = (int)TAG("Z.1.ZONE1.PL3_CL.BAR1_TEMP");//1#���W1�¶�
+    26: 	int BAR1_W2_TEMP = (int)TAG("Z.1.ZONE1.PL3_CL.BAR1_W2_TEMP");//1#���W2�¶�
+    27: 	int BAR1W3_TEMP_ACT = (int)TAG("Z.1.ZONE1.PL3_CL.BAR1W3_TEMP_ACT");//1#���W3�¶�
+    28: 	int BAR2_ACID_TEMP = (int)TAG("Z.1.ZONE1.PL3_CL.BAR2_ACID_TEMP");//2#���W1�¶�
+    29: 	int BAR2_W2_ACID_TEMP = (int)TAG("Z.1.ZONE1.PL3_CL.BAR2_W2_ACID_TEMP");//2#���W2�¶�
+    30: 	int BAR3_ACID_TEMP = (int)TAG("Z.1.ZONE1.PL3_CL.BAR3_ACID_TEMP");//3#���W1�¶�
+    31: 	int BAR3_W2_ACID_TEMP = (int)TAG("Z.1.ZONE1.PL3_CL.BAR3_W2_ACID_TEMP");//3#���W2�¶�
+    32: 	float PL_SPEED = (float)TAG("Z.1.ZONE1.PL3_CL.SPEED")*60;// ���ն��ٶȴ���10mpm��������
+    33: 	float EMU_TEMP_S1_S4 = (float)TAG("Z.1.ZONE1.TCM3_EJ1.S1_S4_EMULSION_TEMP");
+    34: 	float EMU_TEMP_S5 = (float)TAG("Z.1.ZONE1.TCM3_EJ1.S5_EMULSION_TEMP");
+    35: 	float S5_SPEED = (float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED")*60;//S5����ʵ���ٶ�
+    36: 	float TL_ECTENSION_ACT = (float)TAG("Z.1.ZONE1.PL3_TL.TL_EXTENSION");//���û�������
+    37: 	float PL_LEVE1_MONITE = (float)TAG("Z.1.ZONE1.PL3_CL.LEVEL_1");//��ϴһ��Һλ����
+    38  	DWORD TIMETEST = 0;
+
+   271  		////������
+   272: 		int BAR1_ACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.BAR1_ACID_FLOW");//��ϴ1#��P1ѭ��������
+   273: 		int BAR1_P2_ACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.BAR1_P2_ACID_FLOW");//��ϴ1#��P2ѭ��������
+   274: 		int BAR2_ACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.BAR2_ACID_FLOW");//��ϴ2#��P1ѭ��������
+   275: 		int BAR2_P2_ACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.BAR2_P2_ACID_FLOW");//��ϴ2#��P2ѭ��������
+   276: 		int BAR3_ACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.BAR3_ACID_FLOW");//��ϴ3#��P1ѭ��������
+   277: 		int BAR3_P2_ACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.BAR3_P2_ACID_FLOW");//��ϴ3#��P2ѭ��������
+   278  		if (BAR1_ACID_FLOW < BAR1_ACID_FLOW_MIN)
+
+   390  		////������
+   391: 		int PART1_ELE_ACT = (int)TAG("Z.1.ZONE1.PL3_CL.PART1_ELE_ACT");//��ϴ1�ε絼��ʵ��
+   392: 		int PART3_ELE_ACT = (int)TAG("Z.1.ZONE1.PL3_CL.PART3_ELE_ACT");//��ϴ3�ε絼��ʵ��
+   393: 		int WATER_ELE_5 = (int)TAG("Z.1.ZONE1.PL3_CL.WATER_ELE_5");//��ϴ5#��ϴˮ�絼��(us/cm)
+   394: 		float STEAM_PRE = TAG("Z.1.ZONE1.PL3_CL.STEAM_PRE");//��ϴ��ɻ�����ѹ��(Mpa)
+   395: 		int NEWACID_FLOW = (int)TAG("Z.1.ZONE1.PL3_CL.NEWACID_FLOW");//��ϴ��������(m3/h)
+   396  		if (PART1_ELE_ACT > PART1_ELE_ACT_MAX)
+
+   489  	
+   490: 		float  NO_01_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_01_OS_TOP");//1�ż����ϱ������������¶�
+   491: 		float  NO_01_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_01_DS_TOP");//1�ż����ϱ��洫��������¶�
+   492: 		float  NO_01_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_01_OS_BOT");//1�ż����±��洫��������¶�
+   493: 		float  NO_01_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_01_DS_BOT");//1�ż����±��洫��������¶�
+   494: 		float  NO_02_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_02_OS_TOP");//2�ż����ϱ������������¶�
+   495: 		float  NO_02_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_02_DS_TOP");//2�ż����ϱ��洫��������¶�
+   496: 		float  NO_02_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_02_OS_BOT");//2�ż����±��洫��������¶�
+   497: 		float  NO_02_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_02_DS_BOT");//2�ż��ɹ��±��洫��������¶�
+   498: 		float  NO_03_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_03_OS_TOP");//3�ż��ɹ��ϱ������������¶�
+   499: 		float  NO_03_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_03_DS_TOP");//3�ż��ɹ��ϱ��洫��������¶�
+   500: 		float  NO_03_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_03_OS_BOT");//3�ż��ɹ��±��洫��������¶�
+   501: 		float  NO_03_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_03_DS_BOT");//3�ż��ɹ��±��洫��������¶�
+   502: 		float  NO_04_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_04_OS_TOP");//4�ż��ɹ��ϱ������������¶�
+   503: 		float  NO_04_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_04_DS_TOP");//4�ż��ɹ��ϱ��洫��������¶�
+   504: 		float  NO_04_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_04_OS_BOT");//4�ż��ɹ��±��洫��������¶�
+   505: 		float  NO_04_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_04_DS_BOT");//4�ż��ɹ��±��洫��������¶�
+   506: 		float  NO_05_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_05_OS_TOP");//5�ż��ɹ��ϱ������������¶�
+   507: 		float  NO_05_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_05_DS_TOP");//5�ż��ɹ��ϱ��洫��������¶�
+   508: 		float  NO_05_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_05_OS_BOT");//5�ż��ɹ��±��洫��������¶�
+   509: 		float  NO_05_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_05_DS_BOT");//5�ż��ɹ��±��洫��������¶�
+   510: 		float  NO_06_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_06_OS_TOP");//6�ż��ɹ��ϱ������������¶�
+   511: 		float  NO_06_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_06_DS_TOP");//6�ż��ɹ��ϱ��洫��������¶�
+   512: 		float  NO_06_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_06_OS_BOT");//6�ż��ɹ��±��洫��������¶�
+   513: 		float  NO_06_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_06_DS_BOT");//6�ż��ɹ��±��洫��������¶�
+   514: 		float  NO_07_OS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_07_OS_TOP");//7�ż��ɹ��ϱ������������¶�
+   515: 		float  NO_07_DS_TOP = TAG("Z.1.ZONE1.PL3_CL.NO_07_DS_TOP");//7�ż��ɹ��ϱ��洫��������¶�
+   516: 		float  NO_07_OS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_07_OS_BOT");//7�ż��ɹ��±��洫��������¶�
+   517: 		float  NO_07_DS_BOT = TAG("Z.1.ZONE1.PL3_CL.NO_07_DS_BOT");//7�ż��ɹ��±��洫��������¶�
+   518  
+
+   916  	{
+   917: 		int EN_S1_TENDIFF = ((int)TAG("Z.1.ZONE1.TCM3_S1.TENSION_DS_ACT") - (float)TAG("Z.1.ZONE1.TCM3_S1.TENSION_OS_ACT")) * 1000;//S1��������� DS-OS
+   918: 		int S1_S2_TENDIFF = ((int)TAG("Z.1.ZONE1.TCM3_S2.TENSION_DS_ACT") - (float)TAG("Z.1.ZONE1.TCM3_S2.TENSION_OS_ACT")) * 1000;
+   919: 		int S2_S3_TENDIFF = ((int)TAG("Z.1.ZONE1.TCM3_S3.TENSION_DS_ACT") - (float)TAG("Z.1.ZONE1.TCM3_S3.TENSION_OS_ACT")) * 1000;
+   920: 		int S3_S4_TENDIFF = ((int)TAG("Z.1.ZONE1.TCM3_S4.TENSION_DS_ACT") - (float)TAG("Z.1.ZONE1.TCM3_S4.TENSION_OS_ACT")) * 1000;
+   921: 		int S4_S5_TENDIFF = ((int)TAG("Z.1.ZONE1.TCM3_S5.TENSION_DS_ACT") - (float)TAG("Z.1.ZONE1.TCM3_S5.TENSION_OS_ACT")) * 1000;
+   922: 		int S5_TR_TENDIFF = ((int)TAG("Z.1.ZONE1.TCM3_S5.TENSION_DS_EX_ACT") - (float)TAG("Z.1.ZONE1.TCM3_S5.TENSION_OS_EX_ACT")) * 1000;
+   923  		if (EN_S1_TENDIFF > EN_S1_TENDIFF_MAX)
+
+  1068  		//2020��9��29�������ı���
+  1069: 		float  S1_S4_EMULSION_TEMP = TAG("Z.1.ZONE1.TCM3_EJ1.S1_S4_EMULSION_TEMP");//Aϵͳ��Һ�¶�����//Aϵͳ��Һ�¶�����
+  1070: 		float  S5_EMULSION_TEMP = TAG("Z.1.ZONE1.TCM3_EJ1.S5_EMULSION_TEMP");//Lϵͳ��Һ�¶�����//Lϵͳ��Һ�¶�����
+  1071: 		float  FLOW_S1 = TAG("Z.1.ZONE1.TCM3_EMU.FLOW_S1");//S1��Һ����
+  1072: 		float  FLOW_S2 = TAG("Z.1.ZONE1.TCM3_EMU.FLOW_S2");//S2��Һ����
+  1073: 		float  FLOW_S3 = TAG("Z.1.ZONE1.TCM3_EMU.FLOW_S3");//S3��Һ����
+  1074: 		float  FLOW_S4 = TAG("Z.1.ZONE1.TCM3_EMU.FLOW_S4");//S4��Һ����
+  1075: 		float  FLOW_S5 = TAG("Z.1.ZONE1.TCM3_EMU.FLOW_S5");//S5��Һ����
+  1076: 		float  SWEEP_PRESSURE = TAG("Z.1.ZONE1.TCM3_S5.SWEEP_PRESSURE");//����5�ܴ���ѹ��
+  1077  		if ((S1_S4_EMULSION_TEMP < S1_S4_EMULSION_TEMP_LOW) || (S1_S4_EMULSION_TEMP > S1_S4_EMULSION_TEMP_UP)) {
+
+  1182  	//ж���쳣����
+  1183: 	int  unloadCoilError = TAG("Z.1.ZONE1.TCM3_EJ1.COIL_CAR");
+  1184  	if ((unloadCoilError ==1)) {
+
+CRM3_SBA-20210611\SBAHISANA\dataLoad.cpp:
+  1216  	doCompareWithLimit(dataAvgS4.ROLLFORCE_DIFF, S4Limit.avgS1_S4ROLLFORCE_DIFF_LIMIT, 0, 1, "S4�������쳣", "TENDIFF_ALARM", alarmCount_delay.at(36), alarmFlagWRS);
+  1217: 	float S5SPEED = (float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED")*60;
+  1218  	if (S5SPEED>200)
+
+CRM3_SBA-20210611\SBAHISANA\SBAHISANAMsgLooper.cpp:
+  69  		T1.Now();//��ȡ��ǰʱ��
+  70: 		float after_S5_Speed = (float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED") * 60;//��ȡS5�����ٶ�
+  71  		if (after_S5_Speed>20)
+
+CRM3_SBA-20210611\SBAQuJu\FOR_BAK_COIL_ID.cpp:
+  18  	memset(COIL_ID_PRO2, 0X00, sizeof(COIL_ID_PRO2));
+  19: 	strncpy(COIL_ID_PRO1, (const char*)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID1"), 8);//��ȡ������1�Ͼ���
+  20: 	strncpy(COIL_ID_PRO2, (const char*)(FormatString)TAG("Z.1.ZONE1.PL3_POR.ID2"), 8);//��ȡ������2�Ͼ���
+  21  	memset(COIL_ID_FORW, 0X00, sizeof(COIL_ID_FORW));
+
+CRM3_SBA-20210611\SBAQuJu\surfaceTCMAlarm.cpp:
+  49  //	doVoiceAlarm(surfaceTCMLeve);
+  50: //	passSmlength = (float)TAG("Z.1.ZONE1.PL3_SM.LENGTH");
+  51  //	Records recTrackQue;
+
+CRM3_SBA-20210611\SBAQuJu\YPJ_ALARM.cpp:
+  13  		float WELD_YPJ = 0.0;//���쵽Բ�̼��ľ���
+  14: 		WELD_YPJ = (float)TAG("Z.1.ZONE1.PL3_TRK.WELD_SM");
+  15  		int lengthb = 0;//�����ܳ���
+
+CRM3_SBA-20210611\SBARTANA\SBARTANAMsgLooper - 副本 (2).cpp:
+  164      //������������ٶ�--�ж������Ƿ���ͣ��״̬
+  165:     S5_SPEED = TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED");
+  166  
+
+  455        // 1~5����ʵ������
+  456: 	  insSnData[0].TEN_RT_ACT = TAG("Z.1.ZONE1.TCM3_S1.TENSION_ACT");
+  457: 	  insSnData[1].TEN_RT_ACT = TAG("Z.1.ZONE1.TCM3_S2.TENSION_ACT");
+  458: 	  insSnData[2].TEN_RT_ACT = TAG("Z.1.ZONE1.TCM3_S3.TENSION_ACT");
+  459: 	  insSnData[3].TEN_RT_ACT = TAG("Z.1.ZONE1.TCM3_S4.TENSION_ACT");
+  460: 	  insSnData[4].TEN_RT_ACT = TAG("Z.1.ZONE1.TCM3_S5.TENSION_ACT");
+  461       
+  462        // 1~5����������ƫ��
+  463: 	  insSnData[0].FORCE_DIFF = TAG("Z.1.ZONE1.TCM3_S1.S1_ROLLFORCE_DIFF");
+  464: 	  insSnData[1].FORCE_DIFF = TAG("Z.1.ZONE1.TCM3_EJ1.S2_ROLLFORCE_DIFF");
+  465: 	  insSnData[2].FORCE_DIFF = TAG("Z.1.ZONE1.TCM3_EJ1.S3_ROLLFORCE_DIFF");
+  466: 	  insSnData[3].FORCE_DIFF = TAG("Z.1.ZONE1.TCM3_EJ1.S4_ROLLFORCE_DIFF");
+  467: 	  insSnData[4].FORCE_DIFF = TAG("Z.1.ZONE1.TCM3_EJ1.S5_ROLLFORCE_DIFF");
+  468  
+  469        // 1~5���ܹ���ʵ��ֵ
+  470: 	  insSnData[0].GAP_ACT = TAG("Z.1.ZONE1.TCM3_S1.GAP_ACT");
+  471: 	  insSnData[1].GAP_ACT = TAG("Z.1.ZONE1.TCM3_S2.GAP_ACT");
+  472: 	  insSnData[2].GAP_ACT = TAG("Z.1.ZONE1.TCM3_S3.GAP_ACT");
+  473: 	  insSnData[3].GAP_ACT = TAG("Z.1.ZONE1.TCM3_S4.GAP_ACT");
+  474: 	  insSnData[4].GAP_ACT = TAG("Z.1.ZONE1.TCM3_S5.GAP_ACT");
+  475        
+  476        // 1~5������бʵ��ֵ
+  477: 	  insSnData[0].TILT_ACT = TAG("Z.1.ZONE1.TCM3_S1.TILT");
+  478: 	  insSnData[1].TILT_ACT = TAG("Z.1.ZONE1.TCM3_S2.TILT");
+  479: 	  insSnData[2].TILT_ACT = TAG("Z.1.ZONE1.TCM3_S3.TILT");
+  480: 	  insSnData[3].TILT_ACT = TAG("Z.1.ZONE1.TCM3_S4.TILT");
+  481: 	  insSnData[4].TILT_ACT = TAG("Z.1.ZONE1.TCM3_S5.TILT");
+  482        
+  483        // 1~5�����趨����
+  484: 	  insSnData[0].TEN_RT_SET = TAG("Z.1.ZONE1.TCM3_S1.TENSION_SET");
+  485: 	  insSnData[1].TEN_RT_SET = TAG("Z.1.ZONE1.TCM3_S2.TENSION_SET");
+  486: 	  insSnData[2].TEN_RT_SET = TAG("Z.1.ZONE1.TCM3_S3.TENSION_SET");
+  487: 	  insSnData[3].TEN_RT_SET = TAG("Z.1.ZONE1.TCM3_S4.TENSION_SET");
+  488: 	  insSnData[4].TEN_RT_SET = TAG("Z.1.ZONE1.TCM3_S5.TENSION_SET");
+  489        // 1~5���������趨ֵ
+  490: 	  insSnData[0].FORCE_SET = TAG("Z.1.ZONE1.TCM3_S1.FORCE_SET");
+  491: 	  insSnData[1].FORCE_SET = TAG("Z.1.ZONE1.TCM3_S2.FORCE_SET");
+  492: 	  insSnData[2].FORCE_SET = TAG("Z.1.ZONE1.TCM3_S3.FORCE_SET");
+  493: 	  insSnData[3].FORCE_SET = TAG("Z.1.ZONE1.TCM3_S4.FORCE_SET");
+  494: 	  insSnData[4].FORCE_SET = TAG("Z.1.ZONE1.TCM3_S5.FORCE_SET");
+  495  
+  496        // 1~5���ܹ����趨ֵ
+  497: 	  insSnData[0].GAP_SET = TAG("Z.1.ZONE1.TCM3_S1.GAP_SET");
+  498: 	  insSnData[1].GAP_SET = TAG("Z.1.ZONE1.TCM3_S2.GAP_SET");
+  499: 	  insSnData[2].GAP_SET = TAG("Z.1.ZONE1.TCM3_S3.GAP_SET");
+  500: 	  insSnData[3].GAP_SET = TAG("Z.1.ZONE1.TCM3_S4.GAP_SET");
+  501: 	  insSnData[4].GAP_SET = TAG("Z.1.ZONE1.TCM3_S5.GAP_SET");
+  502  
+  503        // 1~5������бֵ�趨ֵ
+  504: 	  insSnData[0].TILT_SET = TAG("Z.1.ZONE1.TCM3_S1.TILT1_SET");
+  505: 	  insSnData[1].TILT_SET = TAG("Z.1.ZONE1.TCM3_S2.TILT2_SET");
+  506: 	  insSnData[2].TILT_SET = TAG("Z.1.ZONE1.TCM3_S3.TILT3_SET");
+  507: 	  insSnData[3].TILT_SET = TAG("Z.1.ZONE1.TCM3_S4.TILT4_SET");
+  508: 	  insSnData[4].TILT_SET = TAG("Z.1.ZONE1.TCM3_S5.TILT5_SET");
+  509  
+  510        // 1~5����Һѹ���и˲�ѹ��
+  511:       ACT_PRESSURE_ROD = TAG("Z.1.ZONE1.TCM3_EJ1.S1_ACT_PRESSURE_ROD");
+  512:       ACT_PRESSURE_ROD = TAG("Z.1.ZONE1.TCM3_EJ1.S2_ACT_PRESSURE_ROD");
+  513:       ACT_PRESSURE_ROD = TAG("Z.1.ZONE1.TCM3_EJ1.S3_ACT_PRESSURE_ROD");
+  514:       ACT_PRESSURE_ROD = TAG("Z.1.ZONE1.TCM3_EJ1.S4_ACT_PRESSURE_ROD");
+  515:       ACT_PRESSURE_ROD = TAG("Z.1.ZONE1.TCM3_EJ1.S5_ACT_PRESSURE_ROD");
+  516        // 1~5����Һѹ�׹�����ѹ��
+  517:       ACT_PRESSURE_DS[0] = TAG("Z.1.ZONE1.TCM3_EJ1.S1_ACT_PRESSURE_DS");
+  518:       ACT_PRESSURE_DS[1] = TAG("Z.1.ZONE1.TCM3_EJ1.S2_ACT_PRESSURE_DS");
+  519:       ACT_PRESSURE_DS[2] = TAG("Z.1.ZONE1.TCM3_EJ1.S3_ACT_PRESSURE_DS");
+  520:       ACT_PRESSURE_DS[3] = TAG("Z.1.ZONE1.TCM3_EJ1.S4_ACT_PRESSURE_DS");
+  521:       ACT_PRESSURE_DS[4] = TAG("Z.1.ZONE1.TCM3_EJ1.S5_ACT_PRESSURE_DS");
+  522        // 1~5����Һѹ�ײ�����ѹ��
+  523:       ACT_PRESSURE_OS[0] = TAG("Z.1.ZONE1.TCM3_EJ1.S1_ACT_PRESSURE_OS");
+  524:       ACT_PRESSURE_OS[1] = TAG("Z.1.ZONE1.TCM3_EJ1.S2_ACT_PRESSURE_OS");
+  525:       ACT_PRESSURE_OS[2] = TAG("Z.1.ZONE1.TCM3_EJ1.S3_ACT_PRESSURE_OS");
+  526:       ACT_PRESSURE_OS[3] = TAG("Z.1.ZONE1.TCM3_EJ1.S4_ACT_PRESSURE_OS");
+  527:       ACT_PRESSURE_OS[4] = TAG("Z.1.ZONE1.TCM3_EJ1.S5_ACT_PRESSURE_OS");
+  528        //�������ƫ��ֵ�ٷֱ�
+
+CRM3_SBA-20210611\SBARTANA\SBARTANAMsgLooper - 副本.cpp:
+  191  	    
+  192: 		S5_SPEED = TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED");
+  193  		if(S5_SPEED==0)
+
+  619  			}
+  620: 		TEN_RT_ACT[0]=TAG("Z.1.ZONE1.TCM3_S1.TENSION_ACT");
+  621: 		TEN_RT_ACT[1]=TAG("Z.1.ZONE1.TCM3_S2.TENSION_ACT");
+  622: 		TEN_RT_ACT[2]=TAG("Z.1.ZONE1.TCM3_S3.TENSION_ACT");
+  623: 		TEN_RT_ACT[3]=TAG("Z.1.ZONE1.TCM3_S4.TENSION_ACT");
+  624: 		TEN_RT_ACT[4]=TAG("Z.1.ZONE1.TCM3_S5.TENSION_ACT");
+  625: 		FORCE_DIFF[0]=TAG("Z.1.ZONE1.TCM3_S1.S1_ROLLFORCE_DIFF");
+  626: 		FORCE_DIFF[1]=TAG("Z.1.ZONE1.TCM3_EJ1.S2_ROLLFORCE_DIFF");
+  627: 		FORCE_DIFF[2]=TAG("Z.1.ZONE1.TCM3_EJ1.S3_ROLLFORCE_DIFF");
+  628: 		FORCE_DIFF[3]=TAG("Z.1.ZONE1.TCM3_EJ1.S4_ROLLFORCE_DIFF");
+  629: 		FORCE_DIFF[4]=TAG("Z.1.ZONE1.TCM3_EJ1.S5_ROLLFORCE_DIFF");
+  630: 		GAP_ACT[0]=TAG("Z.1.ZONE1.TCM3_S1.GAP_ACT");
+  631: 		GAP_ACT[1]=TAG("Z.1.ZONE1.TCM3_S2.GAP_ACT");
+  632: 		GAP_ACT[2]=TAG("Z.1.ZONE1.TCM3_S3.GAP_ACT");
+  633: 		GAP_ACT[3]=TAG("Z.1.ZONE1.TCM3_S4.GAP_ACT");
+  634: 		GAP_ACT[4]=TAG("Z.1.ZONE1.TCM3_S5.GAP_ACT");
+  635: 		TILT_ACT[0]=TAG("Z.1.ZONE1.TCM3_S1.TILT");
+  636: 		TILT_ACT[1]=TAG("Z.1.ZONE1.TCM3_S2.TILT");
+  637: 		TILT_ACT[2]=TAG("Z.1.ZONE1.TCM3_S3.TILT");
+  638: 		TILT_ACT[3]=TAG("Z.1.ZONE1.TCM3_S4.TILT");
+  639: 		TILT_ACT[4]=TAG("Z.1.ZONE1.TCM3_S5.TILT");
+  640: 		TEN_RT_SET[0]=TAG("Z.1.ZONE1.TCM3_S1.TENSION_SET");
+  641: 		TEN_RT_SET[1]=TAG("Z.1.ZONE1.TCM3_S2.TENSION_SET");
+  642: 		TEN_RT_SET[2]=TAG("Z.1.ZONE1.TCM3_S3.TENSION_SET");
+  643: 		TEN_RT_SET[3]=TAG("Z.1.ZONE1.TCM3_S4.TENSION_SET");
+  644: 		TEN_RT_SET[4]=TAG("Z.1.ZONE1.TCM3_S5.TENSION_SET");
+  645: 		FORCE_SET[0]=TAG("Z.1.ZONE1.TCM3_S1.FORCE_SET");
+  646: 		FORCE_SET[1]=TAG("Z.1.ZONE1.TCM3_S2.FORCE_SET");
+  647: 		FORCE_SET[2]=TAG("Z.1.ZONE1.TCM3_S3.FORCE_SET");
+  648: 		FORCE_SET[3]=TAG("Z.1.ZONE1.TCM3_S4.FORCE_SET");
+  649: 		FORCE_SET[4]=TAG("Z.1.ZONE1.TCM3_S5.FORCE_SET");
+  650: 		GAP_SET[0]=TAG("Z.1.ZONE1.TCM3_S1.GAP_SET");
+  651: 		GAP_SET[1]=TAG("Z.1.ZONE1.TCM3_S2.GAP_SET");
+  652: 		GAP_SET[2]=TAG("Z.1.ZONE1.TCM3_S3.GAP_SET");
+  653: 		GAP_SET[3]=TAG("Z.1.ZONE1.TCM3_S4.GAP_SET");
+  654: 		GAP_SET[4]=TAG("Z.1.ZONE1.TCM3_S5.GAP_SET");
+  655: 		TILT_SET[0]=TAG("Z.1.ZONE1.TCM3_S1.TILT1_SET");
+  656: 		TILT_SET[1]=TAG("Z.1.ZONE1.TCM3_S2.TILT2_SET");
+  657: 		TILT_SET[2]=TAG("Z.1.ZONE1.TCM3_S3.TILT3_SET");
+  658: 		TILT_SET[3]=TAG("Z.1.ZONE1.TCM3_S4.TILT4_SET");
+  659: 		TILT_SET[4]=TAG("Z.1.ZONE1.TCM3_S5.TILT5_SET");
+  660: 		ACT_PRESSURE_ROD[0]=TAG("Z.1.ZONE1.TCM3_EJ1.S1_ACT_PRESSURE_ROD");
+  661: 		ACT_PRESSURE_ROD[1]=TAG("Z.1.ZONE1.TCM3_EJ1.S2_ACT_PRESSURE_ROD");
+  662: 		ACT_PRESSURE_ROD[2]=TAG("Z.1.ZONE1.TCM3_EJ1.S3_ACT_PRESSURE_ROD");
+  663: 		ACT_PRESSURE_ROD[3]=TAG("Z.1.ZONE1.TCM3_EJ1.S4_ACT_PRESSURE_ROD");
+  664: 		ACT_PRESSURE_ROD[4]=TAG("Z.1.ZONE1.TCM3_EJ1.S5_ACT_PRESSURE_ROD");
+  665: 		ACT_PRESSURE_DS[0]=TAG("Z.1.ZONE1.TCM3_EJ1.S1_ACT_PRESSURE_DS");
+  666: 		ACT_PRESSURE_DS[1]=TAG("Z.1.ZONE1.TCM3_EJ1.S2_ACT_PRESSURE_DS");
+  667: 		ACT_PRESSURE_DS[2]=TAG("Z.1.ZONE1.TCM3_EJ1.S3_ACT_PRESSURE_DS");
+  668: 		ACT_PRESSURE_DS[3]=TAG("Z.1.ZONE1.TCM3_EJ1.S4_ACT_PRESSURE_DS");
+  669: 		ACT_PRESSURE_DS[4]=TAG("Z.1.ZONE1.TCM3_EJ1.S5_ACT_PRESSURE_DS");
+  670: 		ACT_PRESSURE_OS[0]=TAG("Z.1.ZONE1.TCM3_EJ1.S1_ACT_PRESSURE_OS");
+  671: 		ACT_PRESSURE_OS[1]=TAG("Z.1.ZONE1.TCM3_EJ1.S2_ACT_PRESSURE_OS");
+  672: 		ACT_PRESSURE_OS[2]=TAG("Z.1.ZONE1.TCM3_EJ1.S3_ACT_PRESSURE_OS");
+  673: 		ACT_PRESSURE_OS[3]=TAG("Z.1.ZONE1.TCM3_EJ1.S4_ACT_PRESSURE_OS");
+  674: 		ACT_PRESSURE_OS[4]=TAG("Z.1.ZONE1.TCM3_EJ1.S5_ACT_PRESSURE_OS");
+  675  		//---------------------------��ʱʹ��--------------------//
+
+CRM3_SBA-20210611\SBARTANA\SBARTANAMsgLooper.cpp:
+  154    AddTimer(DONETIME2, 1000);
+  155:   //S5_ACT_SPEED = 0;//Z.1.ZONE1.TCM3_S5.ACT_SPEED
+  156    shapAlarmCount = 0;
+
+  172  	*/
+  173: 	float weldToS1 = (float)TAG("Z.1.ZONE1.TCM3_TRK.WELD_S1");//��ȡ�������S1����
+  174  	if (weldToS1 < weldToS1His) {
+
+  181  		stripLength = weldToS1 / 1.01;//Ĭ�Ͻ��´����ܳ��ȳ�1%�����û������ʣ��õ����û�ǰ�Ĵ����ܳ���
+  182: 		float TH_XH0_SET = (float)TAG("Z.1.ZONE1.TCM3_MFG.TH_XH0_SET") * 1000;//��ȡS1��ǰ����Ǻ���趨ֵ
+  183  		float vOfStrip = stripLength*TH_XH0_SET;//��ȡ��S1����ǰ���������
+
+  186  		float oldVofStrip = (float)TAG("oldVofStrip");//��ȡ���ɡ��������
+  187: 		float TX_XH5_SET = (float)TAG("Z.1.ZONE1.TCM3_MFG.TH_XH5_OLD_SET") * 1000;//�����S5���ܺ������趨ֵ
+  188  		TAG("totalLengthOfS5Ex") = oldVofStrip / TX_XH5_SET;//�˿�S5���ܳ��ڴ���Ӧ�Ĵ����ܳ��ȡ��������ڴ�β���ݸ��١���
+
+  199  	*/
+  200: 	float stripPassASC = (float)TAG("Z.1.ZONE1.TCM3_ASC.LENGTH");//�����Ǵ���ͨ������
+  201  	if (stripPassASC >= stripPassASCHis) {
+
+  265  	//���β���������������
+  266: 	float S5_ACT_SPEED = (float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED") * 60;//S5�����ٶ�ʵ��ֵ
+  267  	if (S5_ACT_SPEED<80) {
+
+  286  	}
+  287: 	stripPassASC = (float)TAG("Z.1.ZONE1.TCM3_ASC.LENGTH");//����ͨ�����ι��ĳ���
+  288  	float leftLength = ((float)TAG("totalLengthOfS5Ex") - stripPassASC);//S5����ʣ�೤��=S5���ܴ���ʵ���ܳ���-�����Ǿ������ֳ���
+  289  	if (stripPassASC > shpAlm_ASC_HEAD_TAIL_ignor_limit || (stripPassASC > 1000 && leftLength > 80)) {
+  290: 		ascActFlatness = (float)TAG("Z.1.ZONE1.TCM3_ASC.F5_ACT_FLATNESS");//ƽ������ֵ
+  291: 		s5WrbActBending = (float)TAG("Z.1.ZONE1.TCM3_S5.WRB_ACT_BENDING");//S5�����ʵ��ֵ
+  292  		exWidthInPlan = (float)TAG("exWidthInPlanInASC");
+
+CRM3_SBA-20210611\SBATRACK\S118SurfaceAlarm.cpp:
+  272  	strcpy(CoidIdS118, (const char *)(FormatString)recTrackQue[10]["coilno"]);
+  273: 	if (surfaceBloblength > 0 && (float)TAG("Z.1.ZONE1.PL3_SM.SM_SPEED") > 0)
+  274  	{
+
+CRM3_SBA-20210611\SBATRACK\SBATRACKMsgLooper.cpp:
+    19  	AddTimer(2023, 1000);
+    20: 	S5_ACT_SPEED = 0;//Z.1.ZONE1.TCM3_S5.ACT_SPEED
+    21  	memset(widNotGoodCoilId, 0x00, sizeof(widNotGoodCoilId));
+
+   145  {
+   146: 	S5_ACT_SPEED = (float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED") * 60;
+   147  	if (Timer == 8086)
+
+   230  void SBATRACKMsgLooper::getNewStripLength() {
+   231: 	TAG("WELD_S1_RAW") = (float)TAG("Z.1.ZONE1.TCM3_TRK.WELD_S1") / 1.015;
+   232  	float weld_s12 = (float)TAG("weld_s12");
+
+   238  		//TAG("LENGTH_S1_TARCK")�������ݺ��쵽S1���ܵľ��������ȡ�����¾����ֵĳ���
+   239: 		TAG("LENGTH_S1_TARCK") = (float)TAG("Z.1.ZONE1.TCM3_TRK.WELD_S1") / 1.015;
+   240  		//����һ��ѭ��������WELD_S1_RAW�浽weld_s12��
+
+  1110  	float RollHeight[8] = { 0 };//�����ܳ��ں��
+  1111: 	RollSpeed[0] = (float)TAG("Z.1.ZONE1.TCM3_S1.ROLLING_SPEED_ACT") * 60;//1���������ٶ�
+  1112: 	RollSpeed[1] = (float)TAG("Z.1.ZONE1.TCM3_S2.ROLLING_SPEED_ACT") * 60;//2���������ٶ�
+  1113: 	RollSpeed[2] = (float)TAG("Z.1.ZONE1.TCM3_S3.ROLLING_SPEED_ACT") * 60;//3���������ٶ�
+  1114: 	RollSpeed[3] = (float)TAG("Z.1.ZONE1.TCM3_S4.ROLLING_SPEED_ACT") * 60;//4���������ٶ�
+  1115: 	RollSpeed[4] = (float)TAG("Z.1.ZONE1.TCM3_S5.ROLLING_SPEED_ACT") * 60;//5���������ٶ�
+  1116: 	if (((float)TAG("Z.1.ZONE1.TCM3_S5.ACT_SPEED") * 60) > 1)
+  1117  	{
+  1118: 		RollHeight[0] = (float)TAG("Z.1.ZONE1.TCM3_MFG.TH_XH0");//1����ǰ���
+  1119: 		RollHeight[1] = (float)TAG("Z.1.ZONE1.TCM3_MFG.TH_XH1");//1���ܺ���
+  1120: 		RollHeight[4] = (float)TAG("Z.1.ZONE1.TCM3_MFG.TX_XH4");//4���ܺ���
+  1121: 		RollHeight[5] = (float)TAG("Z.1.ZONE1.TCM3_MFG.TX_XH5");//5���ܺ���
+  1122  		if (RollSpeed[1] == 0 || RollSpeed[2] == 0)
+
+CRM3_SBA-20210611\SBATRACK\shapeAlarm.hpp:
+  134  //	}
+  135: //	stripPassASC = (float) TAG("Z.1.ZONE1.TCM3_ASC.LENGTH");//����ͨ�����ι��ĳ���
+  136  //	float leftLength = ((float)TAG("totalLengthOfS5Ex")-stripPassASC);
+
+  139  //	if (stripPassASC > shpAlm_ASC_HEAD_TAIL_ignor_limit || (stripPassASC > 1000 && leftLength > 80)) {
+  140: //		ascActFlatness = (float)TAG("Z.1.ZONE1.TCM3_ASC.F5_ACT_FLATNESS");//ƽ������ֵ
+  141: //		s5WrbActBending = (float)TAG("Z.1.ZONE1.TCM3_S5.WRB_ACT_BENDING");//S5�����ʵ��ֵ
+  142  //		exWidthInPlan = (float)TAG("exWidthInPlanInASC");
+
+CRM3_SBA-20210611\SBATRACK\wpdMissAlarm.cpp:
+   3  /************************************************************************		
+   4: 	Z.1.ZONE1.PL3_TRK.WPD2_MISS
+   5: 	Z.1.ZONE1.PL3_TRK.WPD3_MISS
+   6: 	Z.1.ZONE1.PL3_TRK.WPD4_MISS                                                                   
+   7  /************************************************************************/
+
+  48  	int wpd4Miss = 0;
+  49: 	wpd2Miss = (int)TAG("Z.1.ZONE1.PL3_TRK.WPD2_MISS");
+  50  	if (wpd2Miss == 1) {
+
+  57  	}
+  58: 	wpd3Miss = (int)TAG("Z.1.ZONE1.PL3_TRK.WPD3_MISS");
+  59  	if (wpd3Miss == 1) {
+
+LZ 3\酸轧效率\sz\QualityAnalyze\PredictData.cpp:
+   55  		{
+   56: 			double now_looper = (double)ReadTagLong("Z.1.ZONE1.PL3_EJ.ENTRY_LOOPER_POS_ACT")/10000;	//当前入口活套剩余量
+   57  			double remain_length = CalcRemainLooper(coil_data[0].id,coil_data[0].coil_no);//获取开卷机剩余量
+
+  605  
+  606: 	int data = ReadTagLong("Z.1.ZONE1.PL3_TL.HEAD_ENTER");
+  607  	if(flag == 0)
