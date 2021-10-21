@@ -24,7 +24,7 @@ if __name__ == "__main__":
 	for tag_num in range(1,sheet2.nrows):
 		tag_num_name = sheet2.cell_value(tag_num, 0)
 		tag_num_name = tag_num_name.upper()	#要匹配的变量名
-		sheet_new.write(tag_num, 0, tagname)	# 遍历sheet1
+		sheet_new.write(tag_num, 0, tag_num_name)	# 遍历sheet1
 		for i in range(1, sheet1.nrows):
 			aa = 0
 			tagname = sheet1.cell_value(i, 0)	#sheet1每行的变量名
