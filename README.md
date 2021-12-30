@@ -3,23 +3,11 @@
 ### 工程师-->全栈工程师-->架构师-->程序员（最终信仰）
 
 # 文件介绍：
-    wechat_redPackage            wechat随机红包实现方式-java
-    Demon_Gan.txt                windows黑客编程在线交流笔记。
-    README.me                    个人随笔、知识体系、想学习的知识汇总分类。
-    SocketClient.cpp
-    SocketServer.cpp             是Socket通讯的两个测试程序，本不区分Client和Server,但为了方便，取建立监听的为Server,发起请求的为Client。  
-    char型转换.cpp               对char型、字符型、文本型字符转换赋值等操作的测试程序。 因为对方面不太清晰，用来测试和方便后期查阅。
-    formyself.txt               一些个人琐事灵感等
-    git基本操作.docx             git的基本操作汇总  
-    myLearnNotes.md             个人学习笔记
-    test123.cpp                 个人的测试程序代码（包括获取文件 1.txt的内容；调用windowsAPI-MessageBox；通过互斥对象句柄检测程序是否运行）
 ----------------------------------
 # 知识体系：
 汇编-->内核编程-->c/c++-->python、java、
 ## 基础知识
 计算机网络－离散数学－数据库原理－编译原理－计算机操作系统－软件工程－算法－设计模式
-### JAVA知识:
-JAVA基础-容器-并发-JVM-MySQL(或其他数据库)-Redis-RocketMQ(或其他消息中间件)-Git-Docker-Spring-SpringMVC-SpringBoot-SpringCloud
 
 ## 计算机网络
 ### 4/7层模型
