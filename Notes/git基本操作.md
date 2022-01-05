@@ -12,7 +12,7 @@ e)	`git push` (把本地代码放到远程仓库)
 
 #### 4、    取消本地修改内容
 `git checkout -- filename`  filename填写需要撤销修改的文件名(需包含路径)，可以清空所修改内容  
-`git checkout .`  可修改本地未提交的所有改动
+`git checkout .`    可清空本地仓库所有未提交的修改  
 
 ***
 ----
