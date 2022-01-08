@@ -78,7 +78,12 @@ import time
 from flask import Flask, abort, request, jsonify
 from flask_cors import CORS 
 from zeep import Client
+
+import configparser
+import os
 from xml.dom.minidom import parseString
+
+import cx_Oracle
  
 def xml_to_json(xml_str):
     # parse是的xml解析器
@@ -94,7 +99,24 @@ def json_to_xml(json_str):
     xml_str = xmltodict.unparse(json_str, pretty=1)
     return xml_str
 
-Webservice_url="http://62.234.75.131/hmiDataGate/HmiDataGate.asmx?WSDL"
+curpath = os.path.dirname(os.path.realpath(__file__))
+cfgpath = os.path.join(curpath, "config.ini")
+conf = configparser.ConfigParser() # 创建管理对象 
+conf.read(cfgpath, encoding="utf-8")  # python3 # 读ini文件
+items = conf.items('webservice')
+Webservice_url=""
+Webservice_url=str(items[0][1])
+print(Webservice_url)  
+
+#ANSTEEL/ANSTEEL@10.151.18.165:1521/NERCAR 
+oracle_username = conf.get("oralce","username")
+oracle_host = conf.get("oralce","host")
+oracle_port = conf.get("oralce","port")
+oracle_password = conf.get("oralce","password")
+oracle_db = conf.get("oralce","db")
+ora_url = oracle_username + '/' + oracle_username + '@'+oracle_host+":"+oracle_port+'/'+oracle_db
+print(ora_url)  
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 CORS(app, supports_credentials=True)  # 设置跨域
@@ -128,25 +150,25 @@ def getHmiData():
     xml_str = '<data>' + result + '</data>'
     # 定义xml转json的函数
     # return (xml_to_json(xml_str))      #到这里应该结束，但现有格式不一样，为兼容之前接口，使用如下拼接
-# {
-#  "data": {
-#   "TagList": {
-#    "Tag": [
-#     {
-#      "Name": "C",
-#      "TS": "132332226832889690",
-#      "Value": "1.068"
-#     },
-#     {
-#      "Name": "FMRsFlag",
-#      "TS": "132745119208578183",
-#      "Dat": []
-#     }
-#    ]
-#   },
-#   "MsgList": null
-#  }
-# }
+    # {
+    #  "data": {
+    #   "TagList": {
+    #    "Tag": [
+    #     {
+    #      "Name": "C",
+    #      "TS": "132332226832889690",
+    #      "Value": "1.068"
+    #     },
+    #     {
+    #      "Name": "FMRsFlag",
+    #      "TS": "132745119208578183",
+    #      "Dat": []
+    #     }
+    #    ]
+    #   },
+    #   "MsgList": null
+    #  }
+    # }
     #前端用法：res.data.tagList[0].value  记录集 res.data.tagList[51].dataList
     # {"code":0,"msg":"","extraMsg":"","data":{"tagList":[{"name":"C","ts":"132332226832889690","value":"1.068","dataList":null},{"name":"FMRsD","ts":"132745119208588040","value":null,"dataList":[{"d":"76.487"},{"d":"27.042"},{"d":"22.715"},{"d":"19.176"},{"d":"16.464"},{"d":"19.746"},{"d":"18.169"}]}],"msgList":null}}
     result_json = (xml_to_json(xml_str))
@@ -316,7 +338,33 @@ def sendMessage():
     resp = jsonify(resp1)
     return resp
    
-
+#/common/findData    {"key":"query_efficiency","list":[{"@where":""}]}
+#{"key":"oracle_template","list":[{"@sql":"select a.* from frsa_setpoints_tensions_new a"}]}
+#{"msg":"访问数据接口成功","status":2000,"data":[{"F_QUENCH":11.3,"F_BRIDLE3":13.4,"F_RAPID_COOL":7.8,"WIDTH":1600,"F_SOAK":5.5,"STGR_GROUP":".TENS-0","F_HEAT3":5.5,"F_HEAT2":7,"F_HEAT1":8.6,"F_FIN_COOL":7.3,"F_OVERAGING3":5.7,"F_OVERAGING1":5.7,"F_OVERAGING2":5.7,"SPEC":"00716","THICKNESS":0.7,"MTIME":"2021-04-01T02:56:54.000+0000"}],"count":0}
+@app.route('/common/findData', methods=['POST'])
+def findData():
+    print(request.json)
+    if not request.json or 'key' not in request.json or 'list' not in request.json:
+        abort(400)
+    datalist = []
+    conn = cx_Oracle.connect(ora_url)
+    curs = conn.cursor()
+    sql = request.json['key']
+    res = curs.execute(sql)
+    print(res)
+    code = "失败"
+    if res == None:
+        conn.commit()  # 提交结果
+        code = "插入数据成功"
+    else:
+        for result in curs:
+            datalist.append(result)
+        code = "访问数据接口成功"
+    curs.close()
+    conn.close()
+    res = {'msg': code,"status":2000,'data':datalist,"count":0}
+    resp = jsonify(res)
+    return resp
 
 if __name__ == "__main__":
     # 将host设置为0.0.0.0，则外网用户也可以访问到这个服务
