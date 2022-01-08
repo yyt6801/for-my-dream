@@ -15,5 +15,5 @@ conf.read(cfgpath, encoding="utf-8")  # python3
 sections = conf.sections()
 print(sections)  # 返回list
  
-items = conf.items('section0')
-print(items)  # list里面对象是元祖
+items = conf.items('webservice')
+print(items[0][1])  # list里面对象是元祖
