@@ -6,13 +6,17 @@ cur = conn.cursor()
 if not cur:
     raise(NameError,"connect database fails") 
 else:
-    cur.execute("select getdate()")
-    data = cur.fetchall()
-
-    if data :
-        print("ok")
-        for i in data:
-            print(i)
+    try:
+        # 执行sql语句
+        cur.execute("select getdate()")
+        data = cur.fetchall()
+        if data :
+            print("ok")
+            for i in data:
+                print(i)
+    except:
+        conn.rollback()
+        print("failed")
     else:
         print("fail")
     conn.close()
