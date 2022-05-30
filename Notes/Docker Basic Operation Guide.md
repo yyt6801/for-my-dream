@@ -24,14 +24,12 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
 在虚拟机之前，引入新的硬件资源需要消耗几天的时间。虚拟化技术（Virtualization）将这个时间缩短到了分钟级别。而Docker通过为进程仅仅创建一个容器而无需启动一个操作系统，再次将这个过程缩短到了秒级。这正是Google和Facebook都看重的特性。
 你可以在数据中心创建销毁资源而无需担心重新启动带来的开销。通常数据中心的资源利用率只有30%，通过使用Docker并进行有效的资源分配可以提高资源的利用率。
 
-
-
 ----------------------------------------
 # docker使用基本操作
-
+## 开启docker服务
+    sudo service docker start
 ## 搜索镜像
     docker search mongo
-
 ## 拉取镜像到本地
     docker pull mongo
 
@@ -42,8 +40,15 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
 
 ## 把镜像做成容器并运行
     docker run --name mongodb -v ~/docker/mongo:/data/db -p 27017:27017 -d mongo
+#### 通过在创建容器时设置MONGO_INITDB_ROOT_USERNAME和MONGODB_INITDB_ROOT_PASSWORD环境变量来添加初始用户帐户
 
-    docker run -p 3306:3306 --name mymysql -v $PWD/test-mysql/conf:/etc/mysql/conf.d -v $PWD/test-mysql/logs:/logs -v $PWD/test-mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.6
+```docker
+docker run -d --name mongodb -v /mydata/mongodb/datadb:/data/db -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin --privileged=true mongo  
+```
+* 运行mysql5.6  
+```docker
+docker run -p 3306:3306 --name mymysql -v $PWD/test-mysql/conf:/etc/mysql/conf.d -v $PWD/test-mysql/logs:/logs -v $PWD/test-mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.6
+```
 ### 各参数含义:
 * `--name` 设置了容器的自定义名字
 * `-v` 设置了路径的映射, 将本地路径映射到容器中（把一个本地/宿主机上的目录挂载到镜像里）. 此处, 路径可以自定义：冒号前为宿主机目录，必须为绝对路径，冒号后为镜像内挂载的路径。 
@@ -57,9 +62,10 @@ Docker提供了很多的工具，这些工具不一定只是针对容器，但�
 * `-d` 设置当前容器为守护进程,后台运行    
 * `-e` MYSQL_ROOT_PASSWORD=123456：初始化 root 用户的密码。    
 
-
 #### 例:    构建nginx容器映射到本机html目录中
-* `docker run  --name nginx -d -p 80:80 -v /my_folder/my_nginx/html:/usr/share/nginx/html  -v /my_folder/my_nginx/logs:/var/log/nginx nginx`
+```docker
+docker run --name nginx -d -p 80:80 -v /my_folder/my_nginx/html:/usr/share/nginx/html -v /my_folder/my_nginx/logs:/var/log/nginx nginx
+```
 
 
 ## 查看所有的容器
