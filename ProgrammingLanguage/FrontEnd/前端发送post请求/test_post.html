@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <script type="text/javascript" src="jquery-3.2.1.min.js"></script> -->
+	
+<script src="jquery.min.js"></script>
+
+    <title>测试徐博士HttpServer接口</title>
+	tagName:<input id="a" />	
+	<button onclick="my_fun()">run</button>
+	<br>	
+
+	结果:<input id = "result" readonly/>
+</head>
+<body>
+    <script>
+	function my_fun(){
+        $.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:8088/HMI',
+			dataType:"json",
+			headers:{'Content-Type':'application/json;charset=utf8',
+			'Access-Control-Allow-Origin':'*',
+			'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'},
+			crossDomain: true,   // 会让请求头中包含跨域的额外信息，但不会含cookie
+			data:JSON.stringify(
+			{
+				"action": "get_tags",
+				"operator": "abc ",
+				"terminal": "FM_01",
+				"body": [
+					{
+					"tagName": $("#a").val(),
+					"timestamp": 0
+					}
+				]
+			}),
+			success: function (res) {
+				console.log(res);
+				$("#result").val(res.results[0].value)
+			},
+		});}
+
+    </script>
+</body>
+</html>
