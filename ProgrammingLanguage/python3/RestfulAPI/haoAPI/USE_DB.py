@@ -10,11 +10,11 @@ import pymysql
 
 class DB():
     def __init__(self,
-                 host='localhost',
+                 host='qdm712457164.my3w.com',
                  port=3306,
-                 db='test',
-                 user='root',
-                 passwd='123456',
+                 db='qdm712457164_db',
+                 user='qdm712457164',
+                 passwd='Yuan521175',
                  charset='utf8'):
         # 建立连接
         self.conn = pymysql.connect(host=host,
