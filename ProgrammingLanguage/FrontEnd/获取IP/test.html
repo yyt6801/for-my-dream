@@ -1,0 +1,42 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <script type="text/javascript" src="jquery-3.2.1.min.js"></script> -->
+	
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <title>Document</title>
+	<button onclick="my_fun()">run</button>
+	<br>	
+
+</head>
+<body>
+    <script>
+    //获取本地ip
+    function getIPAdress() {
+    var interfaces = require('os').networkInterfaces();
+    for (var devName in interfaces) {
+        var iface = interfaces[devName];
+        for (var i = 0; i < iface.length; i++) {
+        var alias = iface[i];
+        if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+            return alias.address;
+        }
+        }
+    }
+    }
+
+	function my_fun(){
+        console.log("kaishi");
+        var ip = getIPAdress();
+        console.log(ip);
+
+    }
+    </script>
+</body>
+</html>
+
