@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <script type="text/javascript" src="jquery-3.2.1.min.js"></script> -->
+	
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <title>双色球随机生成</title>
+	<button onclick="my_fun()">随机生成一注</button>
+    <p ><span id = "redball1">红1</span> 
+        <span id = "redball2">红2</span>
+        <span id = "redball3">红3</span>
+        <span id = "redball4">红4</span>
+        <span id = "redball5">红5</span>
+        <span id = "redball6">红6</span> &nbsp;&nbsp;&nbsp;
+    <span id = "blueball">蓝</span>
+    </p>
+	<br>	
+
+</head>
+<body>
+    <script>
+	function my_fun(){
+        let redball = []
+        while (redball.length < 6) { 
+            const num = Math.floor(Math.random() * (31 - 1 + 1)) + 1;
+            console.log(num)
+            if (redball.indexOf(num) == -1) { //去除数组重复，indexOf()的功能是，在数组中找不见这一项，就返回 -1；
+                redball.push(num) //只要数组中没有当前随机出来的数，我们就把它推（push)进我们创建的新数组
+            }
+        }
+        redball.sort(function (a, b) { //红色球排序
+            return a - b
+            })
+        console.log(redball)
+        document.getElementById("redball1").textContent =redball[0];
+        document.getElementById("redball2").textContent = redball[1];
+        document.getElementById("redball3").textContent = redball[2];
+        document.getElementById("redball4").textContent = redball[3];
+        document.getElementById("redball5").textContent = redball[4];
+        document.getElementById("redball6").textContent = redball[5];
+
+        const blue = Math.floor(Math.random() * (16 - 1 + 1)) + 1;
+        document.getElementById("blueball").textContent = blue;
+        
+    }
+
+    </script>
+</body>
+</html>
