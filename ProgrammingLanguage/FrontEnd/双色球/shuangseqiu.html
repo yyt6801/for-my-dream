@@ -25,7 +25,7 @@
 	function my_fun(){
         let redball = []
         while (redball.length < 6) { 
-            const num = Math.floor(Math.random() * (31 - 1 + 1)) + 1;
+            const num = Math.floor(Math.random() * (33 - 1 + 1)) + 1;
             console.log(num)
             if (redball.indexOf(num) == -1) { //去除数组重复，indexOf()的功能是，在数组中找不见这一项，就返回 -1；
                 redball.push(num) //只要数组中没有当前随机出来的数，我们就把它推（push)进我们创建的新数组
