@@ -136,6 +136,11 @@ def export_pdf_report():
     ax.set_xlabel('样本组')
     ax.set_ylabel('均值')
     ax.legend()
+    # Annotate the control limits and center line
+    ax.text(len(means) + 15, UCL_X, f'UCL: {UCL_X:.3f}', color='red', va='center', ha='left')
+    ax.text(len(means) + 15, LCL_X, f'LCL: {LCL_X:.3f}', color='red', va='center', ha='left')
+    ax.text(len(means) + 15, overall_mean, f'CL: {overall_mean:.3f}', color='green', va='center', ha='left')
+
     img = Image(save_plot_to_buffer(fig),width=600, height=240)  # 请确保图片文件存在  
     img.hAlign = 'CENTER'  # 图片水平居中  
     elements.append(img)
@@ -154,6 +159,10 @@ def export_pdf_report():
     ax.set_xlabel('样本组')
     ax.set_ylabel('极差')
     ax.legend()
+    # Annotate the control limits and center line
+    ax.text(len(means) + 15, UCL_R, f'UCL: {UCL_R:.3f}', color='red', va='center', ha='left')
+    ax.text(len(means) + 15, LCL_R, f'LCL: {LCL_R:.3f}', color='red', va='center', ha='left')
+    ax.text(len(means) + 15, average_range, f'CL: {average_range:.3f}', color='green', va='center', ha='left')
     img = Image(save_plot_to_buffer(fig),width=600, height=240)  # 请确保图片文件存在  
     img.hAlign = 'CENTER'  # 图片水平居中  
     elements.append(img)
@@ -172,6 +181,10 @@ def export_pdf_report():
     ax.set_xlabel('样本组')
     ax.set_ylabel('标准差')
     ax.legend()
+    # Annotate the control limits and center line
+    ax.text(len(means) + 15, UCL_S, f'UCL: {UCL_S:.3f}', color='red', va='center', ha='left')
+    ax.text(len(means) + 15, LCL_S, f'LCL: {LCL_S:.3f}', color='red', va='center', ha='left')
+    ax.text(len(means) + 15, average_std_dev, f'CL: {average_std_dev:.3f}', color='green', va='center', ha='left')
     img = Image(save_plot_to_buffer(fig),width=600, height=240)  # 请确保图片文件存在  
     img.hAlign = 'CENTER'  # 图片水平居中  
     elements.append(img)
