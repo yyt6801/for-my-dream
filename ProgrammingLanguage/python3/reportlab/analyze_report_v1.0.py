@@ -9,8 +9,8 @@ import io
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle  
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
@@ -30,17 +30,26 @@ def export_pdf_report():
     
     # ****************************************************************************************
     data = np.array(sample_data)  # 替换为你的实际数据
+    means = data
+    ranges = sample_range
+    std_devs = sample_stdev
+    
+    # 计算均值和标准差
     max_=np.max(data)
     min_=np.min(data)
-
+    mean = np.mean(data)
+    std_dev = np.std(data, ddof=1)  # 使用样本标准差
+    # 计算总体均值、平均极差和平均标准差
+    overall_mean = np.mean(means)
+    average_range = np.mean(ranges)
+    average_std_dev = np.mean(std_devs)
+    
     # 规格限
     USL = 0.89  # 上规格限
     LSL = 0.55  # 下规格限
-
-    # 计算均值和标准差
-    mean = np.mean(data)
-    std_dev = np.std(data, ddof=1)  # 使用样本标准差
-
+    target = overall_mean
+    total_count = len(data)
+    
     # 计算Cp和Cpk
     Cp = (USL - LSL) / (6 * std_dev)
     Cpk = min((USL - mean) / (3 * std_dev), (mean - LSL) / (3 * std_dev))
@@ -60,14 +69,6 @@ def export_pdf_report():
     print(f"Pp: {Pp:.2f}")
     print(f"Ppk: {Ppk:.2f}")
         
-    means = data
-    ranges = sample_range
-    std_devs = sample_stdev
-
-    # 计算总体均值、平均极差和平均标准差
-    overall_mean = np.mean(means)
-    average_range = np.mean(ranges)
-    average_std_dev = np.mean(std_devs)
 
     # 控制图常数（假设样本大小为4）
     A2 = 0.729
@@ -84,131 +85,178 @@ def export_pdf_report():
     UCL_S = B4 * average_std_dev
     LCL_S = B3 * average_std_dev
     
-    # # 创建PDF文件
-    # pdf_filename = "SPC_Charts.pdf"
-    # pdf = PdfPages(pdf_filename)
-    
     # 创建PDF文件
-    pdf_buffer = io.BytesIO()
-    pdf = PdfPages(pdf_buffer)
+    report_buffer = io.BytesIO()
+    doc = SimpleDocTemplate(report_buffer, pagesize=letter)
+    elements = []
+
+    # 定义样式  
+    style_normal = ParagraphStyle(name='Normal', fontName='SimHei', fontSize=12, leading=14)  # 使用注册的中文字体  
+    
+    # 添加标题
+    # styles = getSampleStyleSheet()
+    # title = Paragraph("SPC过程能力分析报告", styles['Title'])
+    title = Paragraph("SPC过程能力分析报告", ParagraphStyle(name='Title', fontName='SimHei', fontSize=24, textColor=colors.black, alignment=1,  # 居中  
+        spaceAfter=12  ))
+    elements.append(title)
+    elements.append(Spacer(1, 12))  # 添加间隔  
+    
+    # 添加段落  
+    paragraph = Paragraph("    SPC（统计过程控制）过程能力监控是一种用于监控和评估生产过程稳定性和性能的方法。其主要目的是通过统计分析，确定生产过程是否处于控制状态，并评估其能力是否满足质量要求。", style_normal)  
+    elements.append(paragraph)  
+
+    # 左侧表格数据  
+    data_left = [
+        ['--', '样本信息'],
+        ['开始时间', '2024-10-15 13:32:37'],
+        ['结束时间', '2024-11-15 13:32:37'],
+        ['钢种', 'SPHC-Z'],
+        ['控制上限', f'{USL:.3f}'],
+        ['控制下限', f'{LSL:.3f}'],
+        ['目标值', f'{target:.3f}'],
+        ['样本总数', f'{total_count}'],
+    ]
+    # 创建左侧表格  
+    table_left = Table(data_left)  
+    table_left.setStyle(TableStyle([  
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  # 表头背景色  
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),  
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  
+        ('FONTNAME', (0, 0), (-1, -1), 'SimHei'),  # 确保所有单元格使用中文字体 
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),# 表头下边距 
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+    ]))  
+    
+    # 添加表格
+    data_table = [
+        ['过程能力指标', '能力值'],
+        ['Overall Mean', f'{overall_mean:.3f}'],
+        ['Average Range', f'{average_range:.3f}'],
+        ['Average Std Dev', f'{average_std_dev:.3f}'],
+        ['Cp', f'{Cp:.3f}'],
+        ['Cpk', f'{Cpk:.3f}'],
+        ['Pp', f'{Pp:.3f}'],
+        ['Ppk', f'{Ppk:.3f}'],
+    ]
+    table = Table(data_table)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),# 表头背景色  
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), # 表头文字颜色  
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'), # 中间对齐
+        ('FONTNAME', (0, 0), (-1, 0), 'SimHei'),# 表头字体加粗 
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),# 表头下边距 
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+    ]))
+    
+    # 将两个表格放在同一行  
+    combined_table = Table([[table_left, table]], colWidths=[200, 200])  # 设置每个表格的宽度  
+
+    # 添加表格到文档内容
+    elements.append(combined_table)
+    elements.append(Spacer(1, 12))  
+
+    # 准备图表
+    def save_plot_to_buffer(fig):
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png')
+        buf.seek(0)
+        return buf
 
     # 绘制X-bar控制图
-    plt.figure(figsize=(8, 4))
-    plt.plot(means, marker='o', linestyle='-')
-    plt.axhline(overall_mean, color='green', linestyle='--', label='CL')
-    plt.axhline(UCL_X, color='red', linestyle='--', label='UCL')
-    plt.axhline(LCL_X, color='red', linestyle='--', label='LCL')
-    plt.title('X-bar Control Chart')
-    plt.xlabel('Sample Group')
-    plt.ylabel('Mean')
-    plt.legend()
-    plt.text(0.5, 0.01, 'X-bar chart shows the mean of each sample group.', ha='center', va='center', transform=plt.gcf().transFigure)
-    pdf.savefig()  # 保存当前图表到PDF
-    plt.close()
+    fig, ax = plt.subplots(figsize=(6, 3.5))
+    ax.plot(means, marker='o', linestyle='-')
+    ax.axhline(overall_mean, color='green', linestyle='--', label='CL')
+    ax.axhline(UCL_X, color='red', linestyle='--', label='UCL')
+    ax.axhline(LCL_X, color='red', linestyle='--', label='LCL')
+    ax.set_title('X-bar 控制图')
+    ax.set_xlabel('样本组')
+    ax.set_ylabel('均值')
+    ax.legend()
+    # ax.text(0.5, -0.15, 'X-bar chart shows the mean of each sample group.', ha='center', va='center', transform=ax.transAxes)
+    elements.append(Image(save_plot_to_buffer(fig)))
+    plt.close(fig)
+    # 添加段落  
+    paragraph = Paragraph("X-bar控制图: 用于监控样本均值的变化。UCL（上控制限）和LCL（下控制限）用于判断过程是否失控", style_normal)  
+    elements.append(paragraph)  
+    elements.append(Spacer(1, 12))  
 
     # 绘制R控制图
-    plt.figure(figsize=(8, 4))
-    plt.plot(ranges, marker='o', linestyle='-')
-    plt.axhline(average_range, color='green', linestyle='--', label='CL')
-    plt.axhline(UCL_R, color='red', linestyle='--', label='UCL')
-    plt.axhline(LCL_R, color='red', linestyle='--', label='LCL')
-    plt.title('R Control Chart')
-    plt.xlabel('Sample Group')
-    plt.ylabel('Range')
-    plt.legend()
-    plt.text(0.5, 0.01, 'R chart shows the range of each sample group.', ha='center', va='center', transform=plt.gcf().transFigure)
-    pdf.savefig()
-    plt.close()
+    fig, ax = plt.subplots(figsize=(6, 3.5))
+    ax.plot(ranges, marker='o', linestyle='-')
+    ax.axhline(average_range, color='green', linestyle='--', label='CL')
+    ax.axhline(UCL_R, color='red', linestyle='--', label='UCL')
+    ax.axhline(LCL_R, color='red', linestyle='--', label='LCL')
+    ax.set_title('R 控制图')
+    ax.set_xlabel('样本组')
+    ax.set_ylabel('极差')
+    ax.legend()
+    # ax.text(0.5, -0.15, 'R chart shows the range of each sample group.', ha='center', va='center', transform=ax.transAxes)
+    elements.append(Image(save_plot_to_buffer(fig)))
+    plt.close(fig)
+    # 添加段落  
+    paragraph = Paragraph("R控制图: 用于监控样本极差的变化，帮助识别过程的变异性。", style_normal)  
+    elements.append(paragraph)  
+    elements.append(Spacer(1, 12))  
 
     # 绘制S控制图
-    plt.figure(figsize=(8, 4))
-    plt.plot(std_devs, marker='o', linestyle='-')
-    plt.axhline(average_std_dev, color='green', linestyle='--', label='CL')
-    plt.axhline(UCL_S, color='red', linestyle='--', label='UCL')
-    plt.axhline(LCL_S, color='red', linestyle='--', label='LCL')
-    plt.title('S Control Chart')
-    plt.xlabel('Sample Group')
-    plt.ylabel('Standard Deviation')
-    plt.legend()
-    plt.text(0.5, 0.01, 'S chart shows the standard deviation of each sample group.', ha='center', va='center', transform=plt.gcf().transFigure)
-    pdf.savefig()
-    plt.close()
-
-    # 绘制QQ图
-    plt.figure(figsize=(8, 6))
-    stats.probplot(data.flatten(), dist="norm", plot=plt)
-    plt.title('QQ Plot')
-    pdf.savefig()
-    plt.close()
+    fig, ax = plt.subplots(figsize=(6, 3.5))
+    ax.plot(std_devs, marker='o', linestyle='-')
+    ax.axhline(average_std_dev, color='green', linestyle='--', label='CL')
+    ax.axhline(UCL_S, color='red', linestyle='--', label='UCL')
+    ax.axhline(LCL_S, color='red', linestyle='--', label='LCL')
+    ax.set_title('S 控制图')
+    ax.set_xlabel('样本组')
+    ax.set_ylabel('标准差')
+    ax.legend()
+    # ax.text(0.5, -0.15, 'S chart shows the standard deviation of each sample group.', ha='center', va='center', transform=ax.transAxes)
+    elements.append(Image(save_plot_to_buffer(fig)))
+    plt.close(fig)
+    # 添加段落  
+    paragraph = Paragraph("S控制图（标准差控制图）: 监控样本标准差的变化。使用标准差来评估过程变异性。", style_normal)  
+    elements.append(paragraph)  
+    elements.append(Spacer(1, 12))  
 
     # 绘制分布直方图和正态分布曲线
-    plt.figure(figsize=(8, 4))
-    n, bins, patches = plt.hist(data.flatten(), bins=10, color='skyblue', edgecolor='black', alpha=0.7, density=True)
+    fig, ax = plt.subplots(figsize=(6, 4))
+    n, bins, patches = ax.hist(means, bins=10, color='skyblue', edgecolor='black', alpha=0.7, density=True)
 
     # 计算正态分布曲线
-    mu, sigma = np.mean(data.flatten()), np.std(data.flatten(), ddof=1)
-    x = np.linspace(min(data.flatten()), max(data.flatten()), 100)
+    mu, sigma = np.mean(means), np.std(means, ddof=1)
+    x = np.linspace(min(means), max(means), 100)
     y = stats.norm.pdf(x, mu, sigma)
-    plt.plot(x, y, color='darkblue', linewidth=2, label='Normal Distribution')
+    ax.plot(x, y, color='darkblue', linewidth=2, label='Normal Distribution')
 
     # 添加控制目标和6西格玛线
-    target = overall_mean
-    plt.axvline(target, color='purple', linestyle='--', linewidth=2, label='Target')
-    plt.axvline(target + 3 * sigma, color='orange', linestyle='--', linewidth=2, label='+3σ')
-    plt.axvline(target - 3 * sigma, color='orange', linestyle='--', linewidth=2, label='-3σ')
-    plt.axvline(target + 6 * sigma, color='red', linestyle='--', linewidth=2, label='+6σ')
-    plt.axvline(target - 6 * sigma, color='red', linestyle='--', linewidth=2, label='-6σ')
+    ax.axvline(target, color='purple', linestyle='--', linewidth=2, label='Target')
+    ax.axvline(target + 3 * sigma, color='orange', linestyle='--', linewidth=2, label='+3σ')
+    ax.axvline(target - 3 * sigma, color='orange', linestyle='--', linewidth=2, label='-3σ')
+    ax.axvline(target + 6 * sigma, color='red', linestyle='--', linewidth=2, label='+6σ')
+    ax.axvline(target - 6 * sigma, color='red', linestyle='--', linewidth=2, label='-6σ')
 
-    plt.title('Histogram and Normal Distribution Curve')
-    plt.xlabel('Value')
-    plt.ylabel('Density')
-    plt.legend()
-    plt.legend()
-    plt.text(0.5, 0.01, 'Histogram with normal distribution curve.', ha='center', va='center', transform=plt.gcf().transFigure)
-    # plt.grid(axis='y', alpha=0.75)
-    pdf.savefig()
-    plt.close()
+    ax.set_title('Histogram and Normal Distribution Curve')
+    ax.set_xlabel('Value')
+    ax.set_ylabel('Density')
+    ax.legend()
+    # ax.text(0.5, -0.15, 'Histogram with normal distribution curve.', ha='center', va='center', transform=ax.transAxes)
+    elements.append(Image(save_plot_to_buffer(fig)))
+    plt.close(fig)
+    # 添加段落  
+    paragraph = Paragraph("通过添加目标和3σ线，可以更直观地看到数据分布相对于目标和控制限的位置，帮助识别潜在的过程偏差和变异。", style_normal)  
+    elements.append(paragraph)  
+    # 添加段落  
+    paragraph = Paragraph("控制目标（Target）: 在直方图中用紫色虚线表示，通常是过程的目标值或期望值。", style_normal)  
+    elements.append(paragraph)  
+    # 添加段落  
+    paragraph = Paragraph("3西格玛（3σ）线: 在直方图中用橙色虚线表示，显示在目标值的±3σ位置，帮助识别数据的分布范围。", style_normal)  
+    elements.append(paragraph)  
+    elements.append(Spacer(1, 12))  
 
-    # 关闭PDF文件
-    pdf.close()
-    pdf_buffer.seek(0)
-
-    return send_file(pdf_buffer, as_attachment=True, download_name='SPC_Report.pdf', mimetype='application/pdf')
-
-    # # 使用reportlab添加封面
-    # c = canvas.Canvas("SPC_Charts_with_Cover.pdf", pagesize=letter)
-    # c.setFont("Helvetica", 20)
-    # c.drawString(100, 750, "SPC Analysis Report")
-    # c.setFont("Helvetica", 12)
-    # c.drawString(100, 730, "This report contains SPC charts and analysis results.")
-    # c.showPage()
-    # c.save()
-
-    # # 将生成的图表PDF合并到封面PDF中
-    # from PyPDF2 import PdfReader, PdfWriter
-
-    # cover_pdf = PdfReader("SPC_Charts_with_Cover.pdf")
-    # charts_pdf = PdfReader(pdf_filename)
-    # output_pdf = PdfWriter()
-
-    # # 添加封面
-    # output_pdf.add_page(cover_pdf.pages[0])
-
-    # # 添加图表
-    # for page in charts_pdf.pages:
-    #     output_pdf.add_page(page)
-
-    # # 保存最终PDF
-    # with open("Final_SPC_Report.pdf", "wb") as f:
-    #     output_pdf.write(f)
-
-    # print("PDF report generated: Final_SPC_Report.pdf")
-    # # 6. 将内存中的PDF数据获取出来，作为响应返回给客户端
-    # packet.seek(0)
-    # response = make_response(packet.read())
-    # response.headers['Content-Type'] = 'application/pdf'
-    # response.headers['Content-Disposition'] = 'attachment; filename=report.pdf'
-    # return response
+    # 构建PDF
+    doc.build(elements)
+    report_buffer.seek(0)
+    return send_file(report_buffer, as_attachment=True, download_name='SPC_Report.pdf', mimetype='application/pdf')
 
 if __name__ == '__main__':
     app.run(debug=True)
