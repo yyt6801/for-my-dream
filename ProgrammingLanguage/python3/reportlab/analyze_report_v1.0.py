@@ -12,12 +12,22 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from datetime import datetime
+from datetime import datetime, timedelta
 import http.client
 import json
 
+def replace_last_word(s, replacement):  
+    # 从右侧分割字符串，最多分割成2部分  
+    parts = s.rsplit('_', 1)  
+    if len(parts) == 2:  
+        # 用替换的单词组合字符串  
+        return f"{parts[0]}_{replacement}"  
+    else:  
+        # 如果没有下划线，直接返回原字符串  
+        return s  
+
 def query_data(sample_avg_name, sample_range_name, sample_stdev_name,begin_time, end_time, steel_grade, thick_targ, limit_low, limit_high):
-    conn = http.client.HTTPConnection("10.16.1.245", 8086)
+    conn = http.client.HTTPConnection("10.151.18.218", 8086)
     payload = json.dumps({
         "sql": "select "+sample_avg_name +","+sample_range_name +","+sample_stdev_name+" from V_TCM_CONTROL_SPC_PART2 t @where",
         "@where": "where PROD_END_TIME > to_char(to_date('"+begin_time+"','yyyy-mm-dd hh24:mi:ss'),'yyyymmddhh24miss') and PROD_END_TIME < to_char(to_date('"+end_time+"','yyyy-mm-dd hh24:mi:ss'),'yyyymmddhh24miss') and STEEL_GRADE = '"+steel_grade+"' and t.thick_targ between "+str(limit_low)+" and "+str(limit_high)+" and t.thick_targ = "+str(thick_targ)+" and "+sample_avg_name +" > 0",
@@ -35,17 +45,14 @@ def query_data(sample_avg_name, sample_range_name, sample_stdev_name,begin_time,
     data = res.read()
     return data
 
-app = Flask(__name__)
-pdfmetrics.registerFont(TTFont('SimHei', 'SimHei.ttf'))
-
-@app.route('/export_pdf_report', methods=['GET'])
-def export_pdf_report():
+def get_request_params():
     # 获取GET请求的参数
     sample_avg_name = request.args.get('sample_avg_name', 'S5_THK_HEAD_AVG')
-    sample_range_name = request.args.get('sample_range_name', 'S5_THK_HEAD_RANGE')
-    sample_stdev_name = request.args.get('sample_stdev_name', 'S5_THK_HEAD_STDDEV')
-    BEGINTIME = request.args.get('begintime', "2024-10-15 13:32:37")
-    ENDTIME = request.args.get('endtime', '2024-11-15 13:32:37')
+    sample_range_name = replace_last_word(sample_avg_name, 'RANGE')
+    sample_stdev_name = replace_last_word(sample_avg_name, 'STDDEV')
+    parameter = request.args.get('parameter', '5机架厚度头部均值')
+    BEGINTIME = request.args.get('begintime', (datetime.now()-timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S'))
+    ENDTIME = request.args.get('endtime', (datetime.now()).strftime('%Y-%m-%d %H:%M:%S'))
     STEELGRADE = request.args.get('steelgrade', "SPHC-Z")
     USL = request.args.get('usl', 0.89)
     LSL = request.args.get('lsl', 0.55)
@@ -76,8 +83,66 @@ def export_pdf_report():
         ENDTIME = json.loads(ENDTIME)
     except json.JSONDecodeError:
         pass
-    response = query_data(sample_avg_name, sample_range_name, sample_stdev_name,BEGINTIME, ENDTIME, STEELGRADE, TARGET, LSL, USL)
-    sample_data =[]
+
+    return sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter
+
+def get_post_request_params():
+    # 获取POST请求的参数
+    sample_avg_name = request.form.get('sample_avg_name', 'S5_THK_HEAD_AVG')
+    sample_range_name = replace_last_word(sample_avg_name, 'RANGE')
+    sample_stdev_name = replace_last_word(sample_avg_name, 'STDDEV')
+    parameter = request.form.get('parameter', '5机架厚度头部均值')
+    BEGINTIME = request.form.get('begintime', (datetime.now()-timedelta(days=30)).strftime('%Y-%m-%d %H:%M:%S'))
+    ENDTIME = request.form.get('endtime', (datetime.now()).strftime('%Y-%m-%d %H:%M:%S'))
+    STEELGRADE = request.form.get('steelgrade', "SPHC-Z")
+    USL = request.form.get('uplimit', 0.89)
+    LSL = request.form.get('lowlimit', 0.55)
+    TARGET = request.form.get('objectives', 0.77)
+    
+    # 解析字符串
+    try:
+        sample_avg_name = json.loads(sample_avg_name)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        sample_range_name = json.loads(sample_range_name)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        sample_stdev_name = json.loads(sample_stdev_name)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        BEGINTIME = json.loads(BEGINTIME)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        ENDTIME = json.loads(ENDTIME)
+    except json.JSONDecodeError:
+        pass
+
+    return sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter
+
+app = Flask(__name__)
+pdfmetrics.registerFont(TTFont('SimHei', 'SimHei.ttf'))
+
+@app.route('/export_pdf_report', methods=['POST'])
+def export_pdf_report_post():
+    sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter = get_post_request_params()
+    return generate_pdf_report(sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter)
+
+@app.route('/export_pdf_report', methods=['GET'])
+def export_pdf_report_get():
+    sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter = get_request_params()
+    return generate_pdf_report(sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter)
+
+def generate_pdf_report(sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, USL, LSL, parameter):
+    response = query_data(sample_avg_name, sample_range_name, sample_stdev_name, BEGINTIME, ENDTIME, STEELGRADE, TARGET, LSL, USL)
+    sample_data = []
     sample_range =[]
     sample_stdev =[]
     data = json.loads(response)
@@ -134,6 +199,9 @@ def export_pdf_report():
 
         # Styles
         style_normal = ParagraphStyle(name='Normal', fontName='SimHei', fontSize=12, leading=14)
+        title = Paragraph("TCM2 "+str(STEELGRADE)+ " "+str(parameter), ParagraphStyle(name='Title', fontName='SimHei', fontSize=24, leading=14, textColor=colors.black, alignment=1, spaceAfter=12))
+        elements.append(title)
+        elements.append(Spacer(1, 12))  
         title = Paragraph("SPC过程能力分析报告", ParagraphStyle(name='Title', fontName='SimHei', fontSize=24, textColor=colors.black, alignment=1, spaceAfter=12))
         elements.append(title)
         elements.append(Spacer(1, 12))  
@@ -160,12 +228,12 @@ def export_pdf_report():
         # Add tables
         data_left = [
             ['--', '样本信息'],
-            ['开始时间', '2024-10-15 13:32:37'],
-            ['结束时间', '2024-11-15 13:32:37'],
-            ['钢种', 'SPHC-Z'],
+            ['开始时间', str(BEGINTIME)],
+            ['结束时间', str(ENDTIME)],
+            ['钢种', str(STEELGRADE)],
             ['控制上限', f'{USL:.3f}'],
             ['控制下限', f'{LSL:.3f}'],
-            ['目标值', f'{overall_mean:.3f}'],
+            ['目标值', f'{TARGET:.3f}'],
             ['样本总数', f'{total_count}'],
         ]
         data_table = [
