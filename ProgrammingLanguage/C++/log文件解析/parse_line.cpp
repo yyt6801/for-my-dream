@@ -3,9 +3,9 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <utility> // 添加此行以支持 std::pair
 
 int main() {
-    // std::ifstream file("c:\\Users\\Yuan\\Desktop\\prom.smf");
     std::ifstream file("prom.smf");
     std::string line;
     bool foundLinestyle = false;
@@ -26,7 +26,9 @@ int main() {
                     std::istringstream iss(line);
                     double x, y;
                     if (iss >> x >> y) {
-                        coordinates.push_back(std::make_pair(x, y)); // 使用 push_back 替代 emplace_back
+                        // 使用 std::pair 的构造函数
+                        std::pair<double, double> coord(x, y);
+                        coordinates.push_back(coord); // 使用 push_back 添加坐标
                     }
                 }
                 break; // 读取完 Line() 后退出
@@ -35,8 +37,8 @@ int main() {
     }
 
     // 输出结果
-    for (const auto& coord : coordinates) {
-        std::cout << "X: " << coord.first << ", Y: " << coord.second << std::endl;
+    for (size_t i = 0; i < coordinates.size(); ++i) {
+        std::cout << "X: " << coordinates[i].first << ", Y: " << coordinates[i].second << std::endl;
     }
 
     return 0;

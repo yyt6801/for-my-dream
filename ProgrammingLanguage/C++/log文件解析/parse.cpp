@@ -5,12 +5,15 @@
 #include <string>
 #include <utility>
 
-void parse_log(const std::string& file_path, const std::string& target_pid, 
-               std::vector<std::vector<std::pair<std::string, std::string>>>& parsed_results) {
+int main() {
+    std::string file_path = "PreRG-240812.log";
+    std::string target_pid = "X24814903300";
+    std::vector<std::vector<std::pair<std::string, std::string>>> parsed_results;
+
     std::ifstream file(file_path);
     if (!file.is_open()) {
         std::cerr << "无法打开文件: " << file_path << std::endl;
-        return;
+        return 1; // 添加返回值以指示错误
     }
 
     std::vector<std::string> latest_data;
@@ -25,7 +28,7 @@ void parse_log(const std::string& file_path, const std::string& target_pid,
     file.close();
 
     // 从后往前查找
-    for (auto it = lines.rbegin(); it != lines.rend(); ++it) {
+    for (std::vector<std::string>::reverse_iterator it = lines.rbegin(); it != lines.rend(); ++it) {
         if (it->find("ProfPt: " + target_pid) != std::string::npos) {
             found_target = true;
             continue;
@@ -67,7 +70,8 @@ void parse_log(const std::string& file_path, const std::string& target_pid,
 
         while (data_stream >> data) { // 直接使用流提取操作符
             if (!data.empty() && index < headers.size()) {
-                result.push_back(std::make_pair(headers[index], data)); // 存储为 pair
+                std::pair<std::string, std::string> p(headers[index], data); // 使用 std::pair 的构造函数
+                result.push_back(p); // 存储为 pair
                 index++;
             }
         }
@@ -78,30 +82,21 @@ void parse_log(const std::string& file_path, const std::string& target_pid,
             std::cerr << "警告: 数据行与字段名长度不匹配: " << latest_data[i] << std::endl;
         }
     }
-}
-
-int main() {
-    // std::string file_path = "c:\\Users\\Yuan\\Desktop\\PreRG-240812.log";
-    std::string file_path = "PreRG-240812.log";
-    std::string target_pid = "X24814903300";
-    std::vector<std::vector<std::pair<std::string, std::string>>> parsed_results;
-
-    parse_log(file_path, target_pid, parsed_results);
 
     // 访问特定行的字段
     if (!parsed_results.empty()) {
         // 访问第1行的 'Eprof' 字段
-        for (const auto& pair : parsed_results[0]) {
-            if (pair.first == "Eprof") {
-                std::cout << "parsed_results[0][Eprof] = " << pair.second << std::endl;
+        for (size_t i = 0; i < parsed_results[0].size(); ++i) {
+            if (parsed_results[0][i].first == "Eprof") {
+                std::cout << "parsed_results[0][Eprof] = " << parsed_results[0][i].second << std::endl;
             }
         }
 
         // 访问第2行的 'Pa' 字段（假设有第二行数据）
         if (parsed_results.size() > 1) {
-            for (const auto& pair : parsed_results[1]) {
-                if (pair.first == "Pa") {
-                    std::cout << "parsed_results[1][Pa]=" << pair.second << std::endl;
+            for (size_t i = 0; i < parsed_results[1].size(); ++i) {
+                if (parsed_results[1][i].first == "Pa") {
+                    std::cout << "parsed_results[1][Pa]=" << parsed_results[1][i].second << std::endl;
                 }
             }
         }
