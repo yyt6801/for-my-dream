@@ -16,73 +16,81 @@ int main() {
         return 1; // 添加返回值以指示错误
     }
 
-    std::vector<std::string> latest_data;
-    std::string line;
-    bool found_target = false;
-
-    // 反向读取文件行
     std::vector<std::string> lines;
+    std::string line;
+
+    // 读取文件行
     while (std::getline(file, line)) {
         lines.push_back(line);
     }
     file.close();
 
-    // 从后往前查找
+    // 从后往前查找最后一个 ProfPt:
+    bool found_target = false;
+    size_t target_index = 0;
+
     for (std::vector<std::string>::reverse_iterator it = lines.rbegin(); it != lines.rend(); ++it) {
         if (it->find("ProfPt: " + target_pid) != std::string::npos) {
             found_target = true;
-            continue;
+            target_index = lines.size() - (it - lines.rbegin()) - 1; // 记录 ProfPt: 行的索引
+            break; // 找到最后一个 ProfPt: 后退出循环
         }
+    }
 
-        if (found_target && it->rfind("PRE", 0) == 0) {
-            latest_data.push_back(*it);
-            if (latest_data.size() == 8) { // 包括字段名行和7行数据
-                break;
+    // 如果找到了目标，读取该行后面的数据段
+    if (found_target) {
+        // 读取字段名行
+        if (target_index + 1 < lines.size()) {
+            std::string header_line = lines[target_index + 1];
+            std::vector<std::string> headers;
+            std::stringstream header_stream(header_line);
+            std::string header;
+
+            // 使用空格分割字段名行
+            while (header_stream >> header) {
+                if (!header.empty()) {
+                    headers.push_back(header);
+                }
+            }
+
+            // 读取数据行
+            for (size_t j = target_index + 2; j < lines.size(); ++j) {
+                if (lines[j].find(target_pid) != std::string::npos) { // 只处理与 target_pid 相关的行
+                    std::vector<std::pair<std::string, std::string>> result; // 使用 vector 和 pair
+                    std::stringstream data_stream(lines[j]);
+                    std::string data;
+                    size_t index = 0;
+
+                    while (data_stream >> data) {
+                        if (!data.empty() && index < headers.size()) {
+                            std::pair<std::string, std::string> p(headers[index], data); // 使用 std::pair 的构造函数
+                            result.push_back(p); // 存储为 pair
+                            index++;
+                        }
+                    }
+
+                    if (index == headers.size()) {
+                        parsed_results.push_back(result);
+                    } else {
+                        std::cerr << "警告: 数据行与字段名长度不匹配: " << lines[j] << std::endl;
+                    }
+                }
             }
         }
+    } else {
+        std::cerr << "未找到目标 ProfPt: " << target_pid << std::endl;
     }
 
-    // 手动反转以恢复原始顺序
-    std::vector<std::string> reversed_data;
-    for (size_t i = latest_data.size(); i > 0; --i) {
-        reversed_data.push_back(latest_data[i - 1]);
-    }
-    latest_data = reversed_data;
+    // // 输出结果
+    // for (size_t i = 0; i < parsed_results.size(); ++i) {
+    //     std::cout << "Data from line " << i + 1 << ": ";
+    //     for (size_t j = 0; j < parsed_results[i].size(); ++j) {
+    //         std::cout << parsed_results[i][j].first << " = " << parsed_results[i][j].second << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
 
-    // 解析字段名行
-    std::vector<std::string> headers;
-    std::stringstream header_stream(latest_data[0]);
-    std::string header;
-
-    // 使用空格分割字段名行
-    while (header_stream >> header) { // 直接使用流提取操作符
-        if (!header.empty()) {
-            headers.push_back(header);
-        }
-    }
-
-    // 解析数据行
-    for (size_t i = 1; i < latest_data.size(); ++i) {
-        std::vector<std::pair<std::string, std::string>> result; // 使用 vector 和 pair
-        std::stringstream data_stream(latest_data[i]);
-        std::string data;
-        size_t index = 0;
-
-        while (data_stream >> data) { // 直接使用流提取操作符
-            if (!data.empty() && index < headers.size()) {
-                std::pair<std::string, std::string> p(headers[index], data); // 使用 std::pair 的构造函数
-                result.push_back(p); // 存储为 pair
-                index++;
-            }
-        }
-
-        if (index == headers.size()) {
-            parsed_results.push_back(result);
-        } else {
-            std::cerr << "警告: 数据行与字段名长度不匹配: " << latest_data[i] << std::endl;
-        }
-    }
-
+    
     // 访问特定行的字段
     if (!parsed_results.empty()) {
         // 访问第1行的 'Eprof' 字段
@@ -94,9 +102,9 @@ int main() {
 
         // 访问第2行的 'Pa' 字段（假设有第二行数据）
         if (parsed_results.size() > 1) {
-            for (size_t i = 0; i < parsed_results[1].size(); ++i) {
-                if (parsed_results[1][i].first == "Pa") {
-                    std::cout << "parsed_results[1][Pa]=" << parsed_results[1][i].second << std::endl;
+            for (size_t i = 0; i < parsed_results[6].size(); ++i) {
+                if (parsed_results[6][i].first == "Eprof") {
+                    std::cout << "parsed_results[6][Eprof]=" << parsed_results[6][i].second << std::endl;
                 }
             }
         }
