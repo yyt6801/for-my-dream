@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本格式化工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>文本格式化工具</h1>
+        <textarea id="inputText" placeholder="请在此输入或粘贴需要格式化的文本..."></textarea>
+        <div class="buttons">
+            <button onclick="removeSpaces()">去除空格和换行</button>
+            <button onclick="removeEscape()">去除转义</button>
+            <button onclick="addEscape()">添加转义</button>
+        </div>
+        <textarea id="outputText" placeholder="格式化后的文本将显示在这里..." readonly></textarea>
+    </div>
+
+    <script>
+        function removeSpaces() {
+            const input = document.getElementById('inputText').value;
+            // 去除所有空格和换行
+            const result = input.replace(/\s+/g, '');
+            document.getElementById('outputText').value = result;
+        }
+
+        function removeEscape() {
+            const input = document.getElementById('inputText').value;
+            // 去除转义字符
+            const result = input.replace(/\\(.)/g, '$1');
+            document.getElementById('outputText').value = result;
+        }
+
+        function addEscape() {
+            const input = document.getElementById('inputText').value;
+            // 添加转义字符
+            const result = input.replace(/([\\'"])/g, '\\$1');
+            document.getElementById('outputText').value = result;
+        }
+    </script>
+</body>
+</html>

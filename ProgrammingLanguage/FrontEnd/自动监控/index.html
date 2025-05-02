@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="jquery.min.js"></script>
+    <title>接口测试工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .result {
+            margin-top: 20px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>接口测试工具</h1>
+    <button id="testAllButton">测试所有接口</button>
+    <div class="result" id="result"></div>
+
+        <script>
+            const apiList = [
+                {
+                    url: "http://127.0.0.1:8087/Theme/Query",
+                    postData: {
+                        "line": "Theme_PLTCM",
+                        "data": [
+                          {
+                            "group": "curve",
+                            "name": [
+                              "flat_ave"
+                            ]
+                          }
+                        ],
+                        "page": {
+                          "skip": 0,
+                          "limit": 30
+                        },
+                        "sort": {},
+                        "filter": {
+                          "mat_no": "L12408356900"
+                        }
+                      }
+                }
+            ];
+
+            document.getElementById("testAllButton").onclick = function () {
+                const resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = ''; // 清空结果区域  
+                apiList.forEach(api => {
+                    testApi(api.url, api.postData);
+                });
+            };
+
+            function testApi(url, postData) {
+                // 发送 POST 请求  
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    dataType: "json",
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf8',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+                    },
+                    crossDomain: true,   // 会让请求头中包含跨域的额外信息，但不会含cookie
+                    data: JSON.stringify(postData),
+                    success: function (response) {
+                        console.log(response);
+                        $("#result").val(response.msg)
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                    })
+            }
+        </script>
+    </body>
+
+</html>

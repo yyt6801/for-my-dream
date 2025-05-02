@@ -1,5 +1,7 @@
 *.exe
 .obsidian
+packages
 build
+dist
 *.pyc
 *.spec
