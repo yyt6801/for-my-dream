@@ -46,7 +46,11 @@
         <h1>文本格式化工具</h1>
         <textarea id="inputText" placeholder="请在此输入或粘贴需要格式化的文本..."></textarea>
         <div class="buttons">
+            <button onclick="replaceNewlinesWithSpace()">去除换行</button>
             <button onclick="removeSpaces()">去除空格和换行</button>
+            <button onclick="normalizeSpacesKeepNewlines()">去除多余空格</button>
+            <button onclick="removeCommentLines()">去除注释</button>
+            <button onclick="formatCode()">格式化代码</button>
             <button onclick="removeEscape()">去除转义</button>
             <button onclick="addEscape()">添加转义</button>
         </div>
@@ -58,6 +62,20 @@
             const input = document.getElementById('inputText').value;
             // 去除所有空格和换行
             const result = input.replace(/\s+/g, '');
+            document.getElementById('outputText').value = result;
+        }
+
+        function removeNewlines() {
+            const input = document.getElementById('inputText').value;
+            // 仅去除换行符（\n, \r, \r\n），保留空格
+            const result = input.replace(/[\r\n]+/g, '');
+            document.getElementById('outputText').value = result;
+        }
+
+        function replaceNewlinesWithSpace() {
+            const input = document.getElementById('inputText').value;
+            // 将换行符（\n, \r, \r\n）替换为空格
+            const result = input.replace(/[\r\n]+/g, ' ');
             document.getElementById('outputText').value = result;
         }
 
@@ -74,6 +92,96 @@
             const result = input.replace(/([\\'"])/g, '\\$1');
             document.getElementById('outputText').value = result;
         }
+
+        function normalizeSpaces() {
+            const input = document.getElementById('inputText').value;
+            // 将连续的多个空格替换为单个空格
+            const result = input.replace(/\s+/g, ' ').trim();
+            document.getElementById('outputText').value = result;
+        }
+        function normalizeSpacesKeepNewlines() {
+            const input = document.getElementById('inputText').value;
+            // 分行处理，保留换行符
+            const lines = input.split(/\r?\n/);
+            // 对每行分别处理多余空格
+            const processedLines = lines.map(line => {
+                // 将每行中连续的空格替换为单个空格，并去除行首尾空格
+                return line.replace(/[ \t]+/g, ' ').trim();
+            });
+            // 重新组合成文本，保留原有的换行
+            document.getElementById('outputText').value = processedLines.join('\n');
+        }
+        
+        function formatCode() {
+            const input = document.getElementById('inputText').value;
+            let result = '';
+            let indentLevel = 0;
+            const indentSize = 4; // 缩进大小（空格数）
+            
+            // 分行处理
+            const lines = input.split(/\r?\n/);
+            
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim(); // 去除行首尾空白
+                
+                if (line === '') {
+                    // 保留空行
+                    result += '\n';
+                    continue;
+                }
+                
+                // 检查是否需要减少缩进（行首有右花括号或右括号）
+                if (line.startsWith('}') || line.startsWith(')') || line.startsWith(']')) {
+                    indentLevel = Math.max(0, indentLevel - 1);
+                }
+                
+                // 添加当前缩进级别的空格
+                const indent = ' '.repeat(indentLevel * indentSize);
+                result += indent + line + '\n';
+                
+                // 检查是否需要增加缩进（行尾有左花括号）
+                if (line.endsWith('{') || line.endsWith('(') || line.endsWith('[')) {
+                    indentLevel++;
+                }
+                
+                // 如果行中间有右花括号且后面还有内容，减少下一行的缩进级别
+                if (line.includes('}') && !line.endsWith('}') && 
+                    line.indexOf('}') < line.length - 1) {
+                    indentLevel = Math.max(0, indentLevel - 1);
+                }
+                
+                // 如果行中间有左花括号且前面还有内容，增加下一行的缩进级别
+                if (line.includes('{') && !line.startsWith('{') && 
+                    line.indexOf('{') > 0) {
+                    indentLevel++;
+                }
+            }
+            
+            document.getElementById('outputText').value = result.trim();
+        }
+
+
+        function removeCommentLines() {
+            const input = document.getElementById('inputText').value;
+            // 分行处理
+            const lines = input.split(/\r?\n/);
+            // 过滤掉注释行
+            const filteredLines = lines.filter(line => {
+                // 去除前导空格后的行内容
+                const trimmedLine = line.trim();
+                // 检查是否是常见的注释行（//、#、/* 开头，或者 */ 结尾）
+                return !(
+                    trimmedLine.startsWith('//') || 
+                    trimmedLine.startsWith('#') || 
+                    trimmedLine.startsWith('/*') || 
+                    trimmedLine.endsWith('*/') ||
+                    (trimmedLine.startsWith('<!--') && trimmedLine.endsWith('-->'))
+                );
+            });
+            // 重新组合成文本
+            document.getElementById('outputText').value = filteredLines.join('\n');
+        }
+
     </script>
 </body>
 </html>
